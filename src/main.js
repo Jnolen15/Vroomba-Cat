@@ -12,7 +12,21 @@ let config = {
             gravity: {x: 0, y: 0},
         }
     },
-    scene: [Play, Menu],
+    scene: [Menu, Play],
+}
+
+// basic text configuration for rest of coding
+let textConfig = {
+    fontFamily: 'Courier',
+    fontSize: '28px',
+    backgroundColor: '#F3B141',
+    color: '#843605',
+    align: 'center',
+    padding: {
+    top: 5,
+    bottom: 5,
+    },
+    fixedWidth: 0
 }
 
 //define game
