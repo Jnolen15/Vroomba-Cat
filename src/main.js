@@ -31,3 +31,6 @@ let textConfig = {
 
 //define game
 let game = new Phaser.Game(config);
+
+//Game over boolean
+let gameOver = false;
