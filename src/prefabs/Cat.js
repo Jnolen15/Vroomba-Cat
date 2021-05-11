@@ -14,6 +14,9 @@ class Cat extends Phaser.Physics.Arcade.Sprite {
         //this.setDragX(800);
         this.setMaxVelocity(380);
         this.setGravityY(500);
+
+        // Setup the jump key individually because JustDown does not work the way cursors are set up
+        this.keyUP = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
     }
 
     update(){
@@ -29,7 +32,7 @@ class Cat extends Phaser.Physics.Arcade.Sprite {
         }
 
         // jump
-        if(cursors.up.isDown){
+        if(Phaser.Input.Keyboard.JustDown(this.keyUP) && this.body.touching.down){
             this.body.velocity.y = -this.moveSpeed;
         }
     }

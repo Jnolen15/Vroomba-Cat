@@ -37,4 +37,3 @@ let gameOver = false;
 
 //define globals
 let cursors;
-let isGrounded = false;

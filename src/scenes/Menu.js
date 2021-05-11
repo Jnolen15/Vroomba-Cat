@@ -10,7 +10,8 @@ class Menu extends Phaser.Scene {
 
     create() {
         // Set up keys
-        cursors = this.input.keyboard.createCursorKeys();
+        this.keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
+        this.keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
 
         // Display menu text
         this.add.text(game.config.width/2, game.config.height/2, "Menu", textConfig).setOrigin(0.5);
@@ -19,7 +20,7 @@ class Menu extends Phaser.Scene {
     }
 
     update() {
-        if (cursors.up.isDown) {
+        if (Phaser.Input.Keyboard.JustDown(this.keyUP)) {
             this.scene.start('playScene');  
             game.settings = { 
                 gameTimer: 60000 

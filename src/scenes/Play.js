@@ -6,6 +6,7 @@ class Play extends Phaser.Scene {
     create() {
         // Create Cat (Player)
         this.cat = new Cat(this, game.config.width/2, game.config.height/2, 'cat').setOrigin(0,0);
+        this.cat.setScale(0.5);
 
         // Set up cursor keys
         cursors = this.input.keyboard.createCursorKeys();
@@ -18,19 +19,28 @@ class Play extends Phaser.Scene {
         }, null, this);
         this.timeElapsed = this.add.text(80, 40, 'Time: ' + Phaser.Math.RoundTo(this.clock.elapsed/1000,2, 1), textConfig).setOrigin(0.5);
 
-        // Add platforms (Should find a better way to make the game map for the future)
+        // Add platform group (Should find a better way to make the game map for the future)
         this.platformGroup = this.physics.add.group();
-        this.platform1 = this.physics.add.sprite(game.config.width/2, game.config.height/2 + 200, "platform");
-        this.platformGroup.add(this.platform1);
-        this.platform1.setImmovable(true);
 
         // Add collider between platformGroup and Cat
         this.physics.add.collider(this.cat, this.platformGroup);
-        this.physics.add.overlap(this.cat, this.platformGroup, function(cat, platform) {
-            isGrounded = true;
-        });
 
-        console.log("isGrounded: " + isGrounded);
+        // Add platforms
+        this.platform = this.platformGroup.create(game.config.width/2, game.config.height, "platform");
+        this.platform.scaleX = 8;
+        this.platform.setImmovable(true);
+
+        this.platform = this.platformGroup.create(700, 400, "platform");
+        this.platform.scaleX = 4;
+        this.platform.setImmovable(true);
+
+        this.platform = this.platformGroup.create(100, 300, "platform");
+        this.platform.scaleX = 3;
+        this.platform.setImmovable(true);
+
+        this.platform = this.platformGroup.create(300, 540, "platform");
+        this.platform.scaleX = 2;
+        this.platform.setImmovable(true);
     }
 
     update() {
