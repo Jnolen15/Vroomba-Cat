@@ -9,26 +9,36 @@ class Cat extends Phaser.Physics.Arcade.Sprite {
         this.setCollideWorldBounds(true); // don't go out of the map
 
         // Cat properties
-        this.moveSpeed = 500;
-        this.jumpSpeed = 500;
-        //this.setDragX(800);
-        this.setMaxVelocity(380);
-        this.setGravityY(500);
+        this.moveSpeed = 500;       // On ground move speed
+        this.jumpSpeed = 1000;      // Jump speed / height
+        this.airSpeed = 10;         // How much in air controll the player has
+        this.airSpeedMax = 600;     // Upper bound for in air speed
+        this.setGravityY(1000);
 
         // Setup the jump key individually because JustDown does not work the way cursors are set up
         this.keyUP = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
     }
 
     update(){
-        // left/right movement
-        if(cursors.left.isDown) {
-            this.body.velocity.x = -this.moveSpeed;
-            this.flipX = true;
-        } else if(cursors.right.isDown) {
-            this.body.velocity.x = this.moveSpeed;
-            this.flipX = false;
-        } else {
-            this.body.velocity.x = 0; 
+        // left/right movement on ground
+        if(this.body.touching.down){
+            if(cursors.left.isDown) {
+                this.body.velocity.x = -this.moveSpeed;
+                this.flipX = true;
+            } else if(cursors.right.isDown) {
+                this.body.velocity.x = this.moveSpeed;
+                this.flipX = false;
+            } else {
+                this.body.velocity.x = 0; 
+            }
+        } else { // Reduced speed in air movement
+            if(cursors.left.isDown && this.body.velocity.x > -this.airSpeedMax) {
+                this.body.velocity.x -= this.airSpeed;
+                this.flipX = true;
+            } else if(cursors.right.isDown && this.body.velocity.x < this.airSpeedMax) {
+                this.body.velocity.x += this.airSpeed;
+                this.flipX = false;
+            }
         }
 
         // jump
