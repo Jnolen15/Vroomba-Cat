@@ -3,16 +3,27 @@ class Menu extends Phaser.Scene {
         super("menuScene");
     }
 
+    preload(){
+        this.load.image('cat', './assets/placeholder_CAT.PNG');
+        this.load.image('platform', './assets/placeholder_Platform.PNG');
+    }
+
     create() {
+        // Set up keys
+        cursors = this.input.keyboard.createCursorKeys();
+
+        // Display menu text
         this.add.text(game.config.width/2, game.config.height/2, "Menu", textConfig).setOrigin(0.5);
         this.add.text(game.config.width/2, game.config.height/1.75, "Press ↑ to go to Play Scene", textConfig).setOrigin(0.5);
-        this.keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
+
     }
 
     update() {
-        if (Phaser.Input.Keyboard.JustDown(this.keyUP)) {
+        if (cursors.up.isDown) {
             this.scene.start('playScene');  
-            game.settings = { gameTimer: 10000 }  
+            game.settings = { 
+                gameTimer: 60000 
+            }  
         }
     }
 }

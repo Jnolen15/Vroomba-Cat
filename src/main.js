@@ -8,8 +8,8 @@ let config = {
     physics: {
         default: 'arcade',
         arcade: {
-            //debug: true,
-            gravity: {x: 0, y: 0},
+            debug: true,
+            gravity: {y: 0},
         }
     },
     scene: [Menu, Play],
@@ -34,3 +34,7 @@ let game = new Phaser.Game(config);
 
 //Game over boolean
 let gameOver = false;
+
+//define globals
+let cursors;
+let isGrounded = false;
