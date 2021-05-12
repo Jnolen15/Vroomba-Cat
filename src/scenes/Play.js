@@ -38,9 +38,9 @@ class Play extends Phaser.Scene {
         this.platform.scaleX = 3;
         this.platform.setImmovable(true);
 
-        //this.platform = this.platformGroup.create(300, 540, "platform");
-        //this.platform.scaleX = 2;
-        //this.platform.setImmovable(true);
+        this.platform = this.platformGroup.create(300, 540, "platform");
+        this.platform.scaleX = 2;
+        this.platform.setImmovable(true);
     }
 
     update() {
@@ -50,6 +50,7 @@ class Play extends Phaser.Scene {
 
         // If the game is over and the player hits keyLeft go to the main menu
         if(gameOver && cursors.down.isDown) {
+            gameOver = false;
             this.scene.start('menuScene'); 
         }
 

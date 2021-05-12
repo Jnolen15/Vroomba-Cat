@@ -10,7 +10,11 @@ class Cat extends Phaser.Physics.Arcade.Sprite {
 
         // Cat properties
         this.moveSpeed = 500;       // On ground move speed
-        this.jumpSpeed = 1000;      // Jump speed / height
+        this.numJumps = 2;          // Number of jumps the player currently has
+        this.totalJumps = 2;        // Total number of jumps the player has
+        this.jumpSpeed = 500;       // Jump speed / height
+        this.doubleSpeed = 400;     // Jump speed / height of second jump
+        this.airBrake = 10;         // Air Braking
         this.airSpeed = 10;         // How much in air controll the player has
         this.airSpeedMax = 600;     // Upper bound for in air speed
         this.setGravityY(1000);
@@ -22,6 +26,7 @@ class Cat extends Phaser.Physics.Arcade.Sprite {
     update(){
         // left/right movement on ground
         if(this.body.touching.down){
+            this.numJumps = this.totalJumps; // Replenish jumps when on the ground
             if(cursors.left.isDown) {
                 this.body.velocity.x = -this.moveSpeed;
                 this.flipX = true;
@@ -29,21 +34,35 @@ class Cat extends Phaser.Physics.Arcade.Sprite {
                 this.body.velocity.x = this.moveSpeed;
                 this.flipX = false;
             } else {
-                this.body.velocity.x = 0; 
+                this.body.velocity.x = 0;
             }
-        } else { // Reduced speed in air movement
-            if(cursors.left.isDown && this.body.velocity.x > -this.airSpeedMax) {
+        } else {
+            console.log(this.body.velocity.x);
+            // Airbraking. loose horizontal velocity while in air
+            if(this.flipX && this.body.velocity.x < 0) this.body.velocity.x += this.airBrake;   //Left
+            else if (this.body.velocity.x > 0) this.body.velocity.x -= this.airBrake;           //Right
+            // If player went off an edge without jumping first remove a jump.
+            if(this.numJumps == this.totalJumps) this.numJumps -= 1;
+            // In air movement controll
+            if(cursors.left.isDown && this.body.velocity.x > -this.airSpeedMax) { // Holding left
                 this.body.velocity.x -= this.airSpeed;
                 this.flipX = true;
-            } else if(cursors.right.isDown && this.body.velocity.x < this.airSpeedMax) {
+            } else if(cursors.right.isDown && this.body.velocity.x < this.airSpeedMax) { // Holding right
                 this.body.velocity.x += this.airSpeed;
                 this.flipX = false;
             }
         }
 
         // jump
-        if(Phaser.Input.Keyboard.JustDown(this.keyUP) && this.body.touching.down){
-            this.body.velocity.y = -this.moveSpeed;
+        if(Phaser.Input.Keyboard.JustDown(this.keyUP) && this.numJumps > 0){
+            if(this.numJumps == this.totalJumps){ // First jump
+                this.numJumps -= 1;
+                this.body.velocity.y = -this.jumpSpeed;
+            } else { // Second jump
+                this.numJumps -= 1;
+                this.body.velocity.y = -this.doubleSpeed; // Less powerful
+            }
         }
+
     }
 }
