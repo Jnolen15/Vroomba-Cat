@@ -33,9 +33,26 @@ class Spawner {
         scene.physics.add.collider(obj, this.platformGroup);
         scene.physics.add.overlap(cat, obj, function(cat, object) {
             console.log("object hit!!");
-            cat.turboChargeCat(scene);
+            this.spawnDebris(scene, cat, object);
             scene.addToScore();
             object.destroy();
+        }, null, this);
+    }
+
+    spawnDebris(scene, cat, object) {
+        this.debris = new Object(scene, object.x, object.y, 'temp').setOrigin(0.5);
+        scene.physics.add.collider(this.debris, this.platformGroup);
+        this.debris.alpha = 0;
+        this.debris.active = false;
+        this.debris.setBodySize(75,10);
+        this.clock = scene.time.delayedCall(1000, () => {
+            this.debris.alpha = 1;
+            this.debris.active = true;
+            scene.physics.add.overlap(cat, this.debris, function(cat, deb) {
+                console.log("debris hit!!");
+                cat.turboChargeCat(scene);
+                deb.destroy();
+            }, null, this);
         }, null, this);
     }
 }
