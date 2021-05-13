@@ -25,6 +25,9 @@ class Play extends Phaser.Scene {
         this.camFollowX = this.cameras.main.scrollX;
         this.camFollowY = this.cameras.main.scrollY;
         this.camFollowRate = .0045;
+
+        // Score setup
+        this.score = 0;
     }
 
     update(time, delta) {
@@ -51,5 +54,10 @@ class Play extends Phaser.Scene {
         this.camFollowX = Phaser.Math.Linear(this.camFollowX, (this.cat.x)- game.config.width/2, this.camFollowRate * delta);
         this.camFollowY = Phaser.Math.Linear(this.camFollowY, (this.cat.y)- game.config.height/2, this.camFollowRate * delta);
         this.cameras.main.setScroll(this.camFollowX, this.camFollowY);
+    }
+
+    addToScore() {
+        this.score += 5;
+        console.log("current score: " + this.score);
     }
 }

@@ -27,8 +27,6 @@ class Spawner {
         this.platform = this.platformGroup.create(300, 540, "platform");
         this.platform.scaleX = 2;
         this.platform.setImmovable(true);
-
-        this.turboChargeCat(scene,cat);
     }
 
     objectCollider(scene, cat, obj) {
@@ -36,7 +34,8 @@ class Spawner {
         scene.physics.add.overlap(cat, obj, function(cat, object) {
             console.log("object hit!!");
             cat.turboChargeCat(scene);
+            scene.addToScore();
             object.destroy();
-        });
+        }, null, this);
     }
 }
