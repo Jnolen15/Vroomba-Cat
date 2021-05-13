@@ -20,6 +20,7 @@ class Cat extends Phaser.Physics.Arcade.Sprite {
         this.setGravityY(1000);
         this.setDepth(100);
         this.setScale(0.5);
+        this.turboMode = false;
 
         // Setup the jump key individually because JustDown does not work the way cursors are set up
         this.keyUP = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
@@ -39,7 +40,7 @@ class Cat extends Phaser.Physics.Arcade.Sprite {
                 this.body.velocity.x = 0;
             }
         } else {
-            console.log(this.body.velocity.x);
+            // console.log(this.body.velocity.x);
             // Airbraking. loose horizontal velocity while in air
             if(this.flipX && this.body.velocity.x < 0) this.body.velocity.x += this.airBrake;   //Left
             else if (this.body.velocity.x > 0) this.body.velocity.x -= this.airBrake;           //Right
@@ -66,5 +67,13 @@ class Cat extends Phaser.Physics.Arcade.Sprite {
             }
         }
 
+    }
+
+    turboChargeCat(scene) {
+        this.moveSpeed = 1000;
+        // Game ending clock system
+        this.clock = scene.time.delayedCall(1000, () => {
+            this.moveSpeed = 500;
+        }, null, this);
     }
 }
