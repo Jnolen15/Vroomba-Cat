@@ -1,8 +1,8 @@
 class Spawner {
     constructor(scene, cat){
         scene.add.existing(this);
-        this.obj1 = new Object(scene, game.config.width*0.25, game.config.height/2, 'obj1').setOrigin(0.5);
-        this.obj2 = new Object(scene, game.config.width*0.75, game.config.height/2, 'obj2').setOrigin(0.5);
+        this.obj1 = new Object(scene, game.config.width*0.25, game.config.height/2, 'prop').setOrigin(0.5); this.obj1.setScale(0.5);
+        this.obj2 = new Object(scene, game.config.width*0.75, game.config.height/2, 'prop').setOrigin(0.5); this.obj2.setScale(0.5);
         
         // Add platform group (Should find a better way to make the game map for the future)
         this.platformGroup = scene.physics.add.group();
