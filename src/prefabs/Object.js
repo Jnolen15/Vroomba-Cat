@@ -12,12 +12,4 @@ class Object extends Phaser.Physics.Arcade.Sprite {
         this.setScale(2);
     }
 
-    update() {
-        
-    }
-
-    destroySelf() {
-        this.destroy();
-    }
-
 }
