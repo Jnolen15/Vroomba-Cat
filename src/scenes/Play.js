@@ -6,7 +6,14 @@ class Play extends Phaser.Scene {
     create() {
         // Create Cat (Player)
         this.cat = new Cat(this, game.config.width/2, game.config.height/2, 'cat').setOrigin(0,0);
+        this.obj = new Object(this, game.config.width*0.25, game.config.height/2, 'obj').setOrigin(0.5);
         this.cat.setScale(0.5);
+        
+        this.physics.add.overlap(this.cat, this.obj, function(cat, obj) {
+            console.log("object hit!!");
+            obj.destroy();
+        });
+        
 
         // Set up cursor keys
         cursors = this.input.keyboard.createCursorKeys();
@@ -24,7 +31,7 @@ class Play extends Phaser.Scene {
 
         // Add collider between platformGroup and Cat
         this.physics.add.collider(this.cat, this.platformGroup);
-
+        
         // Add platforms
         this.platform = this.platformGroup.create(game.config.width/2, game.config.height, "platform");
         this.platform.scaleX = 8;
@@ -51,6 +58,7 @@ class Play extends Phaser.Scene {
     }
 
     update(time, delta) {
+        // console.log();
         //Update timer text
         var remaining_time = (this.game.settings.gameTimer/1000) - Phaser.Math.RoundTo(this.clock.elapsed/1000,2, 1);
         this.timeElapsed.setText('Time: ' + remaining_time);

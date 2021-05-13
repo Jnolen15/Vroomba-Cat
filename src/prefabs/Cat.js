@@ -18,6 +18,7 @@ class Cat extends Phaser.Physics.Arcade.Sprite {
         this.airSpeed = 10;         // How much in air controll the player has
         this.airSpeedMax = 600;     // Upper bound for in air speed
         this.setGravityY(1000);
+        this.setDepth(100);
 
         // Setup the jump key individually because JustDown does not work the way cursors are set up
         this.keyUP = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
