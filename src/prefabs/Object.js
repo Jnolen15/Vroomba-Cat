@@ -9,7 +9,6 @@ class Object extends Phaser.Physics.Arcade.Sprite {
         // scene.physics.add.collider();
         this.setCollideWorldBounds(true); // don't go out of the map
         this.setGravityY(1000);
-        this.setScale(2);
     }
 
 }

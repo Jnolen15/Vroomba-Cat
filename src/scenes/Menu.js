@@ -6,6 +6,7 @@ class Menu extends Phaser.Scene {
     preload(){
         this.load.image('cat', './assets/placeholder_CAT.PNG');
         this.load.image('platform', './assets/placeholder_Platform.PNG');
+        this.load.image('prop', './assets/prop_cup.PNG');
     }
 
     create() {
