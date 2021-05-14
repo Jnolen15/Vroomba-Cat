@@ -37,7 +37,7 @@ class Spawner {
         scene.physics.add.collider(obj, this.platformGroup);
         scene.physics.add.overlap(cat, obj, function(cat, object) {
             console.log("object hit!!");
-            scene.sound.play('a3', { volume: 1 });
+            scene.sound.play('a1', { volume: 2 });
             this.spawnDebris(scene, cat, object);
             scene.addToScore();
             object.destroy();
@@ -55,7 +55,7 @@ class Spawner {
             this.debris.active = true;
             scene.physics.add.overlap(cat, this.debris, function(cat, deb) {
                 console.log("debris hit!!");
-                scene.sound.play('a4', { volume: 1 });
+                scene.sound.play('a2', { volume: 1 });
                 cat.turboChargeCat(scene);
                 deb.destroy();
             }, null, this);
