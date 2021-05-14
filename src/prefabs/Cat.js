@@ -19,7 +19,7 @@ class Cat extends Phaser.Physics.Arcade.Sprite {
         this.airSpeed = 20;         // How much in air controll the player has
         this.airSpeedMax = 400;     // Upper bound for in air speed
         this.setGravityY(1000);
-        this.setDepth(100);
+        this.setDepth(1);
         this.setScale(0.5);
         this.setBodySize(125, 110);
         //this.setCircle(60, 10);

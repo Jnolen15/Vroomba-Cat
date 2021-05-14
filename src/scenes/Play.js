@@ -10,13 +10,6 @@ class Play extends Phaser.Scene {
 
         // Set up cursor keys
         cursors = this.input.keyboard.createCursorKeys();
-
-        // | Game ending clock system
-        this.clock = this.time.delayedCall(game.settings.gameTimer, () => {
-            this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', textConfig).setOrigin(0.5);
-            this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press ↓ for Menu', textConfig).setOrigin(0.5);
-            gameOver = true;
-        }, null, this);
         
         // Camera Follower Setup
         this.cameras.main.setBounds(0, 0, game.config.width, game.config.height);
@@ -25,6 +18,20 @@ class Play extends Phaser.Scene {
         this.camFollowY = this.cameras.main.scrollY;
         this.camFollowRate = .0045;
 
+        // Game ending clock system
+        let menuText1 = this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', textConfig).setOrigin(0.5);
+        let menuText2 = this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press ↓ for Menu', textConfig).setOrigin(0.5);
+        this.positionUIForCam(menuText1, menuText1.x, menuText1.y);
+        this.positionUIForCam(menuText2, menuText2.x, menuText2.y);
+        menuText1.alpha = 0; 
+        menuText2.alpha = 0;
+        
+        this.clock = this.time.delayedCall(game.settings.gameTimer, () => {
+            menuText1.alpha = 1;
+            menuText2.alpha = 1;
+            gameOver = true;
+        }, null, this);
+        
         // | Displaying clock timer
         this.timerText = this.add.text(0, 0, 'Time: ', textConfig).setOrigin(.5);
         this.positionUIForCam(this.timerText, game.config.width * .1, game.config.height * .05);
@@ -74,7 +81,7 @@ class Play extends Phaser.Scene {
 
     updateUI() {
         // Update timer text
-        var remaining_time = (this.game.settings.gameTimer/1000) - Phaser.Math.RoundTo(this.clock.elapsed/1000,2, 1);
+        var remaining_time = Phaser.Math.RoundTo((this.clock.delay - this.clock.elapsed)/1000,2, 1);
         this.timerText.setText('Time: ' + remaining_time);
 
         // Update score text
@@ -87,6 +94,7 @@ class Play extends Phaser.Scene {
         object.y = (this.camFollowY + game.config.height/2) 
         - ((game.config.height/2) * 1/this.cameras.main.zoom) + (y * 1/this.cameras.main.zoom);
         object.setScale(1/this.cameras.main.zoom);
+        object.setDepth(2);
         object.setScrollFactor(0);
     }
 }
