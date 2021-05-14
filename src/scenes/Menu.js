@@ -3,10 +3,16 @@ class Menu extends Phaser.Scene {
         super("menuScene");
     }
 
-    preload(){
+    preload(){ // WE SHOULD MAKE A LOAD SCENE BEFORE THE MENU SCENE
+        // Add images
         this.load.image('cat', './assets/placeholder_CAT.PNG');
         this.load.image('platform', './assets/placeholder_Platform.PNG');
         this.load.image('prop', './assets/prop_cup.PNG');
+        this.load.image('comboMeter', './assets/placeholder_comboMeter.PNG')
+        // Add audio
+        this.load.audio('a1', './assets/audio_1.mp3');
+        this.load.audio('a2', './assets/audio_2.mp3');
+        this.load.audio('a3', './assets/audio_3.mp3');
     }
 
     create() {
