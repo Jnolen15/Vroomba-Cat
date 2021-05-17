@@ -49,16 +49,17 @@ class Spawner {
     }
 
     spawnDebris(object) {
-        this.debris = new Object(this.scene, object.x, object.y, 'temp').setOrigin(0.5);
-        this.scene.physics.add.collider(this.debris, this.platformGroup);
-        this.debris.alpha = 0;
-        this.debris.active = false;
-        this.debris.setBodySize(75,10);
+        let debris = new Object(this.scene, object.x, object.y, 'temp').setOrigin(0.5);
+        this.scene.physics.add.collider(debris, this.platformGroup);
+        debris.alpha = 0;
+        debris.active = false;
+        debris.setBodySize(75,10);
+        console.log(this.debris);
         this.clock = this.scene.time.delayedCall(1000, () => {
-            this.debris.alpha = 1;
-            this.debris.active = true;
-            this.scene.physics.add.overlap(this.cat, this.debris, function(cat, deb) {
-                console.log("debris hit!!");
+            console.log(debris);
+            debris.alpha = 1;
+            debris.active = true;
+            this.scene.physics.add.overlap(this.cat, debris, function(cat, deb) {
                 this.scene.sound.play('a2', { volume: 1 });
                 cat.turboChargeCat(this.scene);
                 deb.destroy();
