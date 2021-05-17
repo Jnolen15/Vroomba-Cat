@@ -5,7 +5,7 @@ class Menu extends Phaser.Scene {
 
     preload(){ // WE SHOULD MAKE A LOAD SCENE BEFORE THE MENU SCENE
         // Add images
-        this.load.image('cat', './assets/placeholder_CAT.png');
+        this.load.image('cat', './assets/placeholder_cat.png');
         this.load.image('platform', './assets/placeholder_Platform.png');
         this.load.image('prop', './assets/prop_cup.png');
         this.load.image('comboMeter', './assets/placeholder_comboMeter.png')
