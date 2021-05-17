@@ -9,15 +9,18 @@ class Cat extends Phaser.Physics.Arcade.Sprite {
         this.setCollideWorldBounds(true); // don't go out of the map
 
         // Cat properties
-        this.moveSpeed = 500;       // On ground move speed
-        this.numJumps = 2;          // Number of jumps the player currently has
-        this.totalJumps = 2;        // Total number of jumps the player has
-        this.jumpSpeed = 500;       // Jump speed / height
-        this.doubleSpeed = 400;     // Jump speed / height of second jump
-        this.airBrake = 10;         // Air Braking
-        this.groundBrake = 25;         // Ground Braking
-        this.airSpeed = 20;         // How much in air controll the player has
-        this.airSpeedMax = 400;     // Upper bound for in air speed
+        this.moveSpeed = 20;            // On ground move speed
+        this.moveSpeedMax = 500;        // On ground Max move speed
+        this.turboMoveSpeed = 30;       // On ground TURBO move speed
+        this.turboMoveSpeedMax = 700;   // On ground TURBO Max move speed
+        this.numJumps = 2;              // Number of jumps the player currently has
+        this.totalJumps = 2;            // Total number of jumps the player has
+        this.jumpSpeed = 500;           // Jump speed / height
+        this.doubleSpeed = 400;         // Jump speed / height of second jump
+        this.airBrake = 10;             // Air Braking
+        this.groundBrake = 25;          // Ground Braking
+        this.airSpeed = 20;             // How much in air controll the player has
+        this.airSpeedMax = 400;         // Upper bound for in air speed
         this.setGravityY(1000);
         this.setDepth(1);
         this.setScale(0.5);
@@ -29,15 +32,14 @@ class Cat extends Phaser.Physics.Arcade.Sprite {
     }
 
     update(){
-        //console.log("Velocity: " + this.body.velocity.x);
         // left/right movement on ground
         if(this.body.touching.down){
             this.numJumps = this.totalJumps; // Replenish jumps when on the ground
             if(cursors.left.isDown) {
-                this.body.velocity.x = -this.moveSpeed;
+                if(this.body.velocity.x > -this.moveSpeedMax) this.body.velocity.x -= this.moveSpeed;
                 this.flipX = true;
             } else if(cursors.right.isDown) {
-                this.body.velocity.x = this.moveSpeed;
+                if(this.body.velocity.x < this.moveSpeedMax) this.body.velocity.x += this.moveSpeed;
                 this.flipX = false;
             } else {
                 if(this.body.velocity.x > 0) this.body.velocity.x -=this.groundBrake;
@@ -46,7 +48,6 @@ class Cat extends Phaser.Physics.Arcade.Sprite {
                 if(this.body.velocity.x > -20 && this.body.velocity.x < 20) this.body.velocity.x = 0;
             }
         } else {
-            // console.log(this.body.velocity.x);
             // If player went off an edge without jumping first remove a jump.
             if(this.numJumps == this.totalJumps) this.numJumps -= 1;
             // In air movement controll
@@ -76,10 +77,14 @@ class Cat extends Phaser.Physics.Arcade.Sprite {
     }
 
     turboChargeCat(scene) {
-        this.moveSpeed = 1000;
+        this.moveSpeed = this.turboMoveSpeed;
+        this.moveSpeedMax = this.turboMoveSpeedMax;
+        console.log("TURBO!!");
         // Game ending clock system
         this.clock = scene.time.delayedCall(1000, () => {
-            this.moveSpeed = 500;
+            this.moveSpeed = 20;
+            this.moveSpeedMax = 500;
+            console.log("End of turbo!!");
         }, null, this);
     }
 }
