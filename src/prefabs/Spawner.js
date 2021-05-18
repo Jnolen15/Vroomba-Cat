@@ -43,7 +43,7 @@ class Spawner {
             console.log("object hit!!");
             this.scene.sound.play('a1', { volume: 2 });
             this.spawnDebris(object);
-            this.scene.addToScore();
+            this.scene.controller.addToScore();
             object.destroy();
         }, null, this);
     }
