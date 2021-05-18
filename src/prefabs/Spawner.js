@@ -11,16 +11,16 @@ class Spawner {
         this.scene.physics.add.collider(this.cat, this.platformGroup);
         
         // spawn and place objects
-        this.createProp('prop', game.config.width*0.25, game.config.height*0.7, 0.5);
-        this.createProp('prop', game.config.width*0.75, game.config.height*0.5, 0.5);
-        this.createProp('prop', game.config.width*0.20, game.config.height*0.9, 0.5);
-        this.createProp('prop', game.config.width*0.90, game.config.height*0.9, 0.5);
+        // this.createProp('prop', game.config.width*0.25, game.config.height*0.7, 0.5);
+        // this.createProp('prop', game.config.width*0.75, game.config.height*0.5, 0.5);
+        // this.createProp('prop', game.config.width*0.20, game.config.height*0.9, 0.5);
+        // this.createProp('prop', game.config.width*0.90, game.config.height*0.9, 0.5);
 
-        // Add platforms
-        this.createPlatform('platform', game.config.width/2, game.config.height, 8, 1);
-        this.createPlatform('platform', 700, 400, 4, 1);
-        this.createPlatform('platform', 100, 300, 3, 1);
-        this.createPlatform('platform', 300, 540, 2, 1);
+        // // Add platforms
+        // this.createPlatform('platform', game.config.width/2, game.config.height, 8, 1);
+        // this.createPlatform('platform', 700, 400, 4, 1);
+        // this.createPlatform('platform', 100, 300, 3, 1);
+        // this.createPlatform('platform', 300, 540, 2, 1);
     }
 
     createProp(spriteName, xPos, yPos, scale) {
