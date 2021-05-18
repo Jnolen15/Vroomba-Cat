@@ -31,17 +31,17 @@ class Menu extends Phaser.Scene {
         tutorialButton.setInteractive();
 
         // Interaction controls for both buttons
-        startButton.on("pointerover", () => { console.log("start hovering"); })
-        startButton.on("pointerout", () => { console.log("start not hovering"); })
+        startButton.on("pointerover", () => { startButton.setBackgroundColor("green");})
+        startButton.on("pointerout", () => { startButton.setBackgroundColor("yellow");})
         startButton.on("pointerup", () => {
             this.scene.start('playScene');  
             game.settings = { 
                 gameTimer: 60000 
             }
         })
-        tutorialButton.on("pointerover", () => { console.log("tutorial hovering"); })
-        tutorialButton.on("pointerout", () => { console.log("tutorial not hovering"); })
-        tutorialButton.on("pointerup", () => { console.log("tutorial click") })
+        tutorialButton.on("pointerover", () => { tutorialButton.setBackgroundColor("green"); })
+        tutorialButton.on("pointerout", () => { tutorialButton.setBackgroundColor("yellow");})
+        tutorialButton.on("pointerup", () => { this.scene.start('tutorialScene');  })
     }
 
     update() {
