@@ -25,6 +25,7 @@ class Spawner {
             this.spawnDebris(prop);
             this.scene.controller.addToScore(5);
             prop.destroy();
+            this.scene.cameras.main.shake(20, 0.01);
         }, null, this);
     }
 
@@ -43,10 +44,12 @@ class Spawner {
                     this.scene.sound.play('a1', { volume: 2 });
                     this.spawnDebris(prop);
                     prop.destroy();
+                    this.scene.cameras.main.shake(109, 0.03);
                 } else {
                     hitCount++;
                     this.scene.controller.addToScore(2);
                     console.log("swiped big prop " + hitCount + " times");
+                    this.scene.cameras.main.shake(20, 0.01);
                 }
             } 
         }, null, this);
