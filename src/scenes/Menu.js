@@ -8,7 +8,8 @@ class Menu extends Phaser.Scene {
         this.load.image('cat', './assets/placeholder_cat.png');
         this.load.image('platform', './assets/placeholder_Platform.png');
         this.load.image('prop', './assets/prop_cup.png');
-        this.load.image('comboMeter', './assets/placeholder_comboMeter.png')
+        this.load.image('comboMeter', './assets/placeholder_comboMeter.png');
+        this.load.image('debris', './assets/prop_dust.png');
         // Add audio
         this.load.audio('a1', './assets/audio_1.mp3');
         this.load.audio('a2', './assets/audio_2.mp3');

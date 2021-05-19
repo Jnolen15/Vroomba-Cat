@@ -37,11 +37,11 @@ class Spawner {
     }
 
     spawnDebris(object) {
-        let debris = new Object(this.scene, object.x, object.y, 'temp').setOrigin(0.5);
+        let debris = new Object(this.scene, object.x, object.y, 'debris');
         this.scene.physics.add.collider(debris, this.platformGroup);
         debris.alpha = 0;
         debris.active = false;
-        debris.setBodySize(75,10);
+        // debris.setBodySize(75,10);
         console.log(this.debris);
         this.clock = this.scene.time.delayedCall(1000, () => {
             console.log(debris);
