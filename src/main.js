@@ -13,7 +13,7 @@ let config = {
             gravity: {y: 0},
         }
     },
-    scene: [Menu, Play, Tutorial],
+    scene: [Preloading, Loading, Menu, Play, Tutorial],
 }
 
 // basic text configuration for rest of coding
