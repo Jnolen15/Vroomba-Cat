@@ -38,6 +38,6 @@ class Play extends Phaser.Scene {
     }
 
     update(time, delta) {
-        //this.controller.update(time, delta);
+        this.controller.update(time, delta);
     }
 }
