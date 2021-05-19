@@ -1,9 +1,10 @@
 let config = {
     type: Phaser.CANVAS,
-    width: 880,
-    height: 640,
+    width: 1024,
+    height: 768,
     scale: {
-        autoCenter: Phaser.Scale.CENTER_BOTH
+        autoCenter: Phaser.Scale.CENTER_BOTH,
+        mode: Phaser.Scale.FIT
     },
     physics: {
         default: 'arcade',
