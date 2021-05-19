@@ -3,7 +3,26 @@ class Play extends Phaser.Scene {
         super("playScene");
     }
 
+    preload(){        
+        // Load Json file
+        this.load.tilemapTiledJSON('level', './assets/tilemap/tilemap_Test.json');
+        // Load Spritesheet
+        this.load.image('fridge', './assets/static_fridge.png');
+    }
+    
     create() {
+        /*// Add controller
+        this.controller = new Controller(this);
+
+        //Create the tilemap
+        const map = this.add.tilemap('level');
+
+        // add a tileset to the map
+        const tileset = map.addTilesetImage('static_fridge', 'fridge');
+
+        // create tilemap layers
+        const FurnitureLayer = map.createLayer('FridgeLayer', tileset);*/
+        
         this.controller = new Controller(this);
         
         // spawn and place objects
@@ -19,6 +38,6 @@ class Play extends Phaser.Scene {
     }
 
     update(time, delta) {
-        this.controller.update(time, delta);
+        //this.controller.update(time, delta);
     }
 }
