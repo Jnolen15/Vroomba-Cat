@@ -23,7 +23,7 @@ class Spawner {
             console.log("prop hit!!");
             this.scene.sound.play('a1', { volume: 2 });
             this.spawnDebris(prop);
-            this.scene.controller.addToScore();
+            this.scene.controller.addToScore(5);
             prop.destroy();
         }, null, this);
     }
@@ -32,12 +32,22 @@ class Spawner {
         let prop = new Object(this.scene, xPos, yPos, spriteName);
         prop.setOrigin(0.5); 
         prop.setScale(scale);
+        let hitCount = 0;
         // colliding with platforms
         this.scene.physics.add.collider(prop, this.platformGroup);
         // overlapping
         this.scene.physics.add.overlap(this.cat.swipeBox, prop, function(cat, prop) {
             if (Phaser.Input.Keyboard.JustDown(this.keyF)) {
-                console.log("swiped big prop");
+                if(hitCount >= 14){
+                    hitCount = 0;
+                    this.scene.sound.play('a1', { volume: 2 });
+                    this.spawnDebris(prop);
+                    prop.destroy();
+                } else {
+                    hitCount++;
+                    this.scene.controller.addToScore(2);
+                    console.log("swiped big prop " + hitCount + " times");
+                }
             } 
         }, null, this);
     }
