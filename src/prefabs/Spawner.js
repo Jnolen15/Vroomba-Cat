@@ -9,13 +9,37 @@ class Spawner {
         this.platformGroup = this.scene.physics.add.group();
         // Add collider between platformGroup and Cat
         this.scene.physics.add.collider(this.cat, this.platformGroup);
+        this.keyF = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F);
     }
 
     createProp(spriteName, xPos, yPos, scale) {
         let prop = new Object(this.scene, xPos, yPos, spriteName);
         prop.setOrigin(0.5); 
         prop.setScale(scale);
-        this.objectCollider(prop);
+        // colliding with platforms
+        this.scene.physics.add.collider(prop, this.platformGroup);
+        // overlapping
+        this.scene.physics.add.overlap(this.cat, prop, function(cat, prop) {
+            console.log("prop hit!!");
+            this.scene.sound.play('a1', { volume: 2 });
+            this.spawnDebris(prop);
+            this.scene.controller.addToScore();
+            prop.destroy();
+        }, null, this);
+    }
+
+    createBigProp(spriteName, xPos, yPos, scale) {
+        let prop = new Object(this.scene, xPos, yPos, spriteName);
+        prop.setOrigin(0.5); 
+        prop.setScale(scale);
+        // colliding with platforms
+        this.scene.physics.add.collider(prop, this.platformGroup);
+        // overlapping
+        this.scene.physics.add.overlap(this.cat.swipeBox, prop, function(cat, prop) {
+            if (Phaser.Input.Keyboard.JustDown(this.keyF)) {
+                console.log("swiped big prop");
+            } 
+        }, null, this);
     }
 
     createPlatform(spriteName, xPos, yPos, scaleX, scaleY) {
@@ -24,15 +48,13 @@ class Spawner {
         platform.scaleY = scaleY;
         platform.setImmovable(true);
     }
-    
-    objectCollider(obj) {
-        this.scene.physics.add.collider(obj, this.platformGroup);
-        this.scene.physics.add.overlap(this.cat, obj, function(cat, object) {
-            console.log("object hit!!");
-            this.scene.sound.play('a1', { volume: 2 });
-            this.spawnDebris(object);
-            this.scene.controller.addToScore();
-            object.destroy();
+
+    bigPropCollider(obj) {
+        // TEST -------------- add overlap for swipe hitbox
+        this.scene.physics.add.overlap(this.cat.swipeBox, obj, function(cat, object) {
+            if (Phaser.Input.Keyboard.JustDown(this.keyF)) {
+                console.log("overlapping with prop");
+            }
         }, null, this);
     }
 

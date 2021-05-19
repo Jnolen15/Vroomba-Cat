@@ -23,9 +23,13 @@ class Cat extends Phaser.Physics.Arcade.Sprite {
         this.airSpeedMax = 400;         // Upper bound for in air speed
         this.setGravityY(1000);
         this.setDepth(1);
-        this.setScale(0.5);
-        this.setBodySize(125, 110);
+        this.setScale(.5);
         //this.setCircle(60, 10);
+
+        // Add extra hitboxes
+        this.swipeBox = new Phaser.Physics.Arcade.Sprite(scene, x, y);
+        scene.physics.add.existing(this.swipeBox);
+        this.swipeBox.setBodySize(this.width*this.scale / 2, this.height*this.scale);
 
         // Setup the jump key individually because JustDown does not work the way cursors are set up
         this.keyUP = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
@@ -74,6 +78,9 @@ class Cat extends Phaser.Physics.Arcade.Sprite {
             }
         }
 
+        // --- manage swipe hitbox position
+        this.swipeBox.body.x = this.flipX ? this.body.x - (this.width * this.scale) / 2 : this.body.x + (this.width * this.scale);
+        this.swipeBox.body.y = this.body.y;
     }
 
     turboChargeCat(scene) {

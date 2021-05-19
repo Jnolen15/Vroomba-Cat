@@ -31,6 +31,8 @@ class Play extends Phaser.Scene {
         this.controller.spawner.createProp('prop', game.config.width*0.20, game.config.height*0.9, 0.5);
         this.controller.spawner.createProp('prop', game.config.width*0.90, game.config.height*0.9, 0.5);
 
+        this.controller.spawner.createBigProp('prop', game.config.width*0.1, game.config.height*0.9, 1);
+
         this.controller.spawner.createPlatform('platform', game.config.width/2, game.config.height, 8, 1);
         this.controller.spawner.createPlatform('platform', 700, 400, 4, 1);
         this.controller.spawner.createPlatform('platform', 100, 300, 3, 1);
