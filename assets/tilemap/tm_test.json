@@ -4,17 +4,17 @@
      "export":
         {
          "format":"json",
-         "target":"tilemap_Test.json"
+         "target":"tm_test.json"
         }
     },
  "height":5,
  "infinite":false,
  "layers":[
         {
-         "data":[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0],
+         "data":[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 4, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 5, 0, 3, 0, 1, 0],
          "height":5,
          "id":1,
-         "name":"FridgeLayer",
+         "name":"furnitureLayer",
          "opacity":1,
          "type":"tilelayer",
          "visible":true,
@@ -27,22 +27,22 @@
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.6.0",
- "tileheight":64,
+ "tileheight":375,
  "tilesets":[
         {
-         "columns":1,
+         "columns":3,
          "firstgid":1,
-         "image":"..\/static_fridge.png",
-         "imageheight":300,
-         "imagewidth":146,
+         "image":"ts_furniture.png",
+         "imageheight":1500,
+         "imagewidth":1740,
          "margin":0,
-         "name":"static_fridge",
+         "name":"ts_furniture",
          "spacing":0,
-         "tilecount":1,
-         "tileheight":300,
-         "tilewidth":146
+         "tilecount":6,
+         "tileheight":750,
+         "tilewidth":580
         }],
- "tilewidth":64,
+ "tilewidth":290,
  "type":"map",
  "version":"1.6",
  "width":10

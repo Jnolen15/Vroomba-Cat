@@ -4,7 +4,7 @@ let config = {
     height: 768,
     scale: {
         autoCenter: Phaser.Scale.CENTER_BOTH,
-        mode: Phaser.Scale.FIT
+        //mode: Phaser.Scale.FIT
     },
     physics: {
         default: 'arcade',
