@@ -4,7 +4,7 @@ let config = {
     height: 768,
     scale: {
         autoCenter: Phaser.Scale.CENTER_BOTH,
-        mode: Phaser.Scale.FIT
+        //mode: Phaser.Scale.FIT
     },
     physics: {
         default: 'arcade',
@@ -13,7 +13,7 @@ let config = {
             gravity: {y: 0},
         }
     },
-    scene: [Menu, Play, Tutorial],
+    scene: [Preloading, Loading, Menu, Play, Tutorial],
 }
 
 // basic text configuration for rest of coding
@@ -28,6 +28,24 @@ let textConfig = {
     bottom: 5,
     },
     fixedWidth: 0
+}
+
+let tinyScoreConfig = {
+    fontFamily: 'Verdana',
+    fontSize: '20px',
+    color: '#ffb300',
+    align: 'center',
+    stroke: '#ffb300',
+    strokeThickness: 1.3
+}
+
+let tinyMultConfig = {
+    fontFamily: 'Verdana',
+    fontSize: '14px',
+    color: '#ff0033',
+    align: 'center',
+    stroke: '#ff0033',
+    strokeThickness: 1.3
 }
 
 //define game

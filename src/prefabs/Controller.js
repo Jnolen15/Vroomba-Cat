@@ -39,7 +39,6 @@ class Controller {
         this.isScoring = false;
         this.currCombo = 0;
         this.scoreMulti = 1;
-        this.defaultPoints = 5;
         this.maxScoreTime = 3000;
         this.currScoreTime = 0;
         this.scoreText = scene.add.text(0, 0, 'Score: ', textConfig).setOrigin(1,0);
@@ -49,7 +48,7 @@ class Controller {
         this.comboText = scene.add.text(0, 0, 'Streak: 0 - Multiplier: x1', textConfig).setOrigin(1,0);
         this.positionUIForCam(this.comboText, game.config.width * .95, game.config.height * .1);
         this.comboMeter = scene.add.sprite(0, 0, 'comboMeter').setOrigin(1,0);
-        this.positionUIForCam(this.comboMeter, game.config.width * .95, game.config.height * .2);
+        this.positionUIForCam(this.comboMeter, game.config.width * .95, game.config.height * .17);
     }
 
 
@@ -81,9 +80,9 @@ class Controller {
         this.scene.cameras.main.update(time, delta);
     }
 
-    addToScore() {
+    addToScore(points) {
         // add to score
-        this.score += this.defaultPoints * this.scoreMulti;
+        this.score += points * this.scoreMulti;
         this.currCombo++;
         
         // change multiplier to what's appropriate 
