@@ -10,6 +10,10 @@ class Spawner {
         // Add collider between platformGroup and Cat
         this.scene.physics.add.collider(this.cat, this.platformGroup);
         this.keyF = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F);
+        // Score rules
+        this.propPoints = 5;
+        this.bigPropPoints = 2;
+        this.airPropPoints = 5;
     }
 
     createProp(spriteName, xPos, yPos, scale) {
@@ -23,7 +27,8 @@ class Spawner {
             console.log("prop hit!!");
             this.scene.sound.play('a1', { volume: 2 });
             this.spawnDebris(prop);
-            this.scene.controller.addToScore(5);
+            this.scene.controller.addToScore(this.propPoints);
+            this.makeScorePopUp(prop, this.propPoints);
             prop.destroy();
             this.scene.cameras.main.shake(20, 0.01);
         }, null, this);
@@ -47,7 +52,8 @@ class Spawner {
                     this.scene.cameras.main.shake(109, 0.03);
                 } else {
                     hitCount++;
-                    this.scene.controller.addToScore(2);
+                    this.scene.controller.addToScore(this.bigPropPoints);
+                    this.makeScorePopUp(prop, this.bigPropPoints);
                     console.log("swiped big prop " + hitCount + " times");
                     this.scene.cameras.main.shake(20, 0.01);
                 }
@@ -65,7 +71,8 @@ class Spawner {
         this.scene.physics.add.overlap(this.cat.swipeBox, prop, function(cat, prop) {
             if (Phaser.Input.Keyboard.JustDown(this.keyF) && !this.cat.body.touching.down) {
                 this.cat.body.velocity.y = -this.cat.jumpSpeed;
-                this.scene.controller.addToScore(5);
+                this.scene.controller.addToScore(this.airPropPoints);
+                this.makeScorePopUp(prop, this.airPropPoints);
                 prop.destroy();
             } 
         }, null, this);
@@ -98,5 +105,20 @@ class Spawner {
                 deb.destroy();
             }, null, this);
         }, null, this);
-    } 
+    }
+
+    makeScorePopUp(object, points) {
+        let xPos = (object.x) + Phaser.Math.FloatBetween(-3, 3)
+        let yPos = (object.y) + Phaser.Math.FloatBetween(-6, 6);
+        let pointsText = this.scene.add.text(xPos, yPos, '+' + points, tinyScoreConfig);
+        let multiplierText = this.scene.add.text(xPos+pointsText.width*.9, yPos,' X' + this.scene.controller.scoreMulti, tinyMultConfig);
+        pointsText.setOrigin(.5,.5);
+        pointsText.setDepth(2);
+        multiplierText.setOrigin(.5,.5);
+        multiplierText.setDepth(2);
+        this.scene.time.delayedCall(800, () => {
+            pointsText.destroy();
+            multiplierText.destroy();
+        }, pointsText, this);
+    }
 }

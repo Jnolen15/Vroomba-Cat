@@ -30,6 +30,24 @@ let textConfig = {
     fixedWidth: 0
 }
 
+let tinyScoreConfig = {
+    fontFamily: 'Verdana',
+    fontSize: '20px',
+    color: '#ffb300',
+    align: 'center',
+    stroke: '#ffb300',
+    strokeThickness: 1.3
+}
+
+let tinyMultConfig = {
+    fontFamily: 'Verdana',
+    fontSize: '14px',
+    color: '#ff0033',
+    align: 'center',
+    stroke: '#ff0033',
+    strokeThickness: 1.3
+}
+
 //define game
 let game = new Phaser.Game(config);
 
