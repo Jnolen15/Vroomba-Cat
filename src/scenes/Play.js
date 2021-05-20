@@ -22,8 +22,12 @@ class Play extends Phaser.Scene {
         const tileset = map.addTilesetImage('ts_furniture', 'furniture');
 
         // create tilemap layers
-        const FurnitureLayer = map.createLayer('furnitureLayer', tileset);
+        const FurnitureLayer = map.createLayer('furnitureLayer', tileset, 0, 0);
         FurnitureLayer.setScale(.35);
+
+        // Collision
+        FurnitureLayer.setCollisionByProperty({collides: true});
+        this.physics.add.collider(this.controller.cat, FurnitureLayer);
         
         // spawn and place objects
         this.controller.spawner.createProp('prop', game.config.width*0.1, game.config.height*0.9, 0.5);
