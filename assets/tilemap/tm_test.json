@@ -11,7 +11,7 @@
  "infinite":false,
  "layers":[
         {
-         "data":[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 4, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 5, 0, 3, 0, 1, 0],
+         "data":[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 0, 0, 8, 0, 0, 11, 11, 11, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 4, 0, 1, 12, 5, 0, 9, 9, 0, 0, 0, 10, 7, 9, 11],
          "height":5,
          "id":1,
          "name":"furnitureLayer",
@@ -30,19 +30,19 @@
  "tileheight":375,
  "tilesets":[
         {
-         "columns":3,
+         "columns":6,
          "firstgid":1,
          "image":"ts_furniture.png",
-         "imageheight":1500,
-         "imagewidth":1740,
+         "imageheight":750,
+         "imagewidth":2250,
          "margin":0,
          "name":"ts_furniture",
          "spacing":0,
-         "tilecount":6,
-         "tileheight":750,
-         "tilewidth":580
+         "tilecount":12,
+         "tileheight":375,
+         "tilewidth":375
         }],
- "tilewidth":290,
+ "tilewidth":375,
  "type":"map",
  "version":"1.6",
  "width":10
