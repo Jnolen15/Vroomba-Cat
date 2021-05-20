@@ -10,7 +10,6 @@ class Menu extends Phaser.Scene {
 
         // Display menu text
         this.add.text(game.config.width/2, game.config.height/2, "Vroomba Cat", textConfig).setOrigin(0.5);
-        // this.add.text(game.config.width/2, game.config.height/1.75, "Press ↑ to go to Play Scene", textConfig).setOrigin(0.5);
         let startButton = this.add.text(game.config.width/2, game.config.height/1.75, "Start Game", textConfig).setOrigin(0.5);
         let tutorialButton = this.add.text(game.config.width/2, game.config.height/1.55, "Tutorial", textConfig).setOrigin(0.5);
         

@@ -4,7 +4,7 @@ class Controller {
         // Create Cat (Player)
         this.cat = new Cat(scene, game.config.width/2, game.config.height/2, 'cat').setOrigin(0,0);
         this.spawner = new Spawner(scene, this.cat);
-        this.spawner.createPlatform('platform', game.config.width/2, game.config.height, 8, 1);
+        this.spawner.createPlatform('platform', game.config.width/2, game.config.height, 100, 1);
 
         // Set up cursor keys
         cursors = scene.input.keyboard.createCursorKeys();
