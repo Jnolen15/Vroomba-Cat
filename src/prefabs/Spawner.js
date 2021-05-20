@@ -65,6 +65,7 @@ class Spawner {
         this.scene.physics.add.overlap(this.cat.swipeBox, prop, function(cat, prop) {
             if (Phaser.Input.Keyboard.JustDown(this.keyF) && !this.cat.body.touching.down) {
                 this.cat.body.velocity.y = -this.cat.jumpSpeed;
+                this.scene.controller.addToScore(5);
                 prop.destroy();
             } 
         }, null, this);
@@ -97,5 +98,5 @@ class Spawner {
                 deb.destroy();
             }, null, this);
         }, null, this);
-    }
+    } 
 }

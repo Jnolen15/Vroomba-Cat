@@ -29,7 +29,7 @@ class Cat extends Phaser.Physics.Arcade.Sprite {
         // Add extra hitboxes
         this.swipeBox = new Phaser.Physics.Arcade.Sprite(scene, x, y);
         scene.physics.add.existing(this.swipeBox);
-        this.swipeBox.setBodySize(this.width*this.scale / 2, this.height*this.scale);
+        this.swipeBox.setBodySize(this.width*this.scale, this.height*this.scale);
 
         // Setup the jump key individually because JustDown does not work the way cursors are set up
         this.keyUP = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
@@ -79,7 +79,7 @@ class Cat extends Phaser.Physics.Arcade.Sprite {
         }
 
         // --- manage swipe hitbox position
-        this.swipeBox.body.x = this.flipX ? this.body.x - (this.width * this.scale) / 2 : this.body.x + (this.width * this.scale);
+        this.swipeBox.body.x = this.flipX ? this.body.x - (this.width * this.scale) / 2 : this.body.x + (this.width * this.scale) / 2;
         this.swipeBox.body.y = this.body.y;
     }
 

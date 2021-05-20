@@ -26,16 +26,17 @@ class Play extends Phaser.Scene {
         FurnitureLayer.setScale(.35);
         
         // spawn and place objects
-        this.controller.spawner.createProp('prop', game.config.width*0.25, game.config.height*0.7, 0.5);
-        this.controller.spawner.createProp('prop', game.config.width*0.75, game.config.height*0.5, 0.5);
-        this.controller.spawner.createProp('prop', game.config.width*0.20, game.config.height*0.9, 0.5);
-        this.controller.spawner.createProp('prop', game.config.width*0.90, game.config.height*0.9, 0.5);
+        this.controller.spawner.createProp('prop', game.config.width*0.1, game.config.height*0.9, 0.5);
+        this.controller.spawner.createProp('prop', game.config.width*0.30, game.config.height*0.6, 0.5);
+        this.controller.spawner.createProp('prop', game.config.width*0.75, game.config.height*0.8, 0.5);
+        this.controller.spawner.createProp('prop', game.config.width*0.90, game.config.height*0.4, 0.5);
 
-        this.controller.spawner.createBigProp('prop', game.config.width*0.1, game.config.height*0.9, 1);
+        this.controller.spawner.createBigProp('prop', game.config.width*0.1, game.config.height*0.1, 1);
 
         this.controller.spawner.createAirProp('prop', game.config.width*0.5, game.config.height*0.8, 0.5);
 
-        this.controller.spawner.createPlatform('platform', game.config.width/2, game.config.height, 8, 1);
+        this.controller.spawner.createPlatform('platform', game.config.width*.5, game.config.height, 8, 1);
+        this.controller.spawner.createPlatform('platform', game.config.width*.06, game.config.height*.85, 1.5, 1);
         this.controller.spawner.createPlatform('platform', 700, 400, 4, 1);
         this.controller.spawner.createPlatform('platform', 100, 300, 3, 1);
         this.controller.spawner.createPlatform('platform', 300, 540, 2, 1);
