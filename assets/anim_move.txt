@@ -1,4 +1,4 @@
-animation_idle_4,0,0,383,336
+animation_idle_1,0,0,383,336
 animation_idle_3,0,337,383,336
 animation_idle_2,384,0,383,336
-animation_idle_1,384,337,383,336
+animation_idle_4,384,337,383,336
