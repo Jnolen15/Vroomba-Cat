@@ -48,7 +48,7 @@ class Controller {
         this.comboText = scene.add.text(0, 0, 'Streak: 0 - Multiplier: x1', textConfig).setOrigin(1,0);
         this.positionUIForCam(this.comboText, game.config.width * .95, game.config.height * .1);
         this.comboMeter = scene.add.sprite(0, 0, 'comboMeter').setOrigin(1,0);
-        this.positionUIForCam(this.comboMeter, game.config.width * .95, game.config.height * .2);
+        this.positionUIForCam(this.comboMeter, game.config.width * .95, game.config.height * .17);
     }
 
 

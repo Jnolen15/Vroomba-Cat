@@ -55,20 +55,28 @@ class Spawner {
         }, null, this);
     }
 
+    createAirProp(spriteName, xPos, yPos, scale) {
+        let prop = new Object(this.scene, xPos, yPos, spriteName);
+        prop.setOrigin(0.5); 
+        prop.setScale(scale);
+        // colliding with platforms
+        this.scene.physics.add.collider(prop, this.platformGroup);
+        // overlapping
+        this.scene.physics.add.overlap(this.cat.swipeBox, prop, function(cat, prop) {
+            if (Phaser.Input.Keyboard.JustDown(this.keyF) && !this.cat.body.touching.down) {
+                this.cat.body.velocity.y = -this.cat.jumpSpeed;
+                prop.destroy();
+            } 
+        }, null, this);
+        prop.setImmovable(true);
+        prop.body.setAllowGravity(false);
+    }
+
     createPlatform(spriteName, xPos, yPos, scaleX, scaleY) {
         let platform = this.platformGroup.create(xPos, yPos, spriteName);
         platform.scaleX = scaleX;
         platform.scaleY = scaleY;
         platform.setImmovable(true);
-    }
-
-    bigPropCollider(obj) {
-        // TEST -------------- add overlap for swipe hitbox
-        this.scene.physics.add.overlap(this.cat.swipeBox, obj, function(cat, object) {
-            if (Phaser.Input.Keyboard.JustDown(this.keyF)) {
-                console.log("overlapping with prop");
-            }
-        }, null, this);
     }
 
     spawnDebris(object) {
