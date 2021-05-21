@@ -29,6 +29,14 @@ class Play extends Phaser.Scene {
 
         // Collision
         CollisionLayer.setCollisionFromCollisionGroup();
+        // This part of code from https://www.html5gamedevs.com/topic/40484-jump-through-a-tile-from-underneath/
+        CollisionLayer.layer.data.forEach((row) => { // here we are iterating through each tile.
+			row.forEach((Tile) => {
+						Tile.collideDown = false;
+						Tile.collideLeft = false;
+						Tile.collideRight = false;
+			})
+		});
 
         // Add controller
         this.controller = new Controller(this, CollisionLayer);
