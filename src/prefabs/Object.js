@@ -3,7 +3,7 @@ class Object extends Phaser.Physics.Arcade.Sprite {
         super(scene, x, y, texture, frame);
         // Add self 
         scene.add.existing(this);
-        
+        this.destroyed = false;
         // Add physics
         scene.physics.add.existing(this);
         // scene.physics.add.collider();

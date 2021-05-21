@@ -24,14 +24,16 @@ class Spawner {
         this.scene.physics.add.collider(prop, this.platformGroup);
         // overlapping
         this.scene.physics.add.overlap(this.cat, prop, function(cat, prop) {
-            console.log("prop hit!!");
+            // console.log("prop hit!!");
             this.scene.sound.play('a1', { volume: 2 });
             this.spawnDebris(prop);
             this.scene.controller.addToScore(this.propPoints);
             this.makeScorePopUp(prop, this.propPoints);
             prop.destroy();
+            prop.destroyed = true;
             this.scene.cameras.main.shake(20, 0.01);
         }, null, this);
+        return prop;
     }
 
     createBigProp(spriteName, xPos, yPos, scale) {
@@ -85,6 +87,7 @@ class Spawner {
         platform.scaleX = scaleX;
         platform.scaleY = scaleY;
         platform.setImmovable(true);
+        return platform;
     }
 
     spawnDebris(object) {
@@ -94,7 +97,7 @@ class Spawner {
         debris.active = false;
         debris.setScale(.5);
         // debris.setBodySize(75,10);
-        console.log(this.debris);
+        // console.log(this.debris);
         this.clock = this.scene.time.delayedCall(1000, () => {
             console.log(debris);
             debris.alpha = 1;
