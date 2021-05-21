@@ -37,7 +37,7 @@ class Cat extends Phaser.Physics.Arcade.Sprite {
 
     update(){
         // left/right movement on ground
-        if(this.body.touching.down){
+        if(this.body.blocked.down){
             this.numJumps = this.totalJumps; // Replenish jumps when on the ground
             if(cursors.left.isDown) {
                 if(this.body.velocity.x > -this.moveSpeedMax) this.body.velocity.x -= this.moveSpeed;
