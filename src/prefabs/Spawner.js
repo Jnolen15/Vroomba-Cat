@@ -1,8 +1,9 @@
 class Spawner {
-    constructor(scene, cat){
+    constructor(scene, cat, tmcol){
         // store variables
         this.scene = scene;
         this.cat = cat;
+        this.tmcol = tmcol; // Tile map collider
         // add spawner to the scene
         this.scene.add.existing(this);
         // Add platform group (Should find a better way to make the game map for the future)
@@ -20,6 +21,8 @@ class Spawner {
         let prop = new Object(this.scene, xPos, yPos, spriteName);
         prop.setOrigin(0.5); 
         prop.setScale(scale);
+        // colliding with tilemap
+        this.scene.physics.add.collider(prop, this.tmcol);
         // colliding with platforms
         this.scene.physics.add.collider(prop, this.platformGroup);
         // overlapping
@@ -41,6 +44,8 @@ class Spawner {
         prop.setOrigin(0.5); 
         prop.setScale(scale);
         let hitCount = 0;
+        // colliding with tilemap
+        this.scene.physics.add.collider(prop, this.tmcol);
         // colliding with platforms
         this.scene.physics.add.collider(prop, this.platformGroup);
         // overlapping
@@ -93,6 +98,9 @@ class Spawner {
 
     spawnDebris(object) {
         let debris = new Object(this.scene, object.x, object.y, 'debris');
+        // colliding with tilemap
+        this.scene.physics.add.collider(debris, this.tmcol);
+        // colliding with platforms
         this.scene.physics.add.collider(debris, this.platformGroup);
         debris.alpha = 0;
         debris.active = false;
