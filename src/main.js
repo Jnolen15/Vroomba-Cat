@@ -27,6 +27,7 @@ let textConfig = {
     top: 5,
     bottom: 5,
     },
+    wordWrap: {width: 800, useAdvancedWrap: true},
     fixedWidth: 0
 }
 
