@@ -51,7 +51,7 @@ class Spawner {
                     this.scene.sound.play('a1', { volume: 2 });
                     this.spawnDebris(prop);
                     prop.destroy();
-                    this.scene.cameras.main.shake(109, 0.03);
+                    this.scene.cameras.main.shake(100, 0.03);
                 } else {
                     hitCount++;
                     this.scene.controller.addToScore(this.bigPropPoints);
@@ -76,6 +76,7 @@ class Spawner {
                 this.scene.controller.addToScore(this.airPropPoints);
                 this.makeScorePopUp(prop, this.airPropPoints);
                 prop.destroy();
+                this.scene.cameras.main.shake(20, 0.01);
             } 
         }, null, this);
         prop.setImmovable(true);

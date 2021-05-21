@@ -8,6 +8,7 @@ class Play extends Phaser.Scene {
         this.load.tilemapTiledJSON('level', './assets/tilemap/tm_test.json');
         // Load Spritesheet
         this.load.image('furniture', './assets/tilemap/ts_furniture.png');
+        this.load.image('collision', './assets/tilemap/ts_collision.png');
     }
     
     create() {
@@ -19,15 +20,23 @@ class Play extends Phaser.Scene {
         const map = this.add.tilemap('level');
 
         // add a tileset to the map
-        const tileset = map.addTilesetImage('ts_furniture', 'furniture');
+        const tsFurniture = map.addTilesetImage('ts_furniture', 'furniture');
+        const tsCollision = map.addTilesetImage('ts_collision', 'collision');
 
         // create tilemap layers
-        const FurnitureLayer = map.createLayer('furnitureLayer', tileset, 0, 0);
+        const FurnitureLayer = map.createLayer('furnitureLayer', tsFurniture, 0, 0);
         FurnitureLayer.setScale(.35);
 
+        const CollisionLayer = map.createLayer('collisionLayer', tsCollision, 0, 105);
+        CollisionLayer.setScale(.35);
+
         // Collision
-        FurnitureLayer.setCollisionByProperty({collides: true});
-        this.physics.add.collider(this.controller.cat, FurnitureLayer);
+        CollisionLayer.setCollisionFromCollisionGroup();
+        this.physics.add.collider(this.controller.cat, CollisionLayer);
+
+        this.physics.add.overlap(this.controller.cat, CollisionLayer, function(cat, layer) {
+            //this.cameras.main.shake(20, 0.01);
+        }, null, this);
         
         // spawn and place objects
         this.controller.spawner.createProp('prop', game.config.width*0.1, game.config.height*0.9, 0.5);
