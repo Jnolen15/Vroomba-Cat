@@ -54,10 +54,17 @@ class Loading extends Phaser.Scene {
                 end: 4
             })
         });
-        // idle
+        // idle stationary
         this.anims.create({
-            key: 'idle_animation',
+            key: 'idle_slowing_animation',
             frameRate: 10,
+            repeat: 0,
+            frames: [{key: 'anim_move_atlas', frame: 'animation_idle_2'}, {key: 'anim_move_atlas', frame: 'animation_idle_1'}]
+        });
+        this.anims.create({
+            key: 'idle_stationary_animation',
+            frameRate: 10,
+            repeat: -1,
             frames: this.anims.generateFrameNames('anim_move_atlas', {
                 prefix: 'animation_idle_',
                 suffix: "",
@@ -69,6 +76,7 @@ class Loading extends Phaser.Scene {
         this.anims.create({
             key: 'ground_startMove_animation',
             frameRate: 10,
+            repeat: 0,
             frames: this.anims.generateFrameNames('anim_move_atlas', {
                 prefix: 'animation_idle_',
                 suffix: "",
@@ -80,6 +88,7 @@ class Loading extends Phaser.Scene {
         this.anims.create({
             key: 'ground_moving_animation',
             frameRate: 10,
+            repeat: -1,
             frames: this.anims.generateFrameNames('anim_move_atlas', {
                 prefix: 'animation_idle_',
                 suffix: "",

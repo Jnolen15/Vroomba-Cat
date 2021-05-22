@@ -24,7 +24,11 @@ class Cat extends Phaser.Physics.Arcade.Sprite {
         this.setGravityY(1000);
         this.setDepth(1);
         this.setScale(.2);
-        this.play('move_animation');
+
+        // animation variables
+        this.movementStage = 'idle';    // | idle | moving |
+        this.play('idle_stationary_animation');
+
         //this.setCircle(60, 10);
 
         // Add extra hitboxes
@@ -37,20 +41,26 @@ class Cat extends Phaser.Physics.Arcade.Sprite {
     }
 
     update(){
-        // left/right movement on ground
         if(this.body.blocked.down){
+            // left/right movement on ground
             this.numJumps = this.totalJumps; // Replenish jumps when on the ground
             if(cursors.left.isDown) {
                 if(this.body.velocity.x > -this.moveSpeedMax) this.body.velocity.x -= this.moveSpeed;
                 this.flipX = true;
+                this.doMovementAnim();
             } else if(cursors.right.isDown) {
                 if(this.body.velocity.x < this.moveSpeedMax) this.body.velocity.x += this.moveSpeed;
                 this.flipX = false;
+                this.doMovementAnim();
             } else {
                 if(this.body.velocity.x > 0) this.body.velocity.x -=this.groundBrake;
                 else if(this.body.velocity.x < 0) this.body.velocity.x +=this.groundBrake;
+                this.doIdleAnimation();
 
-                if(this.body.velocity.x > -20 && this.body.velocity.x < 20) this.body.velocity.x = 0;
+                if(this.body.velocity.x > -20 && this.body.velocity.x < 20) {
+                    // stopping completely 
+                    this.body.velocity.x = 0;
+                }
             }
         } else {
             // If player went off an edge without jumping first remove a jump.
@@ -95,4 +105,29 @@ class Cat extends Phaser.Physics.Arcade.Sprite {
             console.log("End of turbo!!");
         }, null, this);
     }
+
+    doMovementAnim() {
+        if (this.movementStage == 'idle') {
+            // play the start up animation
+            this.movementStage = 'moving';
+            this.play('ground_startMove_animation', true);
+            this.on('animationcomplete', () => {
+                // do this looping animation afterwards
+                this.play('ground_moving_animation', true);
+            });
+        }
+    }
+
+    doIdleAnimation() {
+        if (this.movementStage == 'moving') {
+            // play the start up animation
+            this.movementStage = 'idle';
+            this.play('idle_slowing_animation', true);
+            this.on('animationcomplete', () => {
+                // loop the full stop animation afterwards
+                this.play('idle_stationary_animation', true);
+            });
+        }
+    }
+
 }
