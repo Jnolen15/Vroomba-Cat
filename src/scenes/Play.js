@@ -15,17 +15,23 @@ class Play extends Phaser.Scene {
         //Create the tilemap
         const map = this.add.tilemap('level');
 
+        // Scale of tilemap
+        const tmScale = 0.35;
+
         // add a tileset to the map
         const tsFurniture = map.addTilesetImage('ts_furniture', 'furniture');
         const tsCollision = map.addTilesetImage('ts_collision', 'collision');
 
         // create tilemap layers
         const FurnitureLayer = map.createLayer('furnitureLayer', tsFurniture, 0, 0);
-        FurnitureLayer.setScale(.35);
+        FurnitureLayer.setScale(tmScale);
 
         const CollisionLayer = map.createLayer('collisionLayer', tsCollision, 0, 105);
-        CollisionLayer.setScale(.35);
+        CollisionLayer.setScale(tmScale);
         CollisionLayer.alpha = 0;
+
+        const objectsLayer = map.getObjectLayer('objectsLayer')['objects'];
+        //objectsLayer.setScale(tmScale);
 
         // Collision
         CollisionLayer.setCollisionFromCollisionGroup();
@@ -41,21 +47,42 @@ class Play extends Phaser.Scene {
         // Add controller
         this.controller = new Controller(this, CollisionLayer);
 
-        // Collision with player
-        //this.physics.add.collider(this.controller.cat, CollisionLayer);
-        
-        // spawn and place objects
-        this.controller.spawner.createProp('prop', game.config.width*0.1, game.config.height*0.9, 0.5, CollisionLayer);
-        this.controller.spawner.createProp('prop', game.config.width*0.30, game.config.height*0.6, 0.5, CollisionLayer);
-        this.controller.spawner.createProp('prop', game.config.width*0.75, game.config.height*0.8, 0.5, CollisionLayer);
-        this.controller.spawner.createProp('prop', game.config.width*0.90, game.config.height*0.4, 0.5, CollisionLayer);
-
-        this.controller.spawner.createBigProp('prop', game.config.width*0.1, game.config.height*0.1, 1, CollisionLayer);
-
-        this.controller.spawner.createAirProp('prop', game.config.width*0.5, game.config.height*0.8, 0.5);
+        // Spawning objects
+        objectsLayer.forEach(object => { // here we are iterating through each object.
+			switch(object.name) {
+                case 'obj':
+                    this.controller.spawner.createProp(this.randProp(), object.x*tmScale, object.y*tmScale, 0.5, CollisionLayer);
+                    break;
+                case 'big':
+                    this.controller.spawner.createBigProp(this.randBigProp(), object.x*tmScale, object.y*tmScale, 0.5, CollisionLayer);
+                    break;
+                case 'wall':
+                    this.controller.spawner.createAirProp(this.randWallProp(), object.x*tmScale, object.y*tmScale, 0.5, CollisionLayer);
+                    break;
+                default: break;
+            }
+		});
     }
 
     update(time, delta) {
         this.controller.update(time, delta);
+    }
+
+    randProp(){
+        const props = ['p_cup', 'p_apple', 'p_frame', 'p_fruitbowl', 'p_pencilcup', 'p_spoons'];
+        var rand = Phaser.Math.Between(0,5);
+        return props[rand];
+    }
+
+    randBigProp(){
+        const bigProps = ['p_fishbowl', 'p_lamp1'];
+        var rand = Phaser.Math.Between(0,1);
+        return bigProps[rand];
+    }
+
+    randWallProp(){
+        const wallProps = ['p_wallclock'];
+        var rand = Phaser.Math.Between(0,0);
+        return wallProps[rand];
     }
 }

@@ -29,8 +29,21 @@ class Loading extends Phaser.Scene {
         // Add images
         this.load.image('cat', './assets/placeholder_cat.png');
         this.load.image('platform', './assets/placeholder_Platform.png');
-        this.load.image('prop', './assets/prop_cup.png');
         this.load.image('comboMeter', './assets/placeholder_comboMeter.png');
+        this.load.image('debris', './assets/prop_dust.png');
+        // Props
+        this.load.image('p_cup', './assets/prop_cup.png');
+        this.load.image('p_apple', './assets/prop_apple.png');
+        this.load.image('p_frame', './assets/prop_frame.png');
+        this.load.image('p_fruitbowl', './assets/prop_fruitbowl.png');
+        this.load.image('p_pencilcup', './assets/prop_pencilcup.png');
+        this.load.image('p_spoons', './assets/prop_spoons.png');
+        // Big Props
+        this.load.image('p_fishbowl', './assets/prop_fishbowl.png');
+        this.load.image('p_lamp1', './assets/prop_lamp1.png');
+        // Wall Props
+        this.load.image('p_wallclock', './assets/prop_wallclock.png');
+        // Debris
         this.load.image('debris', './assets/prop_dust.png');
         // Add sprites via sprite atlas
         this.load.atlas('anim_move_atlas', './assets/anim_moveFLIPPED.png', './assets/anim_move.json');

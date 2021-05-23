@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.6.0" orientation="orthogonal" renderorder="right-down" width="50" height="25" tilewidth="75" tileheight="75" infinite="0" nextlayerid="4" nextobjectid="13">
+<map version="1.5" tiledversion="1.6.0" orientation="orthogonal" renderorder="right-down" width="50" height="25" tilewidth="75" tileheight="75" infinite="0" nextlayerid="5" nextobjectid="33">
  <editorsettings>
   <export target="tm_test.json" format="json"/>
  </editorsettings>
@@ -72,4 +72,57 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
+ <objectgroup id="4" name="objectsLayer">
+  <object id="14" name="obj" x="1275" y="1350">
+   <point/>
+  </object>
+  <object id="17" name="obj" x="975" y="1050">
+   <point/>
+  </object>
+  <object id="18" name="obj" x="375" y="1050">
+   <point/>
+  </object>
+  <object id="19" name="obj" x="2025" y="675">
+   <point/>
+  </object>
+  <object id="20" name="obj" x="1275" y="300">
+   <point/>
+  </object>
+  <object id="21" name="big" x="600" y="300">
+   <point/>
+  </object>
+  <object id="22" name="obj" x="2775" y="300">
+   <point/>
+  </object>
+  <object id="23" name="obj" x="3000" y="300">
+   <point/>
+  </object>
+  <object id="24" name="obj" x="3300" y="300">
+   <point/>
+  </object>
+  <object id="25" name="obj" x="3525" y="300">
+   <point/>
+  </object>
+  <object id="26" name="obj" x="2550" y="1425">
+   <point/>
+  </object>
+  <object id="27" name="obj" x="450" y="1425">
+   <point/>
+  </object>
+  <object id="28" name="obj" x="3525" y="1050">
+   <point/>
+  </object>
+  <object id="29" name="obj" x="3000" y="1050">
+   <point/>
+  </object>
+  <object id="30" name="spawn" x="1650" y="1275">
+   <point/>
+  </object>
+  <object id="31" name="wall" x="2025" y="375">
+   <point/>
+  </object>
+  <object id="32" name="wall" x="2475" y="900">
+   <point/>
+  </object>
+ </objectgroup>
 </map>
