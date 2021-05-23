@@ -13,6 +13,9 @@ class Play extends Phaser.Scene {
     }
     
     create() {
+        // Set world bounds
+        this.physics.world.setBounds(0,0,1312,656);
+        
         //Create the tilemap
         const map = this.add.tilemap('level');
 
@@ -25,13 +28,13 @@ class Play extends Phaser.Scene {
         const tsWallpaper = map.addTilesetImage('ts_wallpaper', 'wallpaper');
 
         // create tilemap layers
-        const WallpaperLayer = map.createLayer('bkgLayer', tsWallpaper, 0, 0);
+        const WallpaperLayer = map.createLayer('bkgLayer', tsWallpaper, 0, -105);
         WallpaperLayer.setScale(tmScale);
         
-        const FurnitureLayer = map.createLayer('furnitureLayer', tsFurniture, 0, 0);
+        const FurnitureLayer = map.createLayer('furnitureLayer', tsFurniture, 0, -105);
         FurnitureLayer.setScale(tmScale);
 
-        const CollisionLayer = map.createLayer('collisionLayer', tsCollision, 0, 105);
+        const CollisionLayer = map.createLayer('collisionLayer', tsCollision, 0, 0);
         CollisionLayer.setScale(tmScale);
         CollisionLayer.alpha = 0;
 
@@ -67,6 +70,9 @@ class Play extends Phaser.Scene {
                 default: break;
             }
 		});
+
+        // Set camera to world bounds
+        this.controller.scene.cameras.main.setBounds(0,0,1312,656);
     }
 
     update(time, delta) {
