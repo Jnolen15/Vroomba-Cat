@@ -121,7 +121,7 @@ class Loading extends Phaser.Scene {
                 end: 5
             })
         });
-        // air_landing
+        // air_lightLanding
         this.anims.create({
             key: 'air_lightLanding_animation',
             frameRate: 10,
@@ -133,6 +133,7 @@ class Loading extends Phaser.Scene {
                 end: 6
             })
         });
+        // air_hardLanding
         this.anims.create({
             key: 'air_hardLanding_animation',
             frameRate: 10,
@@ -143,6 +144,17 @@ class Loading extends Phaser.Scene {
                 start: 6,
                 end: 7
             })
+        });
+        // air_kickFlipping
+        this.anims.create({
+            key: 'air_kickFlipping_animation',
+            frameRate: 10,
+            repeat: 0,
+            frames: [
+                {key: 'anim_kickflip_atlas', frame: 'kickflip_3'}, 
+                {key: 'anim_kickflip_atlas', frame: 'kickflip_4'},
+                {key: 'anim_kickflip_atlas', frame: 'kickflip_3'}
+            ]
         });
 
         this.scene.start('menuScene');

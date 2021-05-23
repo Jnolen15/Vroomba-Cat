@@ -26,7 +26,7 @@ class Cat extends Phaser.Physics.Arcade.Sprite {
         this.setScale(.2);
 
         // animation variables
-        this.movementStage = 'idle';    // | idle | moving | airRising | airKicking | airFalling
+        this.movementStage = 'idle';    // | idle | moving | airRising | airKickFlipping | airFalling
         this.fallVelocityThresh = 1;    // How fast must the cat be falling for the squish landing animation
         this.riseVelocityThresh = 0;    // How fast must the cat be falling for the squish landing animation
         this.play('idle_stationary_animation');
@@ -40,6 +40,8 @@ class Cat extends Phaser.Physics.Arcade.Sprite {
 
         // Setup the jump key individually because JustDown does not work the way cursors are set up
         this.keyUP = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
+        // Setup down key for testing
+        this.keyDOWN = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
     }
 
     update(){
@@ -89,7 +91,12 @@ class Cat extends Phaser.Physics.Arcade.Sprite {
             } else { // Second jump
                 this.numJumps -= 1;
                 this.body.velocity.y = -this.doubleSpeed; // Less powerful
+                this.doKickFlipAnimation();
             }
+        }
+
+        if (Phaser.Input.Keyboard.JustDown(this.keyUP)) {
+            console.log();
         }
 
         // --- manage swipe hitbox position
@@ -184,11 +191,21 @@ class Cat extends Phaser.Physics.Arcade.Sprite {
         } else if (this.movementStage == 'airFalling') {
             // player is currently airborn
             if (this.body.velocity.y < this.riseVelocityThresh) { // negative means rising
-                // if the player is airborn but falling
+                // if the player starts rising again after falling
                 this.movementStage = 'airRising';
                 this.play('air_rising_animation', true);
             }
         }
+    }
+
+    doKickFlipAnimation() {
+        // play the kick flip animation
+        this.movementStage = 'airRising';
+        this.play('air_kickFlipping_animation', true);
+        this.on('animationcomplete', () => {
+            // transition to rising again
+            this.play('air_rising_animation', true);
+        });
     }
 
 }
