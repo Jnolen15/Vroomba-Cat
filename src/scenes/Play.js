@@ -9,6 +9,7 @@ class Play extends Phaser.Scene {
         // Load Spritesheet
         this.load.image('furniture', './assets/tilemap/ts_furniture.png');
         this.load.image('collision', './assets/tilemap/ts_collision.png');
+        this.load.image('wallpaper', './assets/tilemap/ts_wallpaper.png');
     }
     
     create() {
@@ -21,8 +22,12 @@ class Play extends Phaser.Scene {
         // add a tileset to the map
         const tsFurniture = map.addTilesetImage('ts_furniture', 'furniture');
         const tsCollision = map.addTilesetImage('ts_collision', 'collision');
+        const tsWallpaper = map.addTilesetImage('ts_wallpaper', 'wallpaper');
 
         // create tilemap layers
+        const WallpaperLayer = map.createLayer('bkgLayer', tsWallpaper, 0, 0);
+        WallpaperLayer.setScale(tmScale);
+        
         const FurnitureLayer = map.createLayer('furnitureLayer', tsFurniture, 0, 0);
         FurnitureLayer.setScale(tmScale);
 
