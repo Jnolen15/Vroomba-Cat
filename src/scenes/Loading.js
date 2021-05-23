@@ -153,7 +153,8 @@ class Loading extends Phaser.Scene {
             frames: [
                 {key: 'anim_kickflip_atlas', frame: 'kickflip_3'}, 
                 {key: 'anim_kickflip_atlas', frame: 'kickflip_4'},
-                {key: 'anim_kickflip_atlas', frame: 'kickflip_3'}
+                {key: 'anim_kickflip_atlas', frame: 'kickflip_3'},
+                {key: 'anim_kickflip_atlas', frame: 'kickflip_4'}
             ]
         });
 
