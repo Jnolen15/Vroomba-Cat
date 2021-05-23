@@ -1,0 +1,161 @@
+{
+    "frames": [
+        {
+            "filename": "kickflip_1",
+            "frame": {
+                "x": 0,
+                "y": 0,
+                "w": 384,
+                "h": 337
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 384,
+                "h": 337
+            },
+            "sourceSize": {
+                "w": 384,
+                "h": 337
+            }
+        },
+        {
+            "filename": "kickflip_2",
+            "frame": {
+                "x": 384,
+                "y": 0,
+                "w": 384,
+                "h": 337
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 384,
+                "h": 337
+            },
+            "sourceSize": {
+                "w": 384,
+                "h": 337
+            }
+        },
+        {
+            "filename": "kickflip_3",
+            "frame": {
+                "x": 768,
+                "y": 0,
+                "w": 384,
+                "h": 337
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 384,
+                "h": 337
+            },
+            "sourceSize": {
+                "w": 384,
+                "h": 337
+            }
+        },
+        {
+            "filename": "kickflip_4",
+            "frame": {
+                "x": 0,
+                "y": 337,
+                "w": 384,
+                "h": 337
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 384,
+                "h": 337
+            },
+            "sourceSize": {
+                "w": 384,
+                "h": 337
+            }
+        },
+        {
+            "filename": "kickflip_5",
+            "frame": {
+                "x": 384,
+                "y": 337,
+                "w": 384,
+                "h": 337
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 384,
+                "h": 337
+            },
+            "sourceSize": {
+                "w": 384,
+                "h": 337
+            }
+        },
+        {
+            "filename": "kickflip_6",
+            "frame": {
+                "x": 0,
+                "y": 674,
+                "w": 384,
+                "h": 337
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 384,
+                "h": 337
+            },
+            "sourceSize": {
+                "w": 384,
+                "h": 337
+            }
+        },
+        {
+            "filename": "kickflip_7",
+            "frame": {
+                "x": 384,
+                "y": 674,
+                "w": 384,
+                "h": 337
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 384,
+                "h": 337
+            },
+            "sourceSize": {
+                "w": 384,
+                "h": 337
+            }
+        }
+    ],
+    "meta": {
+        "app": "https://www.leshylabs.com/apps/sstool/",
+        "version": "Leshy SpriteSheet Tool v0.8.4",
+        "image": "anim_kickflip.png",
+        "size": {
+            "w": 1151,
+            "h": 1010
+        },
+        "scale": 1
+    }
+}

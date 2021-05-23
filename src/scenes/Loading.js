@@ -34,6 +34,7 @@ class Loading extends Phaser.Scene {
         this.load.image('debris', './assets/prop_dust.png');
         // Add sprites via sprite atlas
         this.load.atlas('anim_move_atlas', './assets/anim_moveFLIPPED.png', './assets/anim_move.json');
+        this.load.atlas('anim_kickflip_atlas', './assets/anim_kickflip.png', './assets/anim_kickflip.json');
         // Add audio
         this.load.audio('a1', './assets/audio_1.mp3');
         this.load.audio('a2', './assets/audio_2.mp3');
@@ -42,18 +43,6 @@ class Loading extends Phaser.Scene {
 
     create() {
         // --- Setup Animations
-        // testing move
-        this.anims.create({
-            key: 'move_animation',
-            frameRate: 10,
-            repeat: -1,
-            frames: this.anims.generateFrameNames('anim_move_atlas', {
-                prefix: 'animation_idle_',
-                suffix: "",
-                start: 1,
-                end: 4
-            })
-        });
         // idle stationary
         this.anims.create({
             key: 'idle_slowing_animation',
@@ -94,6 +83,65 @@ class Loading extends Phaser.Scene {
                 suffix: "",
                 start: 3,
                 end: 4
+            })
+        });
+        // air_jumping
+        this.anims.create({
+            key: 'air_jumping_animation',
+            frameRate: 10,
+            repeat: 0,
+            frames: this.anims.generateFrameNames('anim_kickflip_atlas', {
+                prefix: 'kickflip_',
+                suffix: "",
+                start: 1,
+                end: 2
+            })
+        });
+        // air_rising
+        this.anims.create({
+            key: 'air_rising_animation',
+            frameRate: 10,
+            repeat: -1,
+            frames: this.anims.generateFrameNames('anim_kickflip_atlas', {
+                prefix: 'kickflip_',
+                suffix: "",
+                start: 2,
+                end: 2
+            })
+        });
+        // air_falling
+        this.anims.create({
+            key: 'air_falling_animation',
+            frameRate: 10,
+            repeat: -1,
+            frames: this.anims.generateFrameNames('anim_kickflip_atlas', {
+                prefix: 'kickflip_',
+                suffix: "",
+                start: 5,
+                end: 5
+            })
+        });
+        // air_landing
+        this.anims.create({
+            key: 'air_lightLanding_animation',
+            frameRate: 10,
+            repeat: 0,
+            frames: this.anims.generateFrameNames('anim_kickflip_atlas', {
+                prefix: 'kickflip_',
+                suffix: "",
+                start: 6,
+                end: 6
+            })
+        });
+        this.anims.create({
+            key: 'air_hardLanding_animation',
+            frameRate: 10,
+            repeat: 0,
+            frames: this.anims.generateFrameNames('anim_kickflip_atlas', {
+                prefix: 'kickflip_',
+                suffix: "",
+                start: 6,
+                end: 7
             })
         });
 

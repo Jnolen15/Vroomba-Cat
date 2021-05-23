@@ -26,7 +26,9 @@ class Cat extends Phaser.Physics.Arcade.Sprite {
         this.setScale(.2);
 
         // animation variables
-        this.movementStage = 'idle';    // | idle | moving |
+        this.movementStage = 'idle';    // | idle | moving | airRising | airKicking | airFalling
+        this.fallVelocityThresh = 1;    // How fast must the cat be falling for the squish landing animation
+        this.riseVelocityThresh = 0;    // How fast must the cat be falling for the squish landing animation
         this.play('idle_stationary_animation');
 
         //this.setCircle(60, 10);
@@ -63,6 +65,7 @@ class Cat extends Phaser.Physics.Arcade.Sprite {
                 }
             }
         } else {
+            this.doAirAnimation();
             // If player went off an edge without jumping first remove a jump.
             if(this.numJumps == this.totalJumps) this.numJumps -= 1;
             // In air movement controll
@@ -112,7 +115,23 @@ class Cat extends Phaser.Physics.Arcade.Sprite {
             this.movementStage = 'moving';
             this.play('ground_startMove_animation', true);
             this.on('animationcomplete', () => {
-                // do this looping animation afterwards
+                // do this looping movement animation afterwards
+                this.play('ground_moving_animation', true);
+            });
+        } else if (this.movementStage == 'airRising') {
+            // player was just airborn, play landing animation
+            this.movementStage = 'moving';
+            this.play('air_lightLanding_animation', true);
+            this.on('animationcomplete', () => {
+                // do this looping movement animation afterwards
+                this.play('ground_moving_animation', true);
+            });
+        } else if (this.movementStage == 'airFalling') {
+            // player was just airborn, play landing animation
+            this.movementStage = 'moving';
+            this.play('air_hardLanding_animation', true);
+            this.on('animationcomplete', () => {
+                // do this looping movement animation afterwards
                 this.play('ground_moving_animation', true);
             });
         }
@@ -120,13 +139,55 @@ class Cat extends Phaser.Physics.Arcade.Sprite {
 
     doIdleAnimation() {
         if (this.movementStage == 'moving') {
-            // play the start up animation
+            // player was just moving; play the slow down animation
             this.movementStage = 'idle';
             this.play('idle_slowing_animation', true);
             this.on('animationcomplete', () => {
                 // loop the full stop animation afterwards
                 this.play('idle_stationary_animation', true);
             });
+        } else if (this.movementStage == 'airRising') {
+            // player was just in the air; play landing animation 
+            this.movementStage = 'idle';
+            this.play('air_lightLanding_animation', true);
+            this.on('animationcomplete', () => {
+                // loop the full stop animation afterwards
+                this.play('idle_stationary_animation', true);
+            });
+        } else if (this.movementStage == 'airFalling') {
+            // player was just in the air; play landing animation 
+            this.movementStage = 'idle';
+            this.play('air_hardLanding_animation', true);
+            this.on('animationcomplete', () => {
+                // loop the full stop animation afterwards
+                this.play('idle_stationary_animation', true);
+            });
+        }
+    }
+
+    doAirAnimation() {
+        if (this.movementStage == 'moving' || this.movementStage == 'idle') {
+            // player is initiating a jump, play jump intro
+            this.movementStage = 'airRising';
+            this.play('air_jumping_animation', true);
+            this.on('animationcomplete', () => {
+                // loop the full stop animation afterwards
+                this.play('air_rising_animation', true);
+            });
+        } else if (this.movementStage == 'airRising') {
+            // player is currently airborn
+            if (this.body.velocity.y > this.fallVelocityThresh) { // postive means falling
+                // if the player is airborn but falling
+                this.movementStage = 'airFalling';
+                this.play('air_falling_animation', true);
+            }
+        } else if (this.movementStage == 'airFalling') {
+            // player is currently airborn
+            if (this.body.velocity.y < this.riseVelocityThresh) { // negative means rising
+                // if the player is airborn but falling
+                this.movementStage = 'airRising';
+                this.play('air_rising_animation', true);
+            }
         }
     }
 

@@ -1,6 +1,6 @@
-class Preloading extends Phaser.Scene {
+class LoadingPrep extends Phaser.Scene {
     constructor() {
-        super("preloadingScene");
+        super("loadingPrepScene");
     }
 
     preload() {
