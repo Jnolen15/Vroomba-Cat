@@ -95,8 +95,9 @@ class Cat extends Phaser.Physics.Arcade.Sprite {
             }
         }
 
+        // TESTING ONLY, CAN USE FOR PRINT STATEMENTS
         if (Phaser.Input.Keyboard.JustDown(this.keyUP)) {
-            console.log();
+            
         }
 
         // --- manage swipe hitbox position
