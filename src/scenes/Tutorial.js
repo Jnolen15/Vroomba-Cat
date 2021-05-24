@@ -20,11 +20,11 @@ class Tutorial extends Phaser.Scene {
         this.wall3 = this.controller.spawner.createPlatform('platform', 3400, 600, .25, 4);
 
         console.log(this.wall1);
-        this.prop1 = this.controller.spawner.createProp('prop', 2250, game.config.height+200, 0.5);
-        this.prop2 = this.controller.spawner.createProp('prop', 2550, game.config.height+200, 0.5);
-        this.prop3 = this.controller.spawner.createProp('prop', 2750, game.config.height+200, 0.5);
-        this.prop4 = this.controller.spawner.createBigProp('prop', 4500, game.config.height+200, 1);
-        this.prop5 = this.controller.spawner.createAirProp('prop', 5500, game.config.height-200, 1);
+        this.prop1 = this.controller.spawner.createProp('p_cup', 2250, game.config.height+200, 0.5);
+        this.prop2 = this.controller.spawner.createProp('p_apple', 2550, game.config.height+200, 0.5);
+        this.prop3 = this.controller.spawner.createProp('p_frame', 2750, game.config.height+200, 0.5);
+        this.prop4 = this.controller.spawner.createBigProp('p_lamp1', 4500, game.config.height+200, 0.5);
+        this.prop5 = this.controller.spawner.createAirProp('p_wallclock', 5500, game.config.height-200, 0.5);
 
         this.keyM = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
         this.keyP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);

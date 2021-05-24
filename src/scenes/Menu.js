@@ -26,13 +26,13 @@ class Menu extends Phaser.Scene {
         startButton.on("pointerout", () => { startButton.setBackgroundColor(textConfig.backgroundColor);})
         startButton.on("pointerup", () => {
             this.scene.start('playScene');  
-            game.settings = { gameTimer: 60000 }
+            game.settings = { gameTimer: 30000 }
         })
         tutorialButton.on("pointerover", () => { tutorialButton.setBackgroundColor("green"); })
         tutorialButton.on("pointerout", () => { tutorialButton.setBackgroundColor(textConfig.backgroundColor);})
         tutorialButton.on("pointerup", () => { 
             this.scene.start('tutorialScene'); 
-            game.settings = { gameTimer: 60000 }
+            game.settings = { gameTimer: 600000 }
         })
         quitButton.on("pointerover", () => { quitButton.setBackgroundColor("green");})
         quitButton.on("pointerout", () => { quitButton.setBackgroundColor(textConfig.backgroundColor);})
