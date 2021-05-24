@@ -10,7 +10,7 @@ class Tutorial extends Phaser.Scene {
         this.controller = new Controller(this);
         this.controller.scene.cameras.main.setBounds(0,0,8000,768);
         this.vroombaCat = this.controller.cat.body;
-        this.tutorialText = this.add.text(this.controller.cat.body.x, this.controller.cat.body.y, "Use ←→ to move.", textConfig).setOrigin(0.5);
+        this.tutorialText = this.add.text(this.controller.cat.body.x, this.controller.cat.body.y, "Use ←→ or A/D to move.", textConfig).setOrigin(0.5);
         this.platform1 = this.controller.spawner.createPlatform('platform', 1500, 700, 3, 1);
         this.wall1 = this.controller.spawner.createPlatform('platform', 1400, 700, .25, 4);
 
@@ -34,10 +34,10 @@ class Tutorial extends Phaser.Scene {
         this.controller.update(time, delta);
         this.tutorialText.setPosition(this.vroombaCat.x + this.vroombaCat.width/2, this.vroombaCat.y - 100);
         if(this.vroombaCat.x > 0 && this.vroombaCat.x < 1000) {
-            this.tutorialText.setText("Use ←→ to move.");
+            this.tutorialText.setText("Use ←→ or A/D to move.");
         }
         else if(this.vroombaCat.x > 1000 && this.vroombaCat.x < 2000) {
-            this.tutorialText.setText("Use ↑ to Jump!");
+            this.tutorialText.setText("Use ↑ or W to Jump!");
         }
         else if(this.vroombaCat.x > 2000 && this.vroombaCat.x < 3000) {
             this.tutorialText.setText("DESTROY OBJECTS!");
@@ -46,16 +46,16 @@ class Tutorial extends Phaser.Scene {
             }
         }
         else if(this.vroombaCat.x > 3000 && this.vroombaCat.x < 4000) {
-            this.tutorialText.setText("↑(x2) = Double Jump");
+            this.tutorialText.setText("↑/W (x2) = Double Jump");
         }
         else if(this.vroombaCat.x > 4000 && this.vroombaCat.x < 5000) {
-            this.tutorialText.setText("MaSh F tO DeStRoY!");
+            this.tutorialText.setText("Mash ↓ or S to DESTROY!");
         }
         else if(this.vroombaCat.x > 5000 && this.vroombaCat.x < 6000) {
-            this.tutorialText.setText("JuMp & HiT F tO DeStRoY!");
+            this.tutorialText.setText("Jump & hit ↓ or S to DESTROY!");
         }
-        else if(this.vroombaCat.x > 6000) {
-            this.tutorialText.setText("Press (M)enu or (P)lay");
+        else if(this.vroombaCat.x = 6000) {
+            this.tutorialText.setText("Press (M)enu (P)lay!");
             if(Phaser.Input.Keyboard.JustDown(this.keyM)) this.scene.start("menuScene");
             else if(Phaser.Input.Keyboard.JustDown(this.keyP)) this.scene.start("playScene");
         }
