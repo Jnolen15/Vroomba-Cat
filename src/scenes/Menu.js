@@ -49,6 +49,12 @@ class Menu extends Phaser.Scene {
     }
 
     update() {
+        if(Phaser.Input.Keyboard.JustDown(this.keyUP)){
+            if(!speedrunMode) speedrunMode = true;
+            else speedrunMode = false;
+            console.log("speedrunMode: " + speedrunMode);
+        }
+
         if(this.title.y == game.config.height/2) {
             this.titleMoveSpeed = 0;
         }

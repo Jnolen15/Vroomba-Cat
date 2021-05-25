@@ -21,18 +21,30 @@ class Controller {
         this.camFollowRate = .0045;
 
         // Game ending clock system
-        let menuText1 = scene.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', textConfig).setOrigin(0.5);
-        let menuText2 = scene.add.text(game.config.width/2, game.config.height/2 + 64, 'Press ↓ for Menu', textConfig).setOrigin(0.5);
-        this.positionUIForCam(menuText1, menuText1.x, menuText1.y);
-        this.positionUIForCam(menuText2, menuText2.x, menuText2.y);
-        menuText1.alpha = 0; 
-        menuText2.alpha = 0;
+        if(!speedrunMode){
+            let menuText1 = scene.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', textConfig).setOrigin(0.5);
+            let menuText2 = scene.add.text(game.config.width/2, game.config.height/2 + 64, 'Press ↓ for Menu', textConfig).setOrigin(0.5);
+            this.positionUIForCam(menuText1, menuText1.x, menuText1.y);
+            this.positionUIForCam(menuText2, menuText2.x, menuText2.y);
+            menuText1.alpha = 0; 
+            menuText2.alpha = 0;
 
-        this.clock = scene.time.delayedCall(game.settings.gameTimer, () => {
-            menuText1.alpha = 1;
-            menuText2.alpha = 1;
-            gameOver = true;
-        }, null, this);
+            this.clock = scene.time.delayedCall(game.settings.gameTimer, () => {
+                menuText1.alpha = 1;
+                menuText2.alpha = 1;
+                gameOver = true;
+            }, null, this);
+        } else {
+            this.timedEvent = this.scene.time.addEvent({ delay: 6000000, callback: this.onClockEvent, callbackScope: this, repeat: 1 });
+            this.minutes = 0;
+            this.seconds = 0;
+            this.endText1 = this.scene.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', textConfig).setOrigin(0.5);
+            this.endText2 = this.scene.add.text(game.config.width/2, game.config.height/2 + 64, 'FINAL TIME: ' + '0' + ':' + '0', textConfig).setOrigin(0.5);
+            this.positionUIForCam(this.endText1, this.endText1.x, this.endText1.y);
+            this.positionUIForCam(this.endText2, this.endText2.x, this.endText2.y);
+            this.endText1.alpha = 0; 
+            this.endText2.alpha = 0;
+        }
 
         // Displaying clock timer
         this.timerText = scene.add.text(0, 0, 'Time: ', textConfig).setOrigin(0);
@@ -57,6 +69,17 @@ class Controller {
 
 
     update(time, delta) {
+        // Trigger game ending if in speedrunmode
+        if(speedrunMode && numObjs <= 0 && !gameOver){
+            gameOver = true;
+            //var elapsedtime = this.timedEvent.getElapsedSeconds().toString();
+            //this.minutes = Math.floor(elapsedtime / 60);
+            //this.seconds = Phaser.Math.RoundTo(elapsedtime - (minutes * 60), -2);
+            this.endText2.setText('FINAL TIME: ' + this.minutes + ':' + this.seconds);
+            this.endText1.alpha = 1; 
+            this.endText2.alpha = 1;
+        }
+        
         // If the game is over and the player hits keyLeft go to the main menu
         if(gameOver && cursors.down.isDown) {
             gameOver = false;
@@ -120,9 +143,16 @@ class Controller {
     }
 
     updateUI() {
-        // Update timer text
-        var remaining_time = Phaser.Math.RoundTo((this.clock.delay - this.clock.elapsed)/1000,2, 1);
-        this.timerText.setText('Time: ' + remaining_time);
+        if(!speedrunMode){
+            // Update timer text
+            var remaining_time = Phaser.Math.RoundTo((this.clock.delay - this.clock.elapsed)/1000,2, 1);
+            this.timerText.setText('Time: ' + remaining_time);
+        } else if (!gameOver) {
+            var elapsedtime = this.timedEvent.getElapsedSeconds().toString();
+            this.minutes = Math.floor(elapsedtime / 60);
+            this.seconds = Phaser.Math.RoundTo(elapsedtime - (this.minutes * 60), -2);
+            this.timerText.setText(this.minutes + ':' + this.seconds);
+        }
 
         // Update score text
         this.scoreText.setText('Score: ' + this.score);

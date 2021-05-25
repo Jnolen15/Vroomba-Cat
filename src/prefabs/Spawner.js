@@ -37,6 +37,7 @@ class Spawner {
             prop.destroy();
             prop.destroyed = true;
             this.scene.cameras.main.shake(20, 0.01);
+            numObjs--;
         }, null, this);
         return prop;
     }
@@ -59,6 +60,7 @@ class Spawner {
                     this.spawnDebris(prop);
                     prop.destroy();
                     this.scene.cameras.main.shake(100, 0.03);
+                    numObjs--;
                 } else {
                     hitCount++;
                     this.scene.controller.addToScore(this.bigPropPoints);
@@ -84,6 +86,7 @@ class Spawner {
                 this.makeScorePopUp(prop, this.airPropPoints);
                 prop.destroy();
                 this.scene.cameras.main.shake(20, 0.01);
+                numObjs--;
             } 
         }, null, this);
         prop.setImmovable(true);
