@@ -112,6 +112,13 @@ class Controller {
         // add to score
         this.score += points * this.scoreMulti;
         this.currCombo++;
+        //this.scene.sound.play('Point', { volume: 1 });
+        this.point = this.scene.sound.add('Point', { 
+            mute: false,
+            volume: 1,
+            rate: 1 + (this.currCombo * 0.1)
+        });
+        this.point.play();
         
         // change multiplier to what's appropriate 
         if (this.currCombo <= 2) {

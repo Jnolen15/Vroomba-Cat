@@ -67,7 +67,7 @@ class Cat extends Phaser.Physics.Arcade.Sprite {
     update(){
         if(this.body.blocked.down){
             // left/right movement on ground
-            if(this.numJumps != this.totalJumps) this.playRandSound(['Thump1', 'Thump2'], 0.5);
+            if(this.numJumps != this.totalJumps) this.playRandSound(['Thump1', 'Thump2'], 0.4);
             this.numJumps = this.totalJumps; // Replenish jumps when on the ground
             if(cursors.left.isDown || this.keyA.isDown) {
                 if(this.body.velocity.x > -this.moveSpeedMax) this.body.velocity.x -= this.moveSpeed;
@@ -109,7 +109,7 @@ class Cat extends Phaser.Physics.Arcade.Sprite {
             if(this.numJumps == this.totalJumps){ // First jump
                 this.numJumps -= 1;
                 this.body.velocity.y = -this.jumpSpeed;
-                this.playRandSound(['Lift1', 'Lift2'], 0.5);
+                this.playRandSound(['Lift1', 'Lift2'], 0.4);
             } else { // Second jump
                 this.numJumps -= 1;
                 this.body.velocity.y = -this.doubleSpeed; // Less powerful
