@@ -35,6 +35,7 @@ class Spawner {
             this.scene.controller.addToScore(this.propPoints);
             this.makeScorePopUp(prop, this.propPoints);
             prop.destroy();
+            this.playRandSound(['Break1', 'Break2', 'Break3', 'Break4'], 0.4);
             prop.destroyed = true;
             this.scene.cameras.main.shake(20, 0.01);
             numObjs--;
@@ -59,6 +60,7 @@ class Spawner {
                     //this.scene.sound.play('a1', { volume: 2 });
                     this.spawnDebris(prop);
                     prop.destroy();
+                    this.playRandSound(['Break1', 'Break2', 'Break3', 'Break4'], 0.4);
                     this.scene.cameras.main.shake(100, 0.03);
                     numObjs--;
                 } else {
@@ -86,6 +88,7 @@ class Spawner {
                 this.scene.controller.addToScore(this.airPropPoints);
                 this.makeScorePopUp(prop, this.airPropPoints);
                 prop.destroy();
+                this.playRandSound(['Break1', 'Break2', 'Break3', 'Break4'], 0.4);
                 this.scene.cameras.main.shake(20, 0.01);
                 numObjs--;
             } 
