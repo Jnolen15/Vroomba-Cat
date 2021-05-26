@@ -52,6 +52,21 @@ class Loading extends Phaser.Scene {
         this.load.audio('a1', './assets/audio_1.mp3');
         this.load.audio('a2', './assets/audio_2.mp3');
         this.load.audio('a3', './assets/audio_3.mp3');
+        this.load.audio('Hit1', './assets/sounds/Hit1.mp3');
+        this.load.audio('Hit2', './assets/sounds/Hit2.mp3');
+        this.load.audio('Lift1', './assets/sounds/Lift1.mp3');
+        this.load.audio('Lift2', './assets/sounds/Lift2.mp3');
+        this.load.audio('Swipe', './assets/sounds/Swipe.mp3');
+        this.load.audio('Thump1', './assets/sounds/Thump1.mp3');
+        this.load.audio('Thump2', './assets/sounds/Thump2.mp3');
+        this.load.audio('VacOn', './assets/sounds/VacOn.mp3');
+        this.load.audio('VacStart', './assets/sounds/VacStart.mp3');
+        this.load.audio('VacStop', './assets/sounds/VacStop.mp3');
+        this.load.audio('VacUp', './assets/sounds/VacUp.mp3');
+        this.load.audio('Woosh1', './assets/sounds/Woosh1.mp3');
+        this.load.audio('Woosh2', './assets/sounds/Woosh2.mp3');
+        this.load.audio('Woosh3', './assets/sounds/Woosh3.mp3');
+
     }
 
     create() {

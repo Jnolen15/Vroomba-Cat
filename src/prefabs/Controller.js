@@ -33,6 +33,7 @@ class Controller {
                 menuText1.alpha = 1;
                 menuText2.alpha = 1;
                 gameOver = true;
+                this.cat.fadevac();
             }, null, this);
         } else {
             this.timedEvent = this.scene.time.addEvent({ delay: 6000000, callback: this.onClockEvent, callbackScope: this, repeat: 1 });

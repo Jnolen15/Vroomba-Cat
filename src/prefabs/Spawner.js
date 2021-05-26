@@ -30,7 +30,7 @@ class Spawner {
         // overlapping
         this.scene.physics.add.overlap(this.cat, prop, function(cat, prop) {
             // console.log("prop hit!!");
-            this.scene.sound.play('a1', { volume: 2 });
+            //this.scene.sound.play('a1', { volume: 2 });
             this.spawnDebris(prop);
             this.scene.controller.addToScore(this.propPoints);
             this.makeScorePopUp(prop, this.propPoints);
@@ -56,13 +56,14 @@ class Spawner {
             if (Phaser.Input.Keyboard.JustDown(this.keyDOWN) || Phaser.Input.Keyboard.JustDown(this.keyS)) {
                 if(hitCount >= 14){
                     hitCount = 0;
-                    this.scene.sound.play('a1', { volume: 2 });
+                    //this.scene.sound.play('a1', { volume: 2 });
                     this.spawnDebris(prop);
                     prop.destroy();
                     this.scene.cameras.main.shake(100, 0.03);
                     numObjs--;
                 } else {
                     hitCount++;
+                    this.playRandSound(['Hit1', 'Hit2'], 1);
                     this.scene.controller.addToScore(this.bigPropPoints);
                     this.makeScorePopUp(prop, this.bigPropPoints);
                     console.log("swiped big prop " + hitCount + " times");
@@ -117,7 +118,7 @@ class Spawner {
             debris.alpha = 1;
             debris.active = true;
             this.scene.physics.add.overlap(this.cat, debris, function(cat, deb) {
-                this.scene.sound.play('a2', { volume: 1 });
+                this.scene.sound.play('VacUp', { volume: 0.1 });
                 cat.turboChargeCat(this.scene);
                 deb.destroy();
             }, null, this);
@@ -137,5 +138,10 @@ class Spawner {
             pointsText.destroy();
             multiplierText.destroy();
         }, pointsText, this);
+    }
+
+    playRandSound(sounds, volume){
+        var rand = Phaser.Math.Between(0,sounds.length-1);
+        this.scene.sound.play(sounds[rand], { volume: volume });
     }
 }
