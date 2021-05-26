@@ -26,13 +26,13 @@ class Menu extends Phaser.Scene {
         startButton.on("pointerout", () => { startButton.setBackgroundColor(textConfig.backgroundColor);})
         startButton.on("pointerup", () => {
             this.scene.start('playScene');  
-            game.settings = { gameTimer: 30000 }
+            game.settings = { gameTimer: 30000}
         })
         tutorialButton.on("pointerover", () => { tutorialButton.setBackgroundColor("green"); })
         tutorialButton.on("pointerout", () => { tutorialButton.setBackgroundColor(textConfig.backgroundColor);})
         tutorialButton.on("pointerup", () => { 
             this.scene.start('tutorialScene'); 
-            game.settings = { gameTimer: 600000 }
+            game.settings = { gameTimer: 600000}
         })
         quitButton.on("pointerover", () => { quitButton.setBackgroundColor("green");})
         quitButton.on("pointerout", () => { quitButton.setBackgroundColor(textConfig.backgroundColor);})
@@ -49,6 +49,12 @@ class Menu extends Phaser.Scene {
     }
 
     update() {
+        if(Phaser.Input.Keyboard.JustDown(this.keyUP)){
+            if(!speedrunMode) speedrunMode = true;
+            else speedrunMode = false;
+            console.log("speedrunMode: " + speedrunMode);
+        }
+
         if(this.title.y == game.config.height/2) {
             this.titleMoveSpeed = 0;
         }

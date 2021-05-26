@@ -38,21 +38,23 @@ class Cat extends Phaser.Physics.Arcade.Sprite {
         scene.physics.add.existing(this.swipeBox);
         this.swipeBox.setBodySize(this.width*this.scale, this.height*this.scale);
 
-        // Setup the jump key individually because JustDown does not work the way cursors are set up
+        // Setup keys
         this.keyUP = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
-        // Setup down key for testing
-        this.keyDOWN = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
+        this.keyW = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+        this.keyA = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+        this.keyD = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+        
     }
 
     update(){
         if(this.body.blocked.down){
             // left/right movement on ground
             this.numJumps = this.totalJumps; // Replenish jumps when on the ground
-            if(cursors.left.isDown) {
+            if(cursors.left.isDown || this.keyA.isDown) {
                 if(this.body.velocity.x > -this.moveSpeedMax) this.body.velocity.x -= this.moveSpeed;
                 this.flipX = true;
                 this.doMovementAnim();
-            } else if(cursors.right.isDown) {
+            } else if(cursors.right.isDown || this.keyD.isDown) {
                 if(this.body.velocity.x < this.moveSpeedMax) this.body.velocity.x += this.moveSpeed;
                 this.flipX = false;
                 this.doMovementAnim();
@@ -71,10 +73,10 @@ class Cat extends Phaser.Physics.Arcade.Sprite {
             // If player went off an edge without jumping first remove a jump.
             if(this.numJumps == this.totalJumps) this.numJumps -= 1;
             // In air movement controll
-            if(cursors.left.isDown && this.body.velocity.x > -this.airSpeedMax) { // Holding left
+            if((cursors.left.isDown || this.keyA.isDown) && this.body.velocity.x > -this.airSpeedMax) { // Holding left
                 this.body.velocity.x -= this.airSpeed;
                 this.flipX = true;
-            } else if(cursors.right.isDown && this.body.velocity.x < this.airSpeedMax) { // Holding right
+            } else if((cursors.right.isDown || this.keyD.isDown) && this.body.velocity.x < this.airSpeedMax) { // Holding right
                 this.body.velocity.x += this.airSpeed;
                 this.flipX = false;
             }
@@ -84,7 +86,7 @@ class Cat extends Phaser.Physics.Arcade.Sprite {
         }
 
         // jump
-        if(Phaser.Input.Keyboard.JustDown(this.keyUP) && this.numJumps > 0){
+        if((Phaser.Input.Keyboard.JustDown(this.keyUP) || Phaser.Input.Keyboard.JustDown(this.keyW)) && this.numJumps > 0){
             if(this.numJumps == this.totalJumps){ // First jump
                 this.numJumps -= 1;
                 this.body.velocity.y = -this.jumpSpeed;
@@ -93,11 +95,6 @@ class Cat extends Phaser.Physics.Arcade.Sprite {
                 this.body.velocity.y = -this.doubleSpeed; // Less powerful
                 this.doKickFlipAnimation();
             }
-        }
-
-        // TESTING ONLY, CAN USE FOR PRINT STATEMENTS
-        if (Phaser.Input.Keyboard.JustDown(this.keyUP)) {
-            
         }
 
         // --- manage swipe hitbox position
@@ -116,6 +113,8 @@ class Cat extends Phaser.Physics.Arcade.Sprite {
             console.log("End of turbo!!");
         }, null, this);
     }
+
+    // Animations
 
     doMovementAnim() {
         if (this.movementStage == 'idle') {

@@ -10,7 +10,9 @@ class Spawner {
         this.platformGroup = this.scene.physics.add.group();
         // Add collider between platformGroup and Cat
         this.scene.physics.add.collider(this.cat, this.platformGroup);
-        this.keyF = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F);
+        // Set up needed keys
+        this.keyDOWN = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
+        this.keyS = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
         // Score rules
         this.propPoints = 5;
         this.bigPropPoints = 2;
@@ -35,6 +37,7 @@ class Spawner {
             prop.destroy();
             prop.destroyed = true;
             this.scene.cameras.main.shake(20, 0.01);
+            numObjs--;
         }, null, this);
         return prop;
     }
@@ -50,13 +53,14 @@ class Spawner {
         this.scene.physics.add.collider(prop, this.platformGroup);
         // overlapping
         this.scene.physics.add.overlap(this.cat.swipeBox, prop, function(cat, prop) {
-            if (Phaser.Input.Keyboard.JustDown(this.keyF)) {
+            if (Phaser.Input.Keyboard.JustDown(this.keyDOWN) || Phaser.Input.Keyboard.JustDown(this.keyS)) {
                 if(hitCount >= 14){
                     hitCount = 0;
                     this.scene.sound.play('a1', { volume: 2 });
                     this.spawnDebris(prop);
                     prop.destroy();
                     this.scene.cameras.main.shake(100, 0.03);
+                    numObjs--;
                 } else {
                     hitCount++;
                     this.scene.controller.addToScore(this.bigPropPoints);
@@ -76,12 +80,13 @@ class Spawner {
         this.scene.physics.add.collider(prop, this.platformGroup);
         // overlapping
         this.scene.physics.add.overlap(this.cat.swipeBox, prop, function(cat, prop) {
-            if (Phaser.Input.Keyboard.JustDown(this.keyF) && !this.cat.body.touching.down) {
+            if ((Phaser.Input.Keyboard.JustDown(this.keyDOWN) || Phaser.Input.Keyboard.JustDown(this.keyS))&& !this.cat.body.touching.down) {
                 this.cat.body.velocity.y = -this.cat.jumpSpeed;
                 this.scene.controller.addToScore(this.airPropPoints);
                 this.makeScorePopUp(prop, this.airPropPoints);
                 prop.destroy();
                 this.scene.cameras.main.shake(20, 0.01);
+                numObjs--;
             } 
         }, null, this);
         prop.setImmovable(true);

@@ -54,6 +54,8 @@ let game = new Phaser.Game(config);
 
 //Game over boolean
 let gameOver = false;
+let speedrunMode = false;
+let numObjs = 0;
 
 //define globals
 let cursors;
