@@ -29,7 +29,8 @@ class Loading extends Phaser.Scene {
         // Add images
         this.load.image('cat', './assets/placeholder_cat.png');
         this.load.image('platform', './assets/placeholder_Platform.png');
-        this.load.image('comboMeter', './assets/placeholder_comboMeter.png');
+        this.load.image('comboMeterFront', './assets/combometer_color.png');
+        this.load.image('comboMeterBack', './assets/combometer_back.png');
         this.load.image('debris', './assets/prop_dust.png');
         // Props
         this.load.image('p_cup', './assets/prop_cup.png');
@@ -49,9 +50,6 @@ class Loading extends Phaser.Scene {
         this.load.atlas('anim_move_atlas', './assets/anim_moveFLIPPED.png', './assets/anim_move.json');
         this.load.atlas('anim_kickflip_atlas', './assets/anim_kickflip.png', './assets/anim_kickflip.json');
         // Add audio
-        this.load.audio('a1', './assets/audio_1.mp3');
-        this.load.audio('a2', './assets/audio_2.mp3');
-        this.load.audio('a3', './assets/audio_3.mp3');
         this.load.audio('Hit1', './assets/sounds/Hit1.mp3');
         this.load.audio('Hit2', './assets/sounds/Hit2.mp3');
         this.load.audio('Lift1', './assets/sounds/Lift1.mp3');
@@ -71,6 +69,7 @@ class Loading extends Phaser.Scene {
         this.load.audio('Break2', './assets/sounds/Break2.mp3'); // From https://freesound.org/people/Nox_Sound/sounds/554367/
         this.load.audio('Break3', './assets/sounds/Break3.mp3'); // From https://freesound.org/people/InspectorJ/sounds/352208/
         this.load.audio('Break4', './assets/sounds/Break4.mp3'); // From https://freesound.org/people/sandyrb/sounds/148074/
+        this.load.audio('music', './assets/sounds/bg_music.mp3'); // From https://snapmuse.com/
 
     }
 
