@@ -55,11 +55,13 @@ class Spawner {
         // overlapping
         this.scene.physics.add.overlap(this.cat.swipeBox, prop, function(cat, prop) {
             if (Phaser.Input.Keyboard.JustDown(this.keyDOWN) || Phaser.Input.Keyboard.JustDown(this.keyS)) {
-                if(hitCount >= 14){
+                if(hitCount >= 9){
                     hitCount = 0;
                     //this.scene.sound.play('a1', { volume: 2 });
                     this.spawnDebris(prop);
                     prop.destroy();
+                    this.scene.controller.addToScore(this.bigPropPoints * 2);
+                    this.makeScorePopUp(prop, this.bigPropPoints * 2);
                     this.playRandSound(['Break1', 'Break2', 'Break3', 'Break4'], 0.4);
                     this.scene.cameras.main.shake(100, 0.03);
                     numObjs--;
