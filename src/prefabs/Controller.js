@@ -33,6 +33,7 @@ class Controller {
                 menuText1.alpha = 1;
                 menuText2.alpha = 1;
                 gameOver = true;
+                this.cat.fadevac();
             }, null, this);
         } else {
             this.timedEvent = this.scene.time.addEvent({ delay: 6000000, callback: this.onClockEvent, callbackScope: this, repeat: 1 });
@@ -55,7 +56,7 @@ class Controller {
         this.isScoring = false;
         this.currCombo = 0;
         this.scoreMulti = 1;
-        this.maxScoreTime = 3000;
+        this.maxScoreTime = 2000;
         this.currScoreTime = 0;
         this.scoreText = scene.add.text(0, 0, 'Score: ', textConfig).setOrigin(1,0);
         this.positionUIForCam(this.scoreText, game.config.width * .95, game.config.height * .05);
@@ -111,11 +112,19 @@ class Controller {
         // add to score
         this.score += points * this.scoreMulti;
         this.currCombo++;
+        if((1 + (this.currCombo * 0.1)) < 2.5) this.soundmod = 1 + (this.currCombo * 0.1);
+        else this.soundmod = 2.5;
+        this.point = this.scene.sound.add('Point', { 
+            mute: false,
+            volume: 1,
+            rate: this.soundmod
+        });
+        this.point.play();
         
         // change multiplier to what's appropriate 
-        if (this.currCombo <= 2) {
+        if (this.currCombo <= 4) {
             this.scoreMulti = 1;
-        } else if (this.currCombo <= 4) {
+        } else if (this.currCombo <= 10) {
             this.scoreMulti = 2;
         } else {
             this.scoreMulti = 3;

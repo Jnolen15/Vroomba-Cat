@@ -11,8 +11,8 @@ class Cat extends Phaser.Physics.Arcade.Sprite {
         // Cat properties
         this.moveSpeed = 20;            // On ground move speed
         this.moveSpeedMax = 500;        // On ground Max move speed
-        this.turboMoveSpeed = 30;       // On ground TURBO move speed
-        this.turboMoveSpeedMax = 700;   // On ground TURBO Max move speed
+        this.turboMoveSpeed = 40;       // On ground TURBO move speed
+        this.turboMoveSpeedMax = 900;   // On ground TURBO Max move speed
         this.numJumps = 2;              // Number of jumps the player currently has
         this.totalJumps = 2;            // Total number of jumps the player has
         this.jumpSpeed = 500;           // Jump speed / height
@@ -43,12 +43,31 @@ class Cat extends Phaser.Physics.Arcade.Sprite {
         this.keyW = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         this.keyA = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         this.keyD = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+        this.keyDOWN = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
+        this.keyS = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
+
+        // Vaccuum Noise
+        this.vac = scene.sound.add('VacOn', { 
+            mute: false,
+            volume: 0,
+            rate: 1,
+            loop: true 
+        });
+        this.vac.play();
+        //scene.sound.play('VacStart', { volume: 0.03 });
+        scene.tweens.add({
+            targets: this.vac,
+            volume: 0.025,
+            ease: 'Linear',
+            duration: 1000,
+        });
         
     }
 
     update(){
         if(this.body.blocked.down){
             // left/right movement on ground
+            if(this.numJumps != this.totalJumps) this.playRandSound(['Thump1', 'Thump2'], 0.4);
             this.numJumps = this.totalJumps; // Replenish jumps when on the ground
             if(cursors.left.isDown || this.keyA.isDown) {
                 if(this.body.velocity.x > -this.moveSpeedMax) this.body.velocity.x -= this.moveSpeed;
@@ -90,11 +109,18 @@ class Cat extends Phaser.Physics.Arcade.Sprite {
             if(this.numJumps == this.totalJumps){ // First jump
                 this.numJumps -= 1;
                 this.body.velocity.y = -this.jumpSpeed;
+                this.playRandSound(['Lift1', 'Lift2'], 0.4);
             } else { // Second jump
                 this.numJumps -= 1;
                 this.body.velocity.y = -this.doubleSpeed; // Less powerful
                 this.doKickFlipAnimation();
+                this.playRandSound(['Woosh1', 'Woosh2', 'Woosh3'], 2);
             }
+        }
+
+        // Swipe (Just the animation and sound)
+        if(Phaser.Input.Keyboard.JustDown(this.keyS) || Phaser.Input.Keyboard.JustDown(this.keyDOWN)){
+            this.scene.sound.play('Swipe', { volume: 2 });
         }
 
         // --- manage swipe hitbox position
@@ -102,20 +128,45 @@ class Cat extends Phaser.Physics.Arcade.Sprite {
         this.swipeBox.body.y = this.body.y;
     }
 
+    fadevac(){
+        this.scene.tweens.add({
+            targets: this.vac,
+            volume: 0.0,
+            ease: 'Linear',
+            duration: 1000,
+        });
+    }
+
     turboChargeCat(scene) {
         this.moveSpeed = this.turboMoveSpeed;
         this.moveSpeedMax = this.turboMoveSpeedMax;
         console.log("TURBO!!");
+        this.scene.tweens.add({
+            targets: this.vac,
+            volume: 0.05,
+            ease: 'Linear',
+            duration: 1000,
+        });
         // Game ending clock system
         this.clock = scene.time.delayedCall(1000, () => {
             this.moveSpeed = 20;
             this.moveSpeedMax = 500;
             console.log("End of turbo!!");
+            this.scene.tweens.add({
+                targets: this.vac,
+                volume: 0.025,
+                ease: 'Linear',
+                duration: 1000,
+            });
         }, null, this);
     }
 
-    // Animations
+    playRandSound(sounds, volume){
+        var rand = Phaser.Math.Between(0,sounds.length-1);
+        this.scene.sound.play(sounds[rand], { volume: volume });
+    }
 
+    // Animations
     doMovementAnim() {
         if (this.movementStage == 'idle') {
             // play the start up animation
