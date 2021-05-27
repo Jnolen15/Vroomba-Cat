@@ -58,10 +58,14 @@ class Menu extends Phaser.Scene {
             hold: 3000,
             duration: 1000,
         });
-        this.bg_music = this.sound.play('music', {loop: true});
+        this.bg_music = this.sound.add('music', {loop: true});
+        this.bg_music.play();
+        console.log(this.bg_music);
+        // this.bg_music.stop();
     }
 
     update() {
+        
         if(Phaser.Input.Keyboard.JustDown(this.keyRIGHT)){
             if(!speedrunMode) {
                 speedrunMode = true;
@@ -78,12 +82,14 @@ class Menu extends Phaser.Scene {
 
         if(Phaser.Input.Keyboard.JustDown(this.keyUP)) {
             game.settings = { gameTimer: 30000 }
+            this.bg_music.stop();
             this.scene.start('playScene');
         }
 
         if(Phaser.Input.Keyboard.JustDown(this.keyDOWN)) {
             game.settings = { gameTimer: 600000 }
             speedrunMode = false;
+            this.bg_music.stop();
             this.scene.start('tutorialScene');
         }
     }
