@@ -58,6 +58,7 @@ class Menu extends Phaser.Scene {
             hold: 3000,
             duration: 1000,
         });
+        this.bg_music = this.sound.play('music', {loop: true});
     }
 
     update() {
@@ -65,10 +66,12 @@ class Menu extends Phaser.Scene {
             if(!speedrunMode) {
                 speedrunMode = true;
                 this.modeIndicator.setText("[→] Speed Run Mode");
+                this.modeIndicator.setBackgroundColor("Red");
             }
             else{
                 speedrunMode = false;
                 this.modeIndicator.setText("[→] Regular Mode");
+                this.modeIndicator.setBackgroundColor(textConfig.backgroundColor);
             } 
             console.log("speedrunMode: " + speedrunMode);
         }

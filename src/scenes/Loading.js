@@ -69,6 +69,7 @@ class Loading extends Phaser.Scene {
         this.load.audio('Break2', './assets/sounds/Break2.mp3'); // From https://freesound.org/people/Nox_Sound/sounds/554367/
         this.load.audio('Break3', './assets/sounds/Break3.mp3'); // From https://freesound.org/people/InspectorJ/sounds/352208/
         this.load.audio('Break4', './assets/sounds/Break4.mp3'); // From https://freesound.org/people/sandyrb/sounds/148074/
+        this.load.audio('music', './assets/sounds/bg_music.mp3'); // From https://snapmuse.com/
 
     }
 
