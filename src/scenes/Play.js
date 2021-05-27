@@ -5,16 +5,16 @@ class Play extends Phaser.Scene {
 
     preload(){        
         // Load Json file
-        this.load.tilemapTiledJSON('level', './assets/tilemap/tm_test.json');
+        this.load.tilemapTiledJSON('level', './assets/tilemap/tm_level.json');
         // Load Spritesheet
-        this.load.image('furniture', './assets/tilemap/ts_furniture.png');
+        this.load.image('furniture2', './assets/tilemap/ts_furniture2.png');
         this.load.image('collision', './assets/tilemap/ts_collision.png');
         this.load.image('wallpaper', './assets/tilemap/ts_wallpaper.png');
     }
     
     create() {
         // Set world bounds
-        this.physics.world.setBounds(0,0,1312,656);
+        this.physics.world.setBounds(0,0,3150,1575);
         
         //Create the tilemap
         const map = this.add.tilemap('level');
@@ -23,7 +23,7 @@ class Play extends Phaser.Scene {
         const tmScale = 0.35;
 
         // add a tileset to the map
-        const tsFurniture = map.addTilesetImage('ts_furniture', 'furniture');
+        const tsFurniture2 = map.addTilesetImage('ts_furniture2', 'furniture2');
         const tsCollision = map.addTilesetImage('ts_collision', 'collision');
         const tsWallpaper = map.addTilesetImage('ts_wallpaper', 'wallpaper');
 
@@ -31,9 +31,9 @@ class Play extends Phaser.Scene {
         const WallpaperLayer = map.createLayer('bkgLayer', tsWallpaper, 0, -105);
         WallpaperLayer.setScale(tmScale);
         
-        const FurnitureLayer = map.createLayer('furnitureLayer', tsFurniture, 0, -105);
+        const FurnitureLayer = map.createLayer('furnitureLayer', tsFurniture2, 0, -105);
         FurnitureLayer.setScale(tmScale);
-
+        
         const CollisionLayer = map.createLayer('collisionLayer', tsCollision, 0, 0);
         CollisionLayer.setScale(tmScale);
         CollisionLayer.alpha = 0;
@@ -46,9 +46,11 @@ class Play extends Phaser.Scene {
         // This part of code from https://www.html5gamedevs.com/topic/40484-jump-through-a-tile-from-underneath/
         CollisionLayer.layer.data.forEach((row) => { // here we are iterating through each tile.
 			row.forEach((Tile) => {
-						Tile.collideDown = false;
-						Tile.collideLeft = false;
-						Tile.collideRight = false;
+                if(Tile.index==39){ 
+                    Tile.collideDown = false;
+                    Tile.collideLeft = false;
+                    Tile.collideRight = false;
+                }
 			})
 		});
 
@@ -75,7 +77,7 @@ class Play extends Phaser.Scene {
 		});
 
         // Set camera to world bounds
-        this.controller.scene.cameras.main.setBounds(0,0,1312,656);
+        this.controller.scene.cameras.main.setBounds(0,0,3150,1575);
     }
 
     update(time, delta) {
