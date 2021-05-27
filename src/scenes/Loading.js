@@ -49,9 +49,6 @@ class Loading extends Phaser.Scene {
         this.load.atlas('anim_move_atlas', './assets/anim_moveFLIPPED.png', './assets/anim_move.json');
         this.load.atlas('anim_kickflip_atlas', './assets/anim_kickflip.png', './assets/anim_kickflip.json');
         // Add audio
-        this.load.audio('a1', './assets/audio_1.mp3');
-        this.load.audio('a2', './assets/audio_2.mp3');
-        this.load.audio('a3', './assets/audio_3.mp3');
         this.load.audio('Hit1', './assets/sounds/Hit1.mp3');
         this.load.audio('Hit2', './assets/sounds/Hit2.mp3');
         this.load.audio('Lift1', './assets/sounds/Lift1.mp3');
