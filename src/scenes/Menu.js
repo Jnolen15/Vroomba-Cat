@@ -74,12 +74,13 @@ class Menu extends Phaser.Scene {
         }
 
         if(Phaser.Input.Keyboard.JustDown(this.keyUP)) {
-            game.settings = { gameTimer: 30000}
+            game.settings = { gameTimer: 30000 }
             this.scene.start('playScene');
         }
 
         if(Phaser.Input.Keyboard.JustDown(this.keyDOWN)) {
-            game.settings = { gameTimer: 600000}
+            game.settings = { gameTimer: 600000 }
+            speedrunMode = false;
             this.scene.start('tutorialScene');
         }
     }

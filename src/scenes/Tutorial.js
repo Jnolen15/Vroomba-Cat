@@ -11,6 +11,7 @@ class Tutorial extends Phaser.Scene {
         this.controller.scene.cameras.main.setBounds(0,0,8000,768);
         this.vroombaCat = this.controller.cat.body;
         this.tutorialText = this.add.text(this.controller.cat.body.x, this.controller.cat.body.y, "Use ←→ or A/D to move.", textConfig).setOrigin(0.5);
+        this.directionalText = this.add.text(this.controller.cat.body.x, this.controller.cat.body.y, "Go →", textConfig).setOrigin(0.5);
         this.platform1 = this.controller.spawner.createPlatform('platform', 1500, 700, 3, 1);
         this.wall1 = this.controller.spawner.createPlatform('platform', 1400, 700, .25, 4);
 
@@ -33,6 +34,7 @@ class Tutorial extends Phaser.Scene {
     update(time, delta) {
         this.controller.update(time, delta);
         this.tutorialText.setPosition(this.vroombaCat.x + this.vroombaCat.width/2, this.vroombaCat.y - 100);
+        this.directionalText.setPosition(this.vroombaCat.x + this.vroombaCat.width/2, this.vroombaCat.y - 350);
         if(this.vroombaCat.x > 0 && this.vroombaCat.x < 1000) {
             this.tutorialText.setText("Use ←→ or A/D to move.");
         }
