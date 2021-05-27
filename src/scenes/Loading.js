@@ -29,7 +29,8 @@ class Loading extends Phaser.Scene {
         // Add images
         this.load.image('cat', './assets/placeholder_cat.png');
         this.load.image('platform', './assets/placeholder_Platform.png');
-        this.load.image('comboMeter', './assets/placeholder_comboMeter.png');
+        this.load.image('comboMeterFront', './assets/combometer_color.png');
+        this.load.image('comboMeterBack', './assets/combometer_back.png');
         this.load.image('debris', './assets/prop_dust.png');
         // Props
         this.load.image('p_cup', './assets/prop_cup.png');

@@ -64,8 +64,12 @@ class Controller {
         // Displaying combo meter
         this.comboText = scene.add.text(0, 0, 'Streak: 0 - Multiplier: x1', textConfig).setOrigin(1,0);
         this.positionUIForCam(this.comboText, game.config.width * .95, game.config.height * .1);
-        this.comboMeter = scene.add.sprite(0, 0, 'comboMeter').setOrigin(1,0);
-        this.positionUIForCam(this.comboMeter, game.config.width * .95, game.config.height * .17);
+        this.comboMeterBack = scene.add.sprite(0, 0, 'comboMeterBack').setOrigin(1,0);
+        this.comboMeterBack.setScale(.6);
+        this.positionUIForCam(this.comboMeterBack, game.config.width * .95, game.config.height * .17);
+        this.comboMeterFront = scene.add.sprite(0, 0, 'comboMeterFront').setOrigin(1,0);
+        this.comboMeterFront.setScale(.6);
+        this.positionUIForCam(this.comboMeterFront, game.config.width * .95, game.config.height * .17);
     }
 
 
@@ -148,7 +152,7 @@ class Controller {
                 this.currScoreTime -= delta;
             }
         }
-        this.comboMeter.frame.cutWidth = this.comboMeter.frame.width * this.inverseLerp(this.currScoreTime, 0, this.maxScoreTime);
+        this.comboMeterFront.frame.cutWidth = this.comboMeterFront.frame.width * this.inverseLerp(this.currScoreTime, 0, this.maxScoreTime);
     }
 
     updateUI() {
@@ -178,7 +182,7 @@ class Controller {
         - ((game.config.width/2) * 1/this.scene.cameras.main.zoom) + (x * 1/this.scene.cameras.main.zoom);
         object.y = (this.camFollowY + game.config.height/2) 
         - ((game.config.height/2) * 1/this.scene.cameras.main.zoom) + (y * 1/this.scene.cameras.main.zoom);
-        object.setScale(1/this.scene.cameras.main.zoom);
+        object.setScale(1/this.scene.cameras.main.zoom * object.scale);
         object.setDepth(2);
         object.setScrollFactor(0);
     }
