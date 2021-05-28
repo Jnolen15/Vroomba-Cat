@@ -15,10 +15,11 @@ class Controller {
 
         // Camera Follower Setup
         scene.cameras.main.setBounds(0, 0, game.config.width, game.config.height);
-        scene.cameras.main.setZoom(1.3);
+        scene.cameras.main.setZoom(1.5);
         this.camFollowX = scene.cameras.main.scrollX;
         this.camFollowY = scene.cameras.main.scrollY;
-        this.camFollowRate = .0045;
+        this.camXFollowRate = .0095;
+        this.camYFollowRate = .0075;
 
         // Game ending clock system
         if(!speedrunMode){
@@ -58,18 +59,30 @@ class Controller {
         this.scoreMulti = 1;
         this.maxScoreTime = 2000;
         this.currScoreTime = 0;
-        this.scoreText = scene.add.text(0, 0, 'Score: ', textConfig).setOrigin(1,0);
-        this.positionUIForCam(this.scoreText, game.config.width * .95, game.config.height * .05);
-
-        // Displaying combo meter
-        this.comboText = scene.add.text(0, 0, 'Streak: 0 - Multiplier: x1', textConfig).setOrigin(1,0);
-        this.positionUIForCam(this.comboText, game.config.width * .95, game.config.height * .1);
-        this.comboMeterBack = scene.add.sprite(0, 0, 'comboMeterBack').setOrigin(1,0);
-        this.comboMeterBack.setScale(.6);
-        this.positionUIForCam(this.comboMeterBack, game.config.width * .95, game.config.height * .17);
-        this.comboMeterFront = scene.add.sprite(0, 0, 'comboMeterFront').setOrigin(1,0);
-        this.comboMeterFront.setScale(.6);
-        this.positionUIForCam(this.comboMeterFront, game.config.width * .95, game.config.height * .17);
+        
+        // --- Setting up UI
+        let UICenterX = game.config.width * .13;
+        let UICenterY = game.config.height * .9;
+        // score counters art
+        this.scoreCountersArt = scene.add.sprite(UICenterX, UICenterY, 'scorecounters_back');
+        this.scoreCountersArt.setScale(.6);
+        this.positionUIForCam(this.scoreCountersArt);
+        this.comboSteakArt = scene.add.sprite(UICenterX, UICenterY, 'scorecounters_streak');
+        this.comboSteakArt.setScale(.6);
+        this.positionUIForCam(this.comboSteakArt);
+        // score text
+        this.scoreText = scene.add.text(UICenterX * 1.2, UICenterY * .93, '0', scoreTextConfig);
+        this.positionUIForCam(this.scoreText);
+        // streak text
+        this.comboText = scene.add.text(UICenterX * .44, UICenterY * 1.02, '0111111', scoreTextConfig);
+        this.positionUIForCam(this.comboText);
+        // combo meter art
+        this.comboMeter_back = scene.add.sprite(UICenterX * 1.73, UICenterY * 1.04, 'combometer_back');
+        this.comboMeter_back.setScale(.6);
+        this.positionUIForCam(this.comboMeter_back);
+        this.comboMeter_front = scene.add.sprite(UICenterX * 1.73, UICenterY * 1.04, 'combometer_front');
+        this.comboMeter_front.setScale(.6);
+        this.positionUIForCam(this.comboMeter_front);
     }
 
 
@@ -106,8 +119,8 @@ class Controller {
 
     camFollowPlayer(time, delta) {
         // Make camera 'catch up' to player gradually with linear interpolation
-        this.camFollowX = Phaser.Math.Linear(this.camFollowX, (this.cat.x) - game.config.width/2, this.camFollowRate * delta);
-        this.camFollowY = Phaser.Math.Linear(this.camFollowY, (this.cat.y) - game.config.height/2, this.camFollowRate * delta);
+        this.camFollowX = Phaser.Math.Linear(this.camFollowX, (this.cat.x) - game.config.width/2, this.camXFollowRate * delta);
+        this.camFollowY = Phaser.Math.Linear(this.camFollowY, (this.cat.y) - game.config.height/2, this.camYFollowRate * delta);
         this.scene.cameras.main.setScroll(this.camFollowX, this.camFollowY);
         this.scene.cameras.main.update(time, delta);
     }
@@ -152,7 +165,7 @@ class Controller {
                 this.currScoreTime -= delta;
             }
         }
-        this.comboMeterFront.frame.cutWidth = this.comboMeterFront.frame.width * this.inverseLerp(this.currScoreTime, 0, this.maxScoreTime);
+        this.comboMeter_front.frame.cutWidth = this.comboMeter_front.frame.width * this.inverseLerp(this.currScoreTime, 0, this.maxScoreTime);
     }
 
     updateUI() {
@@ -168,20 +181,20 @@ class Controller {
         }
 
         // Update score text
-        this.scoreText.setText('Score: ' + this.score);
-        this.comboText.setText('Streak: ' + this.currCombo + ' - Multiplier: x' + this.scoreMulti);
+        this.scoreText.setText(this.score);
+        this.comboText.setText(this.currCombo);
         if (this.scoreMulti > 1) {
-            this.comboText.setBackgroundColor('#fff000');
+            // this.comboText.setBackgroundColor('#fff000');
         } else {
-            this.comboText.setBackgroundColor('#F3B141');
+            // this.comboText.setBackgroundColor('#F3B141');
         }
     }
 
-    positionUIForCam(object, x, y) {
+    positionUIForCam(object) {
         object.x = (this.camFollowX + game.config.width/2) 
-        - ((game.config.width/2) * 1/this.scene.cameras.main.zoom) + (x * 1/this.scene.cameras.main.zoom);
+        - ((game.config.width/2) * 1/this.scene.cameras.main.zoom) + (object.x * 1/this.scene.cameras.main.zoom);
         object.y = (this.camFollowY + game.config.height/2) 
-        - ((game.config.height/2) * 1/this.scene.cameras.main.zoom) + (y * 1/this.scene.cameras.main.zoom);
+        - ((game.config.height/2) * 1/this.scene.cameras.main.zoom) + (object.y * 1/this.scene.cameras.main.zoom);
         object.setScale(1/this.scene.cameras.main.zoom * object.scale);
         object.setDepth(2);
         object.setScrollFactor(0);
