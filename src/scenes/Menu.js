@@ -54,6 +54,7 @@ class Menu extends Phaser.Scene {
         this.bg_music = this.sound.add('music', {loop: true});
         this.bg_music.play();
         console.log(this.bg_music);
+        this.bg_music.volume = 0;
     }
 
     update() {  
@@ -65,11 +66,12 @@ class Menu extends Phaser.Scene {
 
         // Animation for hovering the Start Game Button
         if(!this.startSelected && Phaser.Input.Keyboard.JustDown(this.keyUP)) {
+            this.sound.play('Select', { volume: 0.5 });
             if(this.tutorialSelected) { 
-                this.tweens.add({ targets: this.tutorialButton, x: this.tutorialButtonXAnchor, ease: 'Linear', duration: 1000,}); 
+                this.tweens.add({ targets: this.tutorialButton, x: this.tutorialButtonXAnchor, ease: 'Linear', duration: 200,}); 
                 this.tutorialButton.setText("[↓] Tutorial");
             }
-            this.tweens.add({ targets: this.startButton, x: this.startButton.x + 50, ease: 'Linear', duration: 1000, });
+            this.tweens.add({ targets: this.startButton, x: this.startButton.x + 50, ease: 'Linear', duration: 200, });
             this.startButton.setText("[←] Play [→]");
             this.startSelected = true;
             this.tutorialSelected = false;
@@ -77,19 +79,21 @@ class Menu extends Phaser.Scene {
 
         // Animation for selecting Start Game and receiving game options {Regular Mode vs Speed Run Mode}
         if(this.startSelected && !this.startModeOptions && Phaser.Input.Keyboard.JustDown(this.keyRIGHT)) {
-            this.tweens.add({ targets: this.regModeButton, x: this.regModeButton.x + 250, y: this.regModeButton.y - 50, ease: 'Linear', duration: 1000, alpha: 1, });
-            this.tweens.add({ targets: this.speedModeButton, x: this.speedModeButton.x + 250, y: this.speedModeButton.y + 50, ease: 'Linear', duration: 1000, alpha: 1, });
+            this.sound.play('Start', { volume: 0.5 });
+            this.tweens.add({ targets: this.regModeButton, x: this.regModeButton.x + 250, y: this.regModeButton.y - 50, ease: 'Linear', duration: 200, alpha: 1, });
+            this.tweens.add({ targets: this.speedModeButton, x: this.speedModeButton.x + 250, y: this.speedModeButton.y + 50, ease: 'Linear', duration: 200, alpha: 1, });
             this.startButton.setText("[←] Play");
             this.startModeOptions = true;
         }
 
         // Animation for hovering the Regular Mode
         if(this.startModeOptions &&  !this.regModeSelected && Phaser.Input.Keyboard.JustDown(this.keyUP)) {
+            this.sound.play('Select', { volume: 0.5 });
             if(this.speedModeSelected) { 
-                this.tweens.add({ targets: this.speedModeButton, x: this.speedModeButton.x - 50, ease: 'Linear', duration: 1000, }); 
+                this.tweens.add({ targets: this.speedModeButton, x: this.speedModeButton.x - 50, ease: 'Linear', duration: 200, }); 
                 this.speedModeButton.setText("[↓] Speed Run Mode");
             }
-            this.tweens.add({ targets: this.regModeButton, x: this.regModeButton.x + 50, ease: 'Linear', duration: 1000, });
+            this.tweens.add({ targets: this.regModeButton, x: this.regModeButton.x + 50, ease: 'Linear', duration: 200, });
             this.regModeButton.setText("[→] Regular Mode");
             this.regModeSelected = true;
             this.speedModeSelected = false;
@@ -97,11 +101,12 @@ class Menu extends Phaser.Scene {
 
         // Animation for hovering Speed Run Mode
         if(this.startModeOptions && !this.speedModeSelected && Phaser.Input.Keyboard.JustDown(this.keyDOWN)) {
+            this.sound.play('Select', { volume: 0.5 });
             if(this.regModeSelected) { 
-                this.tweens.add({ targets: this.regModeButton, x: this.regModeButton.x - 50, ease: 'Linear', duration: 1000, });
+                this.tweens.add({ targets: this.regModeButton, x: this.regModeButton.x - 50, ease: 'Linear', duration: 200, });
                 this.regModeButton.setText("[↑] Regular Mode");
             }
-            this.tweens.add({ targets: this.speedModeButton, x: this.speedModeButton.x + 50, ease: 'Linear', duration: 1000, });
+            this.tweens.add({ targets: this.speedModeButton, x: this.speedModeButton.x + 50, ease: 'Linear', duration: 200, });
             this.speedModeButton.setText("[→] Speed Run Mode");
             this.speedModeSelected = true;
             this.regModeSelected = false;
@@ -109,6 +114,7 @@ class Menu extends Phaser.Scene {
 
         // Starts the game if player selected to play one of the modes
         if((this.regModeSelected || this.speedModeSelected) && Phaser.Input.Keyboard.JustDown(this.keyRIGHT)) {
+            this.sound.play('Start', { volume: 0.5 });
             if(this.speedModeSelected) { speedrunMode = true; } 
             else { speedrunMode = false; }
             this.resetFlags();
@@ -121,20 +127,22 @@ class Menu extends Phaser.Scene {
         
         // Animation for hovering Tutorial Button
         if(!this.tutorialSelected && !this.startModeOptions && Phaser.Input.Keyboard.JustDown(this.keyDOWN)) {
+            this.sound.play('Select', { volume: 0.5 });
             if(this.startSelected) {
                 this.startButton.setText("[↑] Play");
-                this.tweens.add({ targets: this.regModeButton, x: this.regModeButtonXAnchor, y: this.regModeButtonYAnchor, ease: 'Linear', duration: 1000, alpha: 0, });
-                this.tweens.add({ targets: this.speedModeButton, x: this.speedModeButtonXAnchor, y: this.speedModeButtonYAnchor, ease: 'Linear', duration: 1000, alpha: 0, });
-                this.tweens.add({ targets: this.startButton, x: this.startButtonXAnchor, ease: 'Linear', duration: 1000, });
+                this.tweens.add({ targets: this.regModeButton, x: this.regModeButtonXAnchor, y: this.regModeButtonYAnchor, ease: 'Linear', duration: 200, alpha: 0, });
+                this.tweens.add({ targets: this.speedModeButton, x: this.speedModeButtonXAnchor, y: this.speedModeButtonYAnchor, ease: 'Linear', duration: 200, alpha: 0, });
+                this.tweens.add({ targets: this.startButton, x: this.startButtonXAnchor, ease: 'Linear', duration: 200, });
             }
             this.tutorialButton.setText("[→] Tutorial");
-            this.tweens.add({ targets: this.tutorialButton, x: this.tutorialButton.x + 50, ease: 'Linear', duration: 1000, });
+            this.tweens.add({ targets: this.tutorialButton, x: this.tutorialButton.x + 50, ease: 'Linear', duration: 200, });
             this.startSelected = false;
             this.tutorialSelected = true;
         }
        
         // Starts the tutorial if player selects the tutorial button
         if(this.tutorialSelected && Phaser.Input.Keyboard.JustDown(this.keyRIGHT)) {
+            this.sound.play('Start', { volume: 0.5 });
             game.settings = { gameTimer: 600000 }
             speedrunMode = false;
             this.bg_music.stop();
@@ -143,15 +151,16 @@ class Menu extends Phaser.Scene {
 
         // Resets all options if player hits left arrow - Goes back to the default menu
         if(Phaser.Input.Keyboard.JustDown(this.keyLEFT)) {
+            this.sound.play('Select', { volume: 0.5 });
             this.resetFlags();
             this.startButton.setText("[↑] Play");
             this.tutorialButton.setText("[↓] Tutorial");
             this.regModeButton.setText("[↑] Regular Mode");
             this.speedModeButton.setText("[↓] Speed Run Mode");
-            this.tweens.add({ targets: this.startButton, x: this.startButtonXAnchor, ease: 'Linear', duration: 1000, });
-            this.tweens.add({ targets: this.tutorialButton, x: this.tutorialButtonXAnchor, ease: 'Linear', duration: 1000, });
-            this.tweens.add({ targets: this.regModeButton, x: this.regModeButtonXAnchor, y: this.regModeButtonYAnchor, ease: 'Linear', duration: 1000, alpha: 0, });
-            this.tweens.add({ targets: this.speedModeButton, x: this.speedModeButtonXAnchor, y: this.speedModeButtonYAnchor, ease: 'Linear', duration: 1000, alpha: 0, });
+            this.tweens.add({ targets: this.startButton, x: this.startButtonXAnchor, ease: 'Linear', duration: 200, });
+            this.tweens.add({ targets: this.tutorialButton, x: this.tutorialButtonXAnchor, ease: 'Linear', duration: 200, });
+            this.tweens.add({ targets: this.regModeButton, x: this.regModeButtonXAnchor, y: this.regModeButtonYAnchor, ease: 'Linear', duration: 200, alpha: 0, });
+            this.tweens.add({ targets: this.speedModeButton, x: this.speedModeButtonXAnchor, y: this.speedModeButtonYAnchor, ease: 'Linear', duration: 200, alpha: 0, });
         }
     }
 
