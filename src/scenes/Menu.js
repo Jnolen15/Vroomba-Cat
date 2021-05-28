@@ -11,86 +11,133 @@ class Menu extends Phaser.Scene {
         this.keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
 
         // Display menu text
-        this.title = this.add.text(game.config.width/2, game.config.height * .10, "Vroomba Cat", textConfig).setOrigin(0.5);
-        this.titleMoveSpeed = 5; this.stop = false; this.title.setDepth(1);
-        let startButton = this.add.text(game.config.width/2, game.config.height * .42, "[↑] Start Game", textConfig).setOrigin(0.5);
-        let tutorialButton = this.add.text(game.config.width/2, game.config.height * .58, "[↓] Tutorial", textConfig).setOrigin(0.5);
-        let quitButton = this.add.text(game.config.width/2 ,game.config.height* .65, "Quit", textConfig).setOrigin(0.5);
-        this.modeIndicator = this.add.text(game.config.width/2, game.config.height * .5, "[→] Regular Mode", textConfig).setOrigin(0.5);
+        this.title = this.add.text(game.config.width/2, game.config.height * .30, "Vroomba Cat", textConfig).setOrigin(0.5);
+        this.startButton = this.add.text(game.config.width/2, game.config.height * .50, "[↑] Start Game", textConfig).setOrigin(0.5);
+        this.tutorialButton = this.add.text(game.config.width/2, game.config.height * .58, "[↓] Tutorial", textConfig).setOrigin(0.5);
+        this.regModeButton = this.add.text(this.startButton.x + 50, this.startButton.y, "[↑] Regular Mode", textConfig).setOrigin(0.5);
+        this.speedModeButton = this.add.text(this.startButton.x + 50, this.startButton.y, "[↓] Speed Run Mode", textConfig).setOrigin(0.5);
         
-        // Adding buttons to the main menu
-        startButton.setInteractive();
-        tutorialButton.setInteractive();
-        quitButton.setInteractive();
+        // Sets the extra play options to be invisible
+        this.regModeButton.alpha = 0;
+        this.speedModeButton.alpha = 0;
 
-        // Interaction controls for both buttons
-        startButton.on("pointerover", () => { startButton.setBackgroundColor("green");})
-        startButton.on("pointerout", () => { startButton.setBackgroundColor(textConfig.backgroundColor);})
-        startButton.on("pointerup", () => {
-            game.settings = { gameTimer: 30000}
-            this.scene.start('playScene');
-        })
-        tutorialButton.on("pointerover", () => { tutorialButton.setBackgroundColor("green"); })
-        tutorialButton.on("pointerout", () => { tutorialButton.setBackgroundColor(textConfig.backgroundColor);})
-        tutorialButton.on("pointerup", () => { 
-            game.settings = { gameTimer: 600000}
-            this.scene.start('tutorialScene');
-        })
-        quitButton.on("pointerover", () => { quitButton.setBackgroundColor("green");})
-        quitButton.on("pointerout", () => { quitButton.setBackgroundColor(textConfig.backgroundColor);})
-        quitButton.on("pointerup", () => {
-            this.title.alpha = 0;
-            startButton.alpha = 0;
-            tutorialButton.alpha = 0;
-            quitButton.alpha = 0;
-            this.modeIndicator.alpha = 0;
-            this.troll = this.add.text(game.config.width/2,game.config.height/2, 
-                "HA YOU THOUGHT! YOU CAN NEVER QUIT THIS GAME BECAUSE IT IS THE BEST GAME IN THE WORLD!!!" + 
-                "REFRESH THIS PAGE NOW AND YOU BETTER ENJOY VROOMBA CAT FOR THE REST OF YOUR LIFE BECAUSE IT IS THE ONLY GAME YOU SHOULD PLAY FROM NOW ON. I WILL ACCEPT NO LESS." +
-                "VROOMBA CAT IS THE LIGHT AND IT IS THE SAVIOR. NOW GET BACK TO PLAYING THE GAME CHUMP!", textConfig).setOrigin(0.5);
-        })
+        // Anchor points for the text
+        this.startButtonXAnchor = this.startButton.x;
+        this.tutorialButtonXAnchor = this.tutorialButton.x;
+        this.regModeButtonXAnchor = this.regModeButton.x;
+        this.regModeButtonYAnchor = this.regModeButton.y;
+        this.speedModeButtonXAnchor = this.speedModeButton.x;
+        this.speedModeButtonYAnchor = this.speedModeButton.y;
+        
+        // Boolean flags to determine which options are selected
+        this.startSelected = false;
+        this.tutorialSelected = false;
+        this.startModeOptions = false;
+        this.regModeSelected = false;
+        this.speedModeSelected = false;
+
+        // Jumping title animation
         this.tweens.add({
             targets: this.title,
-            y: game.config.height * .35,
+            y: this.title.y + 100,
             ease: 'Bounce',
             yoyo: 1,
             repeat: -1,
             hold: 3000,
             duration: 1000,
         });
+
+        // Background Music
         this.bg_music = this.sound.add('music', {loop: true});
         this.bg_music.play();
         console.log(this.bg_music);
-        // this.bg_music.stop();
     }
 
-    update() {
-        
-        if(Phaser.Input.Keyboard.JustDown(this.keyRIGHT)){
-            if(!speedrunMode) {
-                speedrunMode = true;
-                this.modeIndicator.setText("[→] Speed Run Mode");
-                this.modeIndicator.setBackgroundColor("Red");
-            }
-            else{
-                speedrunMode = false;
-                this.modeIndicator.setText("[→] Regular Mode");
-                this.modeIndicator.setBackgroundColor(textConfig.backgroundColor);
-            } 
-            console.log("speedrunMode: " + speedrunMode);
+    update() {  
+        // console.log('start: ' + this.startSelected + 
+        //             '\ntutorial: ' + this.tutorialSelected +
+        //             '\nstartOptions: ' + this.startModeOptions +
+        //             '\nregMode: ' + this.regModeSelected +
+        //             '\nspeedMode: ' + this.speedModeSelected);
+
+        // Animation for hovering the Start Game Button
+        if(!this.startSelected && Phaser.Input.Keyboard.JustDown(this.keyUP)) {
+            if(this.tutorialSelected) { this.tweens.add({ targets: this.tutorialButton, x: this.tutorialButtonXAnchor, ease: 'Linear', duration: 1000,}); }
+            this.tweens.add({ targets: this.startButton, x: this.startButton.x + 50, ease: 'Linear', duration: 1000, });
+            this.startSelected = true;
+            this.tutorialSelected = false;
         }
 
-        if(Phaser.Input.Keyboard.JustDown(this.keyUP)) {
+        // Animation for selecting Start Game and receiving game options {Regular Mode vs Speed Run Mode}
+        if(this.startSelected && !this.startModeOptions && Phaser.Input.Keyboard.JustDown(this.keyRIGHT)) {
+            this.tweens.add({ targets: this.regModeButton, x: this.regModeButton.x + 200, y: this.regModeButton.y - 50, ease: 'Linear', duration: 1000, alpha: 1, });
+            this.tweens.add({ targets: this.speedModeButton, x: this.speedModeButton.x + 200, y: this.speedModeButton.y + 50, ease: 'Linear', duration: 1000, alpha: 1, });
+            this.startModeOptions = true;
+        }
+
+        // Animation for hovering the Regular Mode
+        if(this.startModeOptions &&  !this.regModeSelected && Phaser.Input.Keyboard.JustDown(this.keyUP)) {
+            if(this.speedModeSelected) { this.tweens.add({ targets: this.speedModeButton, x: this.speedModeButton.x - 50, ease: 'Linear', duration: 1000, }); }
+            this.tweens.add({ targets: this.regModeButton, x: this.regModeButton.x + 50, ease: 'Linear', duration: 1000, });
+            this.regModeSelected = true;
+            this.speedModeSelected = false;
+        }
+
+        // Animation for hovering Speed Run Mode
+        if(this.startModeOptions && !this.speedModeSelected && Phaser.Input.Keyboard.JustDown(this.keyDOWN)) {
+            if(this.regModeSelected) { this.tweens.add({ targets: this.regModeButton, x: this.regModeButton.x - 50, ease: 'Linear', duration: 1000, });}
+            this.tweens.add({ targets: this.speedModeButton, x: this.speedModeButton.x + 50, ease: 'Linear', duration: 1000, });
+            this.speedModeSelected = true;
+            this.regModeSelected = false;
+        }
+
+        // Starts the game if player selected to play one of the modes
+        if((this.regModeSelected || this.speedModeSelected) && Phaser.Input.Keyboard.JustDown(this.keyRIGHT)) {
+            if(this.speedModeSelected) { speedrunMode = true; } 
+            else { speedrunMode = false; }
+            this.resetFlags();
+
             game.settings = { gameTimer: 30000 }
             this.bg_music.stop();
+            console.log(speedrunMode);
             this.scene.start('playScene');
         }
-
-        if(Phaser.Input.Keyboard.JustDown(this.keyDOWN)) {
+        
+        // Animation for hovering Tutorial Button
+        if(!this.tutorialSelected && !this.startModeOptions && Phaser.Input.Keyboard.JustDown(this.keyDOWN)) {
+            if(this.startSelected) {
+                this.tweens.add({ targets: this.regModeButton, x: this.regModeButtonXAnchor, y: this.regModeButtonYAnchor, ease: 'Linear', duration: 1000, alpha: 0, });
+                this.tweens.add({ targets: this.speedModeButton, x: this.speedModeButtonXAnchor, y: this.speedModeButtonYAnchor, ease: 'Linear', duration: 1000, alpha: 0, });
+                this.tweens.add({ targets: this.startButton, x: this.startButtonXAnchor, ease: 'Linear', duration: 1000, });
+            }
+            this.tweens.add({ targets: this.tutorialButton, x: this.tutorialButton.x + 50, ease: 'Linear', duration: 1000, });
+            this.startSelected = false;
+            this.tutorialSelected = true;
+        }
+       
+        // Starts the tutorial if player selects the tutorial button
+        if(this.tutorialSelected && Phaser.Input.Keyboard.JustDown(this.keyRIGHT)) {
             game.settings = { gameTimer: 600000 }
             speedrunMode = false;
             this.bg_music.stop();
             this.scene.start('tutorialScene');
         }
+
+        // Resets all options if player hits left arrow - Goes back to the default menu
+        if(Phaser.Input.Keyboard.JustDown(this.keyLEFT)) {
+            this.resetFlags();
+            this.tweens.add({ targets: this.startButton, x: this.startButtonXAnchor, ease: 'Linear', duration: 1000, });
+            this.tweens.add({ targets: this.tutorialButton, x: this.tutorialButtonXAnchor, ease: 'Linear', duration: 1000, });
+            this.tweens.add({ targets: this.regModeButton, x: this.regModeButtonXAnchor, y: this.regModeButtonYAnchor, ease: 'Linear', duration: 1000, alpha: 0, });
+            this.tweens.add({ targets: this.speedModeButton, x: this.speedModeButtonXAnchor, y: this.speedModeButtonYAnchor, ease: 'Linear', duration: 1000, alpha: 0, });
+        }
+    }
+
+    resetFlags() {
+        this.regModeSelected = false;
+        this.speedModeSelected = false;
+        this.startModeOptions = false;
+        this.startSelected = false;
+        this.tutorialSelected = false;
     }
 }
