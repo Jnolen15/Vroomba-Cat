@@ -19,10 +19,12 @@ let config = {
 // basic text configuration for rest of coding
 let textConfig = {
     fontFamily: 'Courier',
-    fontSize: '28px',
-    backgroundColor: '#F3B141',
-    color: '#843605',
+    fontSize: '24px',
+    color: 'white',
     align: 'center',
+    stroke: '#000000',
+    strokeThickness: 6,
+    fill: 'white',
     padding: {
     top: 5,
     bottom: 5,

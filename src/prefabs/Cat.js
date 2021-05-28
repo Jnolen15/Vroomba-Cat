@@ -11,12 +11,12 @@ class Cat extends Phaser.Physics.Arcade.Sprite {
         // Cat properties
         this.moveSpeed = 20;            // On ground move speed
         this.moveSpeedMax = 500;        // On ground Max move speed
-        this.turboMoveSpeed = 40;       // On ground TURBO move speed
-        this.turboMoveSpeedMax = 900;   // On ground TURBO Max move speed
+        this.turboMoveSpeed = 30;       // On ground TURBO move speed
+        this.turboMoveSpeedMax = 700;   // On ground TURBO Max move speed
         this.numJumps = 2;              // Number of jumps the player currently has
         this.totalJumps = 2;            // Total number of jumps the player has
-        this.jumpSpeed = 500;           // Jump speed / height
-        this.doubleSpeed = 400;         // Jump speed / height of second jump
+        this.jumpSpeed = 525;           // Jump speed / height
+        this.doubleSpeed = 350;         // Jump speed / height of second jump
         this.airBrake = 10;             // Air Braking
         this.groundBrake = 25;          // Ground Braking
         this.airSpeed = 20;             // How much in air controll the player has
