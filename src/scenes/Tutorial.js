@@ -3,30 +3,87 @@ class Tutorial extends Phaser.Scene {
         super("tutorialScene");
     }
 
+    preload(){        
+        // Load Json file
+        this.load.tilemapTiledJSON('tutorial', './assets/tilemap/tm_tutorial.json');
+        // Load Spritesheet
+        this.load.image('furniture2', './assets/tilemap/ts_furniture2.png');
+        this.load.image('collision', './assets/tilemap/ts_collision.png');
+        this.load.image('wallpaper', './assets/tilemap/ts_wallpaper.png');
+    }
+    
     create() {
-        // this.scale.setGameSize(1024*2, 768*2);
-        // this.scale.setZoom(.5);
-        this.physics.world.setBounds(0,0,8000,768);
-        this.controller = new Controller(this);
-        this.controller.scene.cameras.main.setBounds(0,0,8000,768);
+        // Set world bounds
+        this.physics.world.setBounds(0,0,5250,657);
+        
+        //Create the tilemap
+        const map = this.add.tilemap('tutorial');
+
+        // Scale of tilemap
+        const tmScale = 0.35;
+
+        // add a tileset to the map
+        const tsFurniture2 = map.addTilesetImage('ts_furniture2', 'furniture2');
+        const tsCollision = map.addTilesetImage('ts_collision', 'collision');
+        const tsWallpaper = map.addTilesetImage('ts_wallpaper', 'wallpaper');
+
+        // create tilemap layers
+        const WallpaperLayer = map.createLayer('bkgLayer', tsWallpaper, 0, 0);
+        WallpaperLayer.setScale(tmScale);
+        
+        const FurnitureLayer = map.createLayer('furnitureLayer', tsFurniture2, 0, 0);
+        FurnitureLayer.setScale(tmScale);
+        
+        const CollisionLayer = map.createLayer('collisionLayer', tsCollision, 0, 0);
+        CollisionLayer.setScale(tmScale);
+        CollisionLayer.alpha = 0;
+
+        const objectsLayer = map.getObjectLayer('objectsLayer')['objects'];
+        //objectsLayer.setScale(tmScale);
+
+        // Collision
+        CollisionLayer.setCollisionFromCollisionGroup();
+        // This part of code from https://www.html5gamedevs.com/topic/40484-jump-through-a-tile-from-underneath/
+        CollisionLayer.layer.data.forEach((row) => { // here we are iterating through each tile.
+			row.forEach((Tile) => {
+                if(Tile.index==951){ 
+                    Tile.collideDown = false;
+                    Tile.collideLeft = false;
+                    Tile.collideRight = false;
+                }
+                //if(Tile.index!=-1)console.log(Tile.index);
+			})
+		});
+
+        // Add controller
+        this.controller = new Controller(this, CollisionLayer);
+
+        // Spawning objects
+        objectsLayer.forEach(object => { // here we are iterating through each object.
+			switch(object.name) {
+                case 'obj':
+                    this.controller.spawner.createProp(this.randProp(), object.x*tmScale, object.y*tmScale, 0.5, CollisionLayer);
+                    numObjs++;
+                    break;
+                case 'big':
+                    this.controller.spawner.createBigProp(this.randBigProp(), object.x*tmScale, object.y*tmScale, 0.5, CollisionLayer);
+                    numObjs++;
+                    break;
+                case 'wall':
+                    this.controller.spawner.createAirProp(this.randWallProp(), object.x*tmScale, object.y*tmScale, 0.5, CollisionLayer);
+                    numObjs++;
+                    break;
+                default: break;
+            }
+		});
+
+        // Set camera to world bounds
+        this.controller.scene.cameras.main.setBounds(0,0,5250,657);
+
+        // Get Player add text
         this.vroombaCat = this.controller.cat.body;
         this.tutorialText = this.add.text(this.controller.cat.body.x, this.controller.cat.body.y, "Use ←→ or A/D to move.", textConfig).setOrigin(0.5);
         this.directionalText = this.add.text(this.controller.cat.body.x, this.controller.cat.body.y, "Go →", textConfig).setOrigin(0.5);
-        this.platform1 = this.controller.spawner.createPlatform('platform', 1500, 700, 3, 1);
-        this.wall1 = this.controller.spawner.createPlatform('platform', 1400, 700, .25, 4);
-
-        this.platform2 = this.controller.spawner.createPlatform('platform', 3500, 700, 3, 1);
-        this.wall2 = this.controller.spawner.createPlatform('platform', 3400, 700, .25, 4);
-        this.platform3 = this.controller.spawner.createPlatform('platform', 3500, 600, 3, 1);
-        this.wall3 = this.controller.spawner.createPlatform('platform', 3400, 600, .25, 4);
-
-        console.log(this.wall1);
-        this.prop1 = this.controller.spawner.createProp('p_cup', 2250, game.config.height+200, 0.5);
-        this.prop2 = this.controller.spawner.createProp('p_apple', 2550, game.config.height+200, 0.5);
-        this.prop3 = this.controller.spawner.createProp('p_frame', 2750, game.config.height+200, 0.5);
-        this.prop4 = this.controller.spawner.createBigProp('p_lamp1', 4500, game.config.height+200, 0.5);
-        this.prop5 = this.controller.spawner.createAirProp('p_wallclock', 5500, game.config.height-200, 0.5);
-
         this.keyM = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
         this.keyP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
     }
@@ -35,7 +92,7 @@ class Tutorial extends Phaser.Scene {
         this.controller.update(time, delta);
         this.tutorialText.setPosition(this.vroombaCat.x + this.vroombaCat.width/2, this.vroombaCat.y - 100);
         this.directionalText.setPosition(this.vroombaCat.x + this.vroombaCat.width/2, this.vroombaCat.y - 350);
-        if(this.vroombaCat.x > 0 && this.vroombaCat.x < 1000) {
+        /*if(this.vroombaCat.x > 0 && this.vroombaCat.x < 1000) {
             this.tutorialText.setText("Use ←→ or A/D to move.");
         }
         else if(this.vroombaCat.x > 1000 && this.vroombaCat.x < 2000) {
@@ -60,6 +117,24 @@ class Tutorial extends Phaser.Scene {
             this.tutorialText.setText("Press (M)enu (P)lay!");
             if(Phaser.Input.Keyboard.JustDown(this.keyM)) this.scene.start("menuScene");
             else if(Phaser.Input.Keyboard.JustDown(this.keyP)) this.scene.start("playScene");
-        }
+        }*/
+    }
+
+    randProp(){
+        const props = ['p_cup', 'p_apple', 'p_frame', 'p_fruitbowl', 'p_pencilcup', 'p_spoons'];
+        var rand = Phaser.Math.Between(0,5);
+        return props[rand];
+    }
+
+    randBigProp(){
+        const bigProps = ['p_fishbowl', 'p_lamp1'];
+        var rand = Phaser.Math.Between(0,1);
+        return bigProps[rand];
+    }
+
+    randWallProp(){
+        const wallProps = ['p_wallclock'];
+        var rand = Phaser.Math.Between(0,0);
+        return wallProps[rand];
     }
 }
