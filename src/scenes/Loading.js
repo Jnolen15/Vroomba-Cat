@@ -34,6 +34,8 @@ class Loading extends Phaser.Scene {
         this.load.image('scorecounters_back', './assets/ui_counters_back.png');
         this.load.image('scorecounters_streak', './assets/ui_counters_streak.png');
         this.load.image('debris', './assets/prop_dust.png');
+        // Menu Background
+        this.load.image('bg', './assets/static_menubackground.png');
         // Props
         this.load.image('p_cup', './assets/prop_cup.png');
         this.load.image('p_apple', './assets/prop_apple.png');
