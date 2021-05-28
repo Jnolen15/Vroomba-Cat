@@ -10,6 +10,7 @@ class Play extends Phaser.Scene {
         this.load.image('furniture2', './assets/tilemap/ts_furniture2.png');
         this.load.image('collision', './assets/tilemap/ts_collision.png');
         this.load.image('wallpaper', './assets/tilemap/ts_wallpaper.png');
+        this.load.image('shadows', './assets/tilemap/ts_shadows.png');
     }
     
     create() {
@@ -26,12 +27,16 @@ class Play extends Phaser.Scene {
         const tsFurniture2 = map.addTilesetImage('ts_furniture2', 'furniture2');
         const tsCollision = map.addTilesetImage('ts_collision', 'collision');
         const tsWallpaper = map.addTilesetImage('ts_wallpaper', 'wallpaper');
+        const tsShadows = map.addTilesetImage('ts_shadows', 'shadows');
 
         // create tilemap layers
-        const WallpaperLayer = map.createLayer('bkgLayer', tsWallpaper, 0, -105);
+        const WallpaperLayer = map.createLayer('bkgLayer', tsWallpaper, 0, 0);
         WallpaperLayer.setScale(tmScale);
+
+        const ShadowsLayer = map.createLayer('shadowLayer', tsShadows, 0, 0);
+        ShadowsLayer.setScale(tmScale);
         
-        const FurnitureLayer = map.createLayer('furnitureLayer', tsFurniture2, 0, -105);
+        const FurnitureLayer = map.createLayer('furnitureLayer', tsFurniture2, 0, 0);
         FurnitureLayer.setScale(tmScale);
         
         const CollisionLayer = map.createLayer('collisionLayer', tsCollision, 0, 0);
@@ -46,7 +51,7 @@ class Play extends Phaser.Scene {
         // This part of code from https://www.html5gamedevs.com/topic/40484-jump-through-a-tile-from-underneath/
         CollisionLayer.layer.data.forEach((row) => { // here we are iterating through each tile.
 			row.forEach((Tile) => {
-                if(Tile.index==39){ 
+                if(Tile.index==1){ 
                     Tile.collideDown = false;
                     Tile.collideLeft = false;
                     Tile.collideRight = false;
