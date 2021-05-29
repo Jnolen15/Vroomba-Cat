@@ -54,6 +54,7 @@ class Loading extends Phaser.Scene {
         // Add sprites via sprite atlas
         this.load.atlas('anim_move_atlas', './assets/anim_moveFLIPPED.png', './assets/anim_move.json');
         this.load.atlas('anim_kickflip_atlas', './assets/anim_kickflip.png', './assets/anim_kickflip.json');
+        this.load.atlas('anim_swipe_atlas', './assets/anim_swipe.png', './assets/anim_swipe.json');
         // Add audio
         this.load.audio('Hit1', './assets/sounds/Hit1.mp3');
         this.load.audio('Hit2', './assets/sounds/Hit2.mp3');
@@ -196,7 +197,20 @@ class Loading extends Phaser.Scene {
                 {key: 'anim_kickflip_atlas', frame: 'kickflip_4'}
             ]
         });
+        // swiping 
+        this.anims.create({
+            key: 'swiping_animation',
+            frameRate: 10,
+            repeat: 0,
+            frames: this.anims.generateFrameNames('anim_swipe_atlas', {
+                prefix: 'swipe',
+                suffix: ".png",
+                start: 1,
+                end: 2
+            })
+        });
 
+        // Start scene
         this.scene.start('menuScene');
     }
 }

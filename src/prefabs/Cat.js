@@ -121,6 +121,7 @@ class Cat extends Phaser.Physics.Arcade.Sprite {
         // Swipe (Just the animation and sound)
         if(Phaser.Input.Keyboard.JustDown(this.keyS) || Phaser.Input.Keyboard.JustDown(this.keyDOWN)){
             this.scene.sound.play('Swipe', { volume: 2 });
+            this.doSwipeAnimation();
         }
 
         // --- manage swipe hitbox position
@@ -140,7 +141,6 @@ class Cat extends Phaser.Physics.Arcade.Sprite {
     turboChargeCat(scene) {
         this.moveSpeed = this.turboMoveSpeed;
         this.moveSpeedMax = this.turboMoveSpeedMax;
-        console.log("TURBO!!");
         this.scene.tweens.add({
             targets: this.vac,
             volume: 0.05,
@@ -151,7 +151,6 @@ class Cat extends Phaser.Physics.Arcade.Sprite {
         this.clock = scene.time.delayedCall(1000, () => {
             this.moveSpeed = 20;
             this.moveSpeedMax = 500;
-            console.log("End of turbo!!");
             this.scene.tweens.add({
                 targets: this.vac,
                 volume: 0.025,
@@ -257,6 +256,11 @@ class Cat extends Phaser.Physics.Arcade.Sprite {
             // transition to rising again
             this.play('air_rising_animation', true);
         });
+    }
+
+    doSwipeAnimation() {
+        // play the swipe animation
+        this.play('swiping_animation', true);
     }
 
 }

@@ -70,9 +70,9 @@ class Spawner {
                     this.playRandSound(['Hit1', 'Hit2'], 1);
                     this.scene.controller.addToScore(this.bigPropPoints);
                     this.makeScorePopUp(prop, this.bigPropPoints);
-                    console.log("swiped big prop " + hitCount + " times");
                     this.scene.cameras.main.shake(20, 0.01);
                 }
+                this.cat.doSwipeAnimation();
             } 
         }, null, this);
     }
@@ -119,7 +119,7 @@ class Spawner {
         // debris.setBodySize(75,10);
         // console.log(this.debris);
         this.clock = this.scene.time.delayedCall(1000, () => {
-            console.log(debris);
+            //console.log(debris);
             debris.alpha = 1;
             debris.active = true;
             this.scene.physics.add.overlap(this.cat, debris, function(cat, deb) {
