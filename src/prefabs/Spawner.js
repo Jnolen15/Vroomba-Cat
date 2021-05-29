@@ -17,6 +17,41 @@ class Spawner {
         this.propPoints = 5;
         this.bigPropPoints = 2;
         this.airPropPoints = 5;
+
+        // Particles
+        let dustparticleConfig = {
+            x: 0,
+            y: 0,
+            blendmode: 'ADD',
+            speedX: {min: -50, max: 50},
+            scale: {min: 0.1, max: 0.3},
+            rotate: {min: 0, max: 360},
+            alpha: {start: 1, end: 0},
+            lifespan: {min: 1000, max: 1500},
+            gravityY: 20,
+            on: false,
+        }
+
+        this.dustParticles = this.scene.add.particles('poof');
+        this.dustParticles.depth = 200;
+        this.dustemitter = this.dustParticles.createEmitter(dustparticleConfig);
+
+        let shardparticleConfig = {
+            x: 0,
+            y: 0,
+            blendmode: 'ADD',
+            speed: {min: 20, max: 80},
+            scale: {min: 0.2, max: 0.6},
+            rotate: {start: 0, end: 360},
+            alpha: {start: 1, end: 0},
+            lifespan: {min: 200, max: 600},
+            gravityY: 50,
+            on: false,
+        }
+
+        this.shardParticles = this.scene.add.particles('shard');
+        this.shardParticles.depth = 200;
+        this.shardemitter = this.shardParticles.createEmitter(shardparticleConfig);
     }
 
     createProp(spriteName, xPos, yPos, scale) {
@@ -34,6 +69,8 @@ class Spawner {
             this.spawnDebris(prop);
             this.scene.controller.addToScore(this.propPoints);
             this.makeScorePopUp(prop, this.propPoints);
+            this.dustParticles.emitParticleAt(prop.x, prop.y+15, 8);
+            this.shardParticles.emitParticleAt(prop.x, prop.y+15, 20);
             prop.destroy();
             this.playRandSound(['Break1', 'Break2', 'Break3', 'Break4'], 0.4);
             prop.destroyed = true;
@@ -59,6 +96,8 @@ class Spawner {
                     hitCount = 0;
                     //this.scene.sound.play('a1', { volume: 2 });
                     this.spawnDebris(prop);
+                    this.dustParticles.emitParticleAt(prop.x, prop.y+15, 16);
+                    this.shardParticles.emitParticleAt(prop.x, prop.y+15, 30);
                     prop.destroy();
                     this.scene.controller.addToScore(this.bigPropPoints * 2);
                     this.makeScorePopUp(prop, this.bigPropPoints * 2);
@@ -71,6 +110,8 @@ class Spawner {
                     this.scene.controller.addToScore(this.bigPropPoints);
                     this.makeScorePopUp(prop, this.bigPropPoints);
                     this.scene.cameras.main.shake(20, 0.01);
+                    this.dustParticles.emitParticleAt(prop.x, prop.y+15, 1);
+                    this.shardParticles.emitParticleAt(prop.x, prop.y+15, 2);
                 }
                 this.cat.doSwipeAnimation();
             } 
@@ -89,6 +130,8 @@ class Spawner {
                 this.cat.body.velocity.y = -this.cat.jumpSpeed;
                 this.scene.controller.addToScore(this.airPropPoints);
                 this.makeScorePopUp(prop, this.airPropPoints);
+                this.dustParticles.emitParticleAt(prop.x, prop.y+15, 12);
+                this.shardParticles.emitParticleAt(prop.x, prop.y+15, 26);
                 prop.destroy();
                 this.playRandSound(['Break1', 'Break2', 'Break3', 'Break4'], 0.4);
                 this.scene.cameras.main.shake(20, 0.01);

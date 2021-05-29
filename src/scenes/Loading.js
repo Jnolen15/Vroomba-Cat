@@ -51,6 +51,8 @@ class Loading extends Phaser.Scene {
         this.load.image('p_wallclock', './assets/prop_wallclock.png');
         // Debris
         this.load.image('debris', './assets/prop_dust.png');
+        this.load.image('poof', './assets/prop_poof.png');
+        this.load.image('shard', './assets/prop_shard.png');
         // Add sprites via sprite atlas
         this.load.atlas('anim_move_atlas', './assets/anim_moveFLIPPED.png', './assets/anim_move.json');
         this.load.atlas('anim_kickflip_atlas', './assets/anim_kickflip.png', './assets/anim_kickflip.json');
