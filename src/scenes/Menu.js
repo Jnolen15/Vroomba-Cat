@@ -117,12 +117,13 @@ class Menu extends Phaser.Scene {
             this.sound.play('Start', { volume: 0.5 });
             if(this.speedModeSelected) { speedrunMode = true; } 
             else { speedrunMode = false; }
-            this.resetFlags();
+            //this.resetFlags();
 
             game.settings = { gameTimer: 30000 }
             this.bg_music.stop();
             console.log(speedrunMode);
-            this.scene.start('playScene');
+            if(this.speedModeSelected) { this.resetFlags(); this.scene.start('speedrunScene');} 
+            else { this.resetFlags(); this.scene.start('playScene');}
         }
         
         // Animation for hovering Tutorial Button

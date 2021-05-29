@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.6.0" orientation="orthogonal" renderorder="right-down" width="200" height="25" tilewidth="75" tileheight="75" infinite="0" nextlayerid="7" nextobjectid="23">
+<map version="1.5" tiledversion="1.6.0" orientation="orthogonal" renderorder="right-down" width="200" height="25" tilewidth="75" tileheight="75" infinite="0" nextlayerid="7" nextobjectid="24">
  <editorsettings>
   <export target="tm_tutorial.json" format="json"/>
  </editorsettings>
@@ -115,6 +115,9 @@
    <point/>
   </object>
   <object id="22" name="obj" x="12975" y="525">
+   <point/>
+  </object>
+  <object id="23" name="spawn" x="1500" y="1650">
    <point/>
   </object>
  </objectgroup>
