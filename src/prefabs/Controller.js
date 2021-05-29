@@ -85,10 +85,11 @@ class Controller {
         this.scoreText = scene.add.text(UICenterX - 65, UICenterY - 45, '0', scoreTextConfig);
         this.positionUIForCam(this.scoreText);
         // streak text
-        this.comboText = scene.add.text(UICenterX - 160, UICenterY + 18, '0', scoreTextConfig);
+        this.comboText = scene.add.text(UICenterX - 160, UICenterY + 8, '0', messyTextConfig);
         this.positionUIForCam(this.comboText);
         // multiplier text
-        this.multText = scene.add.text(UICenterX + 35, UICenterY - 45, 'x1', scoreTextConfig);
+        this.multText = scene.add.text(UICenterX + 35, UICenterY - 60, 'x1', messyTextConfig);
+        this.multText.setFontSize(50);
         this.positionUIForCam(this.multText);
     }
 
@@ -193,12 +194,21 @@ class Controller {
         this.scoreText.setText(this.score);
         this.comboText.setText(this.currCombo);
         this.multText.setText("x" + this.scoreMulti);
+        
+        // score multiplier visibility
         if (this.scoreMulti > 1) {
             this.multiplier_back.alpha = 1;
             this.multText.alpha = 1;
         } else {
             this.multiplier_back.alpha = 0;
             this.multText.alpha = 0;
+        }
+
+        // score multiplier color 
+        if (this.scoreMulti == 3) {
+            this.multText.setColor("orange");
+        } else if (this.scoreMulti == 2) {
+            this.multText.setColor("yellow");
         }
     }
 

@@ -38,6 +38,20 @@ let scoreTextConfig = {
     fontSize: '28px',
     color: '#ffffff',
     align: 'center',
+    stroke: '#fff',
+    strokeThickness: 2,
+    padding: {
+    top: 5,
+    bottom: 5,
+    },
+    fixedWidth: 70
+}
+
+let messyTextConfig = {
+    fontFamily: 'edosz',
+    fontSize: '32px',
+    color: '#ffffff',
+    align: 'center',
     padding: {
     top: 5,
     bottom: 5,
