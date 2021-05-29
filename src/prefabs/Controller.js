@@ -59,29 +59,37 @@ class Controller {
         this.maxScoreTime = 2000;
         this.currScoreTime = 0;
         
-        // --- Setting up UI
-        let UICenterX = game.config.width * .13;
+        // --- Setting up UI backside art
+        let UICenterX = game.config.width * .18;
         let UICenterY = game.config.height * .9;
         // score counters art
         this.scoreCountersArt = scene.add.sprite(UICenterX, UICenterY, 'scorecounters_back');
         this.scoreCountersArt.setScale(.6);
         this.positionUIForCam(this.scoreCountersArt);
-        this.comboSteakArt = scene.add.sprite(UICenterX, UICenterY, 'scorecounters_streak');
-        this.comboSteakArt.setScale(.6);
-        this.positionUIForCam(this.comboSteakArt);
-        // score text
-        this.scoreText = scene.add.text(UICenterX * 1.2, UICenterY * .93, '0', scoreTextConfig);
-        this.positionUIForCam(this.scoreText);
-        // streak text
-        this.comboText = scene.add.text(UICenterX * .44, UICenterY * 1.02, '0111111', scoreTextConfig);
-        this.positionUIForCam(this.comboText);
-        // combo meter art
-        this.comboMeter_back = scene.add.sprite(UICenterX * 1.73, UICenterY * 1.04, 'combometer_back');
+        // multiplier backside art
+        this.multiplier_back = scene.add.sprite(UICenterX, UICenterY, 'multiplier_back');
+        this.multiplier_back.setScale(.6);
+        this.positionUIForCam(this.multiplier_back);
+        // combo meter backside
+        this.comboMeter_back = scene.add.sprite(UICenterX + 34, UICenterY + 29, 'combometer_back');
         this.comboMeter_back.setScale(.6);
         this.positionUIForCam(this.comboMeter_back);
-        this.comboMeter_front = scene.add.sprite(UICenterX * 1.73, UICenterY * 1.04, 'combometer_front');
+
+        // --- Setting up UI combo meter lights
+        this.comboMeter_front = scene.add.sprite(UICenterX + 34, UICenterY + 28, 'combometer_front');
         this.comboMeter_front.setScale(.6);
         this.positionUIForCam(this.comboMeter_front);
+
+        // --- Setting up UI text
+        // score text
+        this.scoreText = scene.add.text(UICenterX - 65, UICenterY - 45, '0', scoreTextConfig);
+        this.positionUIForCam(this.scoreText);
+        // streak text
+        this.comboText = scene.add.text(UICenterX - 160, UICenterY + 18, '0', scoreTextConfig);
+        this.positionUIForCam(this.comboText);
+        // multiplier text
+        this.multText = scene.add.text(UICenterX + 35, UICenterY - 45, 'x1', scoreTextConfig);
+        this.positionUIForCam(this.multText);
     }
 
 
@@ -164,6 +172,8 @@ class Controller {
                 this.currScoreTime -= delta;
             }
         }
+
+        // Managing combo meter cat paw lights
         this.comboMeter_front.frame.cutWidth = this.comboMeter_front.frame.width * this.inverseLerp(this.currScoreTime, 0, this.maxScoreTime);
     }
 
@@ -182,10 +192,13 @@ class Controller {
         // Update score text
         this.scoreText.setText(this.score);
         this.comboText.setText(this.currCombo);
+        this.multText.setText("x" + this.scoreMulti);
         if (this.scoreMulti > 1) {
-            // this.comboText.setBackgroundColor('#fff000');
+            this.multiplier_back.alpha = 1;
+            this.multText.alpha = 1;
         } else {
-            // this.comboText.setBackgroundColor('#F3B141');
+            this.multiplier_back.alpha = 0;
+            this.multText.alpha = 0;
         }
     }
 
