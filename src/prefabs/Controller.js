@@ -29,7 +29,7 @@ class Controller {
             menuText1.alpha = 0; 
             menuText2.alpha = 0;
 
-            this.clock = scene.time.delayedCall(5000, () => {
+            this.clock = scene.time.delayedCall(game.settings.gameTimer, () => {
                 menuText1.alpha = 1;
                 menuText2.alpha = 1;
                 gameOver = true;
