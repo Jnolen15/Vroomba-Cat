@@ -9,6 +9,10 @@ class Menu extends Phaser.Scene {
         this.keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
         this.keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         this.keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
+        this.keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+        this.keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
+        this.keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+        this.keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
 
         // Menu Background
         this.add.image(game.config.width/2,game.config.height/2,'bg').setOrigin(0.5);
@@ -65,7 +69,7 @@ class Menu extends Phaser.Scene {
         //             '\nspeedMode: ' + this.speedModeSelected);
 
         // Animation for hovering the Start Game Button
-        if(!this.startSelected && Phaser.Input.Keyboard.JustDown(this.keyUP)) {
+        if(!this.startSelected && (Phaser.Input.Keyboard.JustDown(this.keyUP) || Phaser.Input.Keyboard.JustDown(this.keyW))) {
             this.sound.play('Select', { volume: 0.5 });
             if(this.tutorialSelected) { 
                 this.tweens.add({ targets: this.tutorialButton, x: this.tutorialButtonXAnchor, ease: 'Linear', duration: 200,}); 
@@ -78,7 +82,7 @@ class Menu extends Phaser.Scene {
         }
 
         // Animation for selecting Start Game and receiving game options {Regular Mode vs Speed Run Mode}
-        if(this.startSelected && !this.startModeOptions && Phaser.Input.Keyboard.JustDown(this.keyRIGHT)) {
+        if(this.startSelected && !this.startModeOptions && (Phaser.Input.Keyboard.JustDown(this.keyRIGHT) || Phaser.Input.Keyboard.JustDown(this.keyD))) {
             this.sound.play('Start', { volume: 0.5 });
             this.tweens.add({ targets: this.regModeButton, x: this.regModeButton.x + 250, y: this.regModeButton.y - 50, ease: 'Linear', duration: 200, alpha: 1, });
             this.tweens.add({ targets: this.speedModeButton, x: this.speedModeButton.x + 250, y: this.speedModeButton.y + 50, ease: 'Linear', duration: 200, alpha: 1, });
@@ -87,7 +91,7 @@ class Menu extends Phaser.Scene {
         }
 
         // Animation for hovering the Regular Mode
-        if(this.startModeOptions &&  !this.regModeSelected && Phaser.Input.Keyboard.JustDown(this.keyUP)) {
+        if(this.startModeOptions &&  !this.regModeSelected && (Phaser.Input.Keyboard.JustDown(this.keyUP) || Phaser.Input.Keyboard.JustDown(this.keyW))) {
             this.sound.play('Select', { volume: 0.5 });
             if(this.speedModeSelected) { 
                 this.tweens.add({ targets: this.speedModeButton, x: this.speedModeButton.x - 50, ease: 'Linear', duration: 200, }); 
@@ -100,7 +104,7 @@ class Menu extends Phaser.Scene {
         }
 
         // Animation for hovering Speed Run Mode
-        if(this.startModeOptions && !this.speedModeSelected && Phaser.Input.Keyboard.JustDown(this.keyDOWN)) {
+        if(this.startModeOptions && !this.speedModeSelected && (Phaser.Input.Keyboard.JustDown(this.keyDOWN) || Phaser.Input.Keyboard.JustDown(this.keyS))) {
             this.sound.play('Select', { volume: 0.5 });
             if(this.regModeSelected) { 
                 this.tweens.add({ targets: this.regModeButton, x: this.regModeButton.x - 50, ease: 'Linear', duration: 200, });
@@ -113,7 +117,7 @@ class Menu extends Phaser.Scene {
         }
 
         // Starts the game if player selected to play one of the modes
-        if((this.regModeSelected || this.speedModeSelected) && Phaser.Input.Keyboard.JustDown(this.keyRIGHT)) {
+        if((this.regModeSelected || this.speedModeSelected) && (Phaser.Input.Keyboard.JustDown(this.keyRIGHT) || Phaser.Input.Keyboard.JustDown(this.keyD))) {
             this.sound.play('Start', { volume: 0.5 });
             if(this.speedModeSelected) { speedrunMode = true; } 
             else { speedrunMode = false; }
@@ -127,7 +131,7 @@ class Menu extends Phaser.Scene {
         }
         
         // Animation for hovering Tutorial Button
-        if(!this.tutorialSelected && !this.startModeOptions && Phaser.Input.Keyboard.JustDown(this.keyDOWN)) {
+        if(!this.tutorialSelected && !this.startModeOptions && (Phaser.Input.Keyboard.JustDown(this.keyDOWN) || Phaser.Input.Keyboard.JustDown(this.keyS))) {
             this.sound.play('Select', { volume: 0.5 });
             if(this.startSelected) {
                 this.startButton.setText("[↑] Play");
@@ -142,7 +146,7 @@ class Menu extends Phaser.Scene {
         }
        
         // Starts the tutorial if player selects the tutorial button
-        if(this.tutorialSelected && Phaser.Input.Keyboard.JustDown(this.keyRIGHT)) {
+        if(this.tutorialSelected && (Phaser.Input.Keyboard.JustDown(this.keyRIGHT) || Phaser.Input.Keyboard.JustDown(this.keyD))) {
             this.sound.play('Start', { volume: 0.5 });
             game.settings = { gameTimer: 600000 }
             speedrunMode = false;
@@ -151,7 +155,7 @@ class Menu extends Phaser.Scene {
         }
 
         // Resets all options if player hits left arrow - Goes back to the default menu
-        if(Phaser.Input.Keyboard.JustDown(this.keyLEFT)) {
+        if(Phaser.Input.Keyboard.JustDown(this.keyLEFT) || Phaser.Input.Keyboard.JustDown(this.keyA)) {
             this.sound.play('Select', { volume: 0.5 });
             this.resetFlags();
             this.startButton.setText("[↑] Play");
