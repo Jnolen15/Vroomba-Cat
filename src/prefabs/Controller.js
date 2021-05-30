@@ -61,7 +61,11 @@ class Controller {
         let UICenterX = game.config.width * .18;
         let UICenterY = game.config.height * .9;
         // timer art
-        this.timerArt = scene.add.sprite(20, 10, 'timer_back').setOrigin(0,0);
+        if (!speedrunMode) {
+            this.timerArt = scene.add.sprite(20, 10, 'timer_back').setOrigin(0,0);
+        } else {
+            this.timerArt = scene.add.sprite(20, 10, 'speedtimer_back').setOrigin(0,0);
+        }
         this.timerArt.setScale(.6);
         this.positionUIForCam(this.timerArt);
         // score counters art
@@ -78,13 +82,13 @@ class Controller {
         this.positionUIForCam(this.comboMeter_back);
 
         // --- Setting up UI combo meter lights
-        this.comboMeter_front = scene.add.image(UICenterX + 34, UICenterY + 28, 'combometer_front');
+        this.comboMeter_front = scene.add.sprite(UICenterX + 34, UICenterY + 28, 'combometer_front');
         this.comboMeter_front.setScale(.6);
         this.positionUIForCam(this.comboMeter_front);
 
         // --- Setting up UI text
         // clock timer art
-        this.timerText = scene.add.text(115, 29, 'Time: ', scoreTextConfig).setOrigin(0);
+        this.timerText = scene.add.text(129, 29, 'Time: ', timerTextConfig);
         this.positionUIForCam(this.timerText, game.config.width * .05, game.config.height * .05);
         // score text
         this.scoreText = scene.add.text(UICenterX - 65, UICenterY - 45, '0', scoreTextConfig);

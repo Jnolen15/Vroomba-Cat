@@ -33,6 +33,20 @@ let textConfig = {
     fixedWidth: 0
 }
 
+let timerTextConfig = {
+    fontFamily: 'Courier',
+    fontSize: '28px',
+    color: '#ffffff',
+    align: 'left',
+    stroke: '#fff',
+    strokeThickness: 2,
+    padding: {
+    top: 5,
+    bottom: 5,
+    },
+    fixedWidth: 170
+}
+
 let scoreTextConfig = {
     fontFamily: 'Courier',
     fontSize: '28px',
