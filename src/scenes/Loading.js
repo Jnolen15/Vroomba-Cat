@@ -30,6 +30,7 @@ class Loading extends Phaser.Scene {
         this.load.image('cat', './assets/placeholder_cat.png');
         this.load.image('platform', './assets/placeholder_Platform.png');
         // Add UI images
+        this.load.image('timer_back', './assets/ui_timer_back.png');
         this.load.image('combometer_back', './assets/ui_comboMeter_back.png');
         this.load.image('combometer_front', './assets/ui_comboMeter_front.png');
         this.load.image('scorecounters_back', './assets/ui_counters_back.png');
