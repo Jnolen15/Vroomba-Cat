@@ -47,9 +47,7 @@ class Controller {
             this.endText2.alpha = 0;
         }
 
-        // Displaying clock timer
-        this.timerText = scene.add.text(0, 0, 'Time: ', textConfig).setOrigin(0);
-        this.positionUIForCam(this.timerText, game.config.width * .05, game.config.height * .05);
+        
 
         // Score setup
         this.score = 0;
@@ -62,6 +60,10 @@ class Controller {
         // --- Setting up UI backside art
         let UICenterX = game.config.width * .18;
         let UICenterY = game.config.height * .9;
+        // timer art
+        this.timerArt = scene.add.sprite(20, 10, 'timer_back').setOrigin(0,0);
+        this.timerArt.setScale(.6);
+        this.positionUIForCam(this.timerArt);
         // score counters art
         this.scoreCountersArt = scene.add.sprite(UICenterX, UICenterY, 'scorecounters_back');
         this.scoreCountersArt.setScale(.6);
@@ -81,11 +83,14 @@ class Controller {
         this.positionUIForCam(this.comboMeter_front);
 
         // --- Setting up UI text
+        // clock timer art
+        this.timerText = scene.add.text(115, 29, 'Time: ', scoreTextConfig).setOrigin(0);
+        this.positionUIForCam(this.timerText, game.config.width * .05, game.config.height * .05);
         // score text
         this.scoreText = scene.add.text(UICenterX - 65, UICenterY - 45, '0', scoreTextConfig);
         this.positionUIForCam(this.scoreText);
         // streak text
-        this.comboText = scene.add.text(UICenterX - 160, UICenterY + 8, '0', messyTextConfig);
+        this.comboText = scene.add.text(UICenterX - 160, UICenterY + 11, '0', messyTextConfig);
         this.positionUIForCam(this.comboText);
         // multiplier text
         this.multText = scene.add.text(UICenterX + 35, UICenterY - 60, 'x1', messyTextConfig);
@@ -182,7 +187,7 @@ class Controller {
         if(!speedrunMode){
             // Update timer text
             var remaining_time = Phaser.Math.RoundTo((this.clock.delay - this.clock.elapsed)/1000,2, 1);
-            this.timerText.setText('Time: ' + remaining_time);
+            this.timerText.setText(remaining_time);
         } else if (!gameOver) {
             var elapsedtime = this.timedEvent.getElapsedSeconds().toString();
             this.minutes = Math.floor(elapsedtime / 60);
@@ -206,9 +211,14 @@ class Controller {
 
         // score multiplier color 
         if (this.scoreMulti == 3) {
+            this.comboText.setColor("orange");
             this.multText.setColor("orange");
         } else if (this.scoreMulti == 2) {
+            this.comboText.setColor("yellow");
             this.multText.setColor("yellow");
+        } else {
+            this.comboText.setColor("white");
+            this.multText.setColor("white");
         }
     }
 
