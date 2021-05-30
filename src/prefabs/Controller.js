@@ -76,7 +76,7 @@ class Controller {
         this.positionUIForCam(this.comboMeter_back);
 
         // --- Setting up UI combo meter lights
-        this.comboMeter_front = scene.add.sprite(UICenterX + 34, UICenterY + 28, 'combometer_front');
+        this.comboMeter_front = scene.add.image(UICenterX + 34, UICenterY + 28, 'combometer_front');
         this.comboMeter_front.setScale(.6);
         this.positionUIForCam(this.comboMeter_front);
 
@@ -175,7 +175,9 @@ class Controller {
         }
 
         // Managing combo meter cat paw lights
-        this.comboMeter_front.frame.cutWidth = this.comboMeter_front.frame.width * this.inverseLerp(this.currScoreTime, 0, this.maxScoreTime);
+        // this.comboMeter_front.frame.cutWidth = this.comboMeter_front.frame.width * this.inverseLerp(this.currScoreTime, 0, this.maxScoreTime);
+        this.comboMeter_front.setCrop(0,0, this.comboMeter_front.frame.width * this.inverseLerp(this.currScoreTime, 0, this.maxScoreTime), this.comboMeter_front.height);
+        // console.log(this.comboMeter_front.frame.cutWidth);
     }
 
     updateUI() {
