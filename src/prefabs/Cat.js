@@ -129,6 +129,25 @@ class Cat extends Phaser.Physics.Arcade.Sprite {
         this.swipeBox.body.y = this.body.y;
     }
 
+    stopCat() {
+        if(this.body.blocked.down){
+            // if the cat is grounded — slow it down
+            if(this.body.velocity.x > 0)
+                this.body.velocity.x -=this.groundBrake;
+            else if (this.body.velocity.x < 0)
+                this.body.velocity.x +=this.groundBrake;
+            
+            // if within a threshhold — stop completely
+            if(this.body.velocity.x > -20 && this.body.velocity.x < 20)
+                this.body.velocity.x = 0;
+
+            this.doIdleAnimation();
+        } else {
+            // if the cat is airborne — the falling anim until you hit the ground
+            this.doAirAnimation();
+        }
+    }
+
     fadevac(){
         this.scene.tweens.add({
             targets: this.vac,

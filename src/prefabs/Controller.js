@@ -29,7 +29,7 @@ class Controller {
             menuText1.alpha = 0; 
             menuText2.alpha = 0;
 
-            this.clock = scene.time.delayedCall(game.settings.gameTimer, () => {
+            this.clock = scene.time.delayedCall(5000, () => {
                 menuText1.alpha = 1;
                 menuText2.alpha = 1;
                 gameOver = true;
@@ -122,7 +122,13 @@ class Controller {
         }
 
         // Update Player Cat
-        if(!gameOver) this.cat.update();
+        if(!gameOver) {
+            this.cat.update();
+        }
+        else {
+            this.cat.stopCat();
+        }
+
 
         // Update Game Score;
         this.manageScore(time, delta);
