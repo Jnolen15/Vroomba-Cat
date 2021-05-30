@@ -5,7 +5,7 @@ class Speedrun extends Phaser.Scene {
 
     preload(){        
         // Load Json file
-        this.load.tilemapTiledJSON('level', './assets/tilemap/tm_speedrun.json');
+        this.load.tilemapTiledJSON('speedrun', './assets/tilemap/tm_speedrun.json');
         // Load Spritesheet
         this.load.image('furniture2', './assets/tilemap/ts_furniture2.png');
         this.load.image('collision', './assets/tilemap/ts_collision.png');
@@ -18,7 +18,7 @@ class Speedrun extends Phaser.Scene {
         this.physics.world.setBounds(0,0,2625,1313);
         
         //Create the tilemap
-        const map = this.add.tilemap('level');
+        const map = this.add.tilemap('speedrun');
 
         // Scale of tilemap
         const tmScale = 0.35;

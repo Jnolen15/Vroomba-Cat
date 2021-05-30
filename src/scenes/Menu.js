@@ -59,7 +59,10 @@ class Menu extends Phaser.Scene {
         this.bg_music.play();
         console.log(this.bg_music);
         this.bg_music.volume = 0;
+
+        this.resetFlags();
     }
+    
 
     update() {  
         // console.log('start: ' + this.startSelected + 
@@ -76,7 +79,7 @@ class Menu extends Phaser.Scene {
                 this.tutorialButton.setText("[↓] Tutorial");
             }
             this.tweens.add({ targets: this.startButton, x: this.startButton.x + 50, ease: 'Linear', duration: 200, });
-            this.startButton.setText("[←] Play [→]");
+            this.startButton.setText("[→] Play");
             this.startSelected = true;
             this.tutorialSelected = false;
         }

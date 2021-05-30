@@ -11,6 +11,7 @@ class Controller {
 
         // Set up cursor keys
         cursors = scene.input.keyboard.createCursorKeys();
+        this.keyM = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
 
         // Camera Follower Setup
         scene.cameras.main.setBounds(0, 0, game.config.width, game.config.height);
@@ -23,7 +24,7 @@ class Controller {
         // Game ending clock system
         if(!speedrunMode){
             let menuText1 = scene.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', textConfig).setOrigin(0.5);
-            let menuText2 = scene.add.text(game.config.width/2, game.config.height/2 + 64, 'Press ↓ for Menu', textConfig).setOrigin(0.5);
+            let menuText2 = scene.add.text(game.config.width/2, game.config.height/2 + 64, 'Press M for Menu', textConfig).setOrigin(0.5);
             this.positionUIForCam(menuText1, menuText1.x, menuText1.y);
             this.positionUIForCam(menuText2, menuText2.x, menuText2.y);
             menuText1.alpha = 0; 
@@ -41,10 +42,13 @@ class Controller {
             this.seconds = 0;
             this.endText1 = this.scene.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', textConfig).setOrigin(0.5);
             this.endText2 = this.scene.add.text(game.config.width/2, game.config.height/2 + 64, 'FINAL TIME: ' + '0' + ':' + '0', textConfig).setOrigin(0.5);
+            this.endText3 = this.scene.add.text(game.config.width/2, game.config.height/2 + 128, 'Press M for Menu', textConfig).setOrigin(0.5);
             this.positionUIForCam(this.endText1, this.endText1.x, this.endText1.y);
             this.positionUIForCam(this.endText2, this.endText2.x, this.endText2.y);
+            this.positionUIForCam(this.endText3, this.endText3.x, this.endText3.y);
             this.endText1.alpha = 0; 
             this.endText2.alpha = 0;
+            this.endText3.alpha = 0;
         }
 
         
@@ -113,10 +117,11 @@ class Controller {
             this.endText2.setText('FINAL TIME: ' + this.minutes + ':' + this.seconds);
             this.endText1.alpha = 1; 
             this.endText2.alpha = 1;
+            this.endText3.alpha = 1;
         }
         
         // If the game is over and the player hits keyLeft go to the main menu
-        if(gameOver && cursors.down.isDown) {
+        if(gameOver && Phaser.Input.Keyboard.JustDown(this.keyM)) {
             gameOver = false;
             this.scene.scene.start('menuScene'); 
         }
