@@ -101,7 +101,7 @@ class Menu extends Phaser.Scene {
                 this.speedModeButton.setText("[↓] Speed Run Mode");
             }
             this.tweens.add({ targets: this.regModeButton, x: this.regModeButton.x + 50, ease: 'Linear', duration: 200, });
-            this.regModeButton.setText("[→] Regular Mode");
+            this.regModeButton.setText("[→] Regular Mode: \nSmash as many objects as you \ncan within the time limit! \nHow high of a score can you get!");
             this.regModeSelected = true;
             this.speedModeSelected = false;
         }
@@ -114,7 +114,7 @@ class Menu extends Phaser.Scene {
                 this.regModeButton.setText("[↑] Regular Mode");
             }
             this.tweens.add({ targets: this.speedModeButton, x: this.speedModeButton.x + 50, ease: 'Linear', duration: 200, });
-            this.speedModeButton.setText("[→] Speed Run Mode");
+            this.speedModeButton.setText("[→] Speed Run Mode: \nDestroy every object in the \nlevel as fast as you can! \nThe quicker the better!");
             this.speedModeSelected = true;
             this.regModeSelected = false;
         }

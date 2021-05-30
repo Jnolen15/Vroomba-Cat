@@ -4,6 +4,7 @@ class Controller {
         this.tmcol = tmcol; // Tile map collision
         // Create Cat (Player)
         this.cat = new Cat(scene, game.config.width/2, game.config.height/2, 'anim_move_atlas', 'animation_idle_1').setOrigin(0,0);
+        //this.cat.body.setSize(250, 350);
         this.spawner = new Spawner(scene, this.cat, this.tmcol);
 
         // Collision with player

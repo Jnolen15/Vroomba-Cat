@@ -52,13 +52,13 @@
   <object id="2" name="obj" x="2025" y="3525">
    <point/>
   </object>
-  <object id="3" name="obj" x="1125" y="3300">
+  <object id="3" name="obj" x="1125" y="3225">
    <point/>
   </object>
-  <object id="5" name="obj" x="2550" y="2925">
+  <object id="5" name="obj" x="2550" y="2775">
    <point/>
   </object>
-  <object id="6" name="obj" x="3075" y="3675">
+  <object id="6" name="obj" x="3075" y="3600">
    <point/>
   </object>
   <object id="7" name="obj" x="3750" y="3600">
@@ -70,13 +70,13 @@
   <object id="9" name="obj" x="5400" y="3600">
    <point/>
   </object>
-  <object id="10" name="obj" x="4800" y="3225">
+  <object id="10" name="obj" x="4800" y="3150">
    <point/>
   </object>
-  <object id="11" name="obj" x="5400" y="3225">
+  <object id="11" name="obj" x="5400" y="3150">
    <point/>
   </object>
-  <object id="12" name="obj" x="4200" y="2925">
+  <object id="12" name="obj" x="4200" y="2775">
    <point/>
   </object>
   <object id="16" name="obj" x="6225" y="2475">
@@ -94,10 +94,10 @@
   <object id="20" name="obj" x="5100" y="1950">
    <point/>
   </object>
-  <object id="21" name="obj" x="1575" y="2100">
+  <object id="21" name="obj" x="1575" y="2025">
    <point/>
   </object>
-  <object id="22" name="obj" x="2250" y="2100">
+  <object id="22" name="obj" x="2250" y="2025">
    <point/>
   </object>
   <object id="23" name="obj" x="3075" y="2025">
@@ -124,7 +124,7 @@
   <object id="30" name="obj" x="6075" y="1350">
    <point/>
   </object>
-  <object id="31" name="obj" x="6900" y="1275">
+  <object id="31" name="obj" x="6675" y="1275">
    <point/>
   </object>
   <object id="32" name="obj" x="5325" y="975">
@@ -142,7 +142,7 @@
   <object id="39" name="wall" x="5100" y="2700">
    <point/>
   </object>
-  <object id="40" name="spawn" x="300" y="3600">
+  <object id="40" name="spawn" x="300" y="3525">
    <point/>
   </object>
  </objectgroup>
