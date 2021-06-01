@@ -74,21 +74,21 @@ let messyTextConfig = {
 }
 
 let tinyScoreConfig = {
-    fontFamily: 'Verdana',
-    fontSize: '20px',
+    fontFamily: 'edosz',
+    fontSize: '24px',
     color: '#ffb300',
     align: 'center',
-    stroke: '#ffb300',
-    strokeThickness: 1.3
+    stroke: '#000000',
+    strokeThickness: 2
 }
 
 let tinyMultConfig = {
-    fontFamily: 'Verdana',
-    fontSize: '14px',
+    fontFamily: 'edosz',
+    fontSize: '18px',
     color: '#ff0033',
     align: 'center',
-    stroke: '#ff0033',
-    strokeThickness: 1.3
+    stroke: '#000000',
+    strokeThickness: 2
 }
 
 //define game

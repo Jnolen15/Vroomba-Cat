@@ -174,15 +174,31 @@ class Spawner {
     }
 
     makeScorePopUp(object, points) {
-        let xPos = (object.x) + Phaser.Math.FloatBetween(-3, 3)
-        let yPos = (object.y) + Phaser.Math.FloatBetween(-6, 6);
-        let pointsText = this.scene.add.text(xPos, yPos, '+' + points, tinyScoreConfig);
+        // Add text popups where an object is destroyed or any points are gained.
+        // Text is tweened to move up and fade. Shows the score and current multiplyer
+        let xPos = (object.x) + Phaser.Math.FloatBetween(-20, 20);
+        let yPos = (object.y) + Phaser.Math.FloatBetween(-10, 10);
+        let pointsText = this.scene.add.text(xPos, yPos, '+' + points * this.scene.controller.scoreMulti, tinyScoreConfig);
         let multiplierText = this.scene.add.text(xPos+pointsText.width*.9, yPos,' X' + this.scene.controller.scoreMulti, tinyMultConfig);
         pointsText.setOrigin(.5,.5);
         pointsText.setDepth(2);
         multiplierText.setOrigin(.5,.5);
         multiplierText.setDepth(2);
-        this.scene.time.delayedCall(800, () => {
+        this.scene.tweens.add({ 
+            targets: pointsText, 
+            y: "-=50",
+            alpha: 0,
+            ease: 'Linear', 
+            duration: 1000, 
+        });
+        this.scene.tweens.add({ 
+            targets: multiplierText, 
+            y: "-=50",
+            alpha: 0,
+            ease: 'Linear', 
+            duration: 1000, 
+        });
+        this.scene.time.delayedCall(1000, () => {
             pointsText.destroy();
             multiplierText.destroy();
         }, pointsText, this);

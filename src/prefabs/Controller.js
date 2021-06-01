@@ -58,7 +58,9 @@ class Controller {
         this.score = 0;
         this.isScoring = false;
         this.currCombo = 0;
+        this.prevCombo = 0;
         this.scoreMulti = 1;
+        this.prevMulti = 1;
         this.maxScoreTime = 2000;
         this.currScoreTime = 0;
         
@@ -158,7 +160,9 @@ class Controller {
         // add to score
         this.score += points * this.scoreMulti;
         this.currCombo++;
-        if((1 + (this.currCombo * 0.1)) < 2.5) this.soundmod = 1 + (this.currCombo * 0.1);
+        //console.log(this.currScoreTime * 0.001);
+        // Scaling Sound
+        if((1 + (this.currCombo * 0.05)) < 2.5) this.soundmod = 1 + (this.currCombo * 0.05);
         else this.soundmod = 2.5;
         this.point = this.scene.sound.add('Point', { 
             mute: false,
@@ -168,9 +172,9 @@ class Controller {
         this.point.play();
         
         // change multiplier to what's appropriate 
-        if (this.currCombo <= 4) {
+        if (this.currCombo <= 5) {
             this.scoreMulti = 1;
-        } else if (this.currCombo <= 10) {
+        } else if (this.currCombo <= 19) {
             this.scoreMulti = 2;
         } else {
             this.scoreMulti = 3;
@@ -215,8 +219,29 @@ class Controller {
 
         // Update score text
         this.scoreText.setText(this.score);
-        this.comboText.setText(this.currCombo);
-        this.multText.setText("x" + this.scoreMulti);
+        if(this.prevMulti != this.scoreMulti){
+            this.multText.setText("x" + this.scoreMulti);
+            this.multText.y -= 25;
+            this.scene.tweens.add({ 
+                targets: this.multText,
+                y: "+=25",
+                ease: 'Linear', 
+                duration: 50, 
+            });
+            this.prevMulti = this.scoreMulti;
+        }
+        if(this.comboText.y > 596) {this.comboText.y = 596; console.log('HERE:' + this.comboText.y)}
+        if(this.prevCombo != this.currCombo){
+            this.comboText.setText(this.currCombo);
+            this.comboText.y -= 25;
+            this.scene.tweens.add({ 
+                targets: this.comboText,
+                y: "+=25",
+                ease: 'Linear', 
+                duration: 50, 
+            });
+            this.prevCombo = this.currCombo;
+        }
         
         // score multiplier visibility
         if (this.scoreMulti > 1) {
