@@ -39,6 +39,7 @@ class Loading extends Phaser.Scene {
         this.load.image('debris', './assets/prop_dust.png');
         // Menu Background
         this.load.image('bg', './assets/static_menubackground.png');
+        this.load.image('logo', './assets/VroombaCatLogoV2-Tilted.png');
         // Props
         this.load.image('p_cup', './assets/prop_cup.png');
         this.load.image('p_apple', './assets/prop_apple.png');

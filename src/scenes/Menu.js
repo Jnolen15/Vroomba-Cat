@@ -18,12 +18,15 @@ class Menu extends Phaser.Scene {
         this.add.image(game.config.width/2,game.config.height/2,'bg').setOrigin(0.5);
 
         // Display menu text
-        this.title = this.add.text(game.config.width * 0.25, game.config.height * .30, "Vroomba Cat", textConfig).setOrigin(0.5);
+        //this.title = this.add.text(game.config.width * 0.25, game.config.height * .30, "Vroomba Cat", textConfig).setOrigin(0.5);
         this.startButton = this.add.text(game.config.width * 0.25, game.config.height * .52, "[↑] Play", textConfig).setOrigin(0.5);
         this.tutorialButton = this.add.text(game.config.width * 0.25 , game.config.height * .6, "[↓] Tutorial", textConfig).setOrigin(0.5);
         this.regModeButton = this.add.text(this.startButton.x + 50, this.startButton.y, "[↑] Regular Mode", textConfig).setOrigin(0.5);
         this.speedModeButton = this.add.text(this.startButton.x + 50, this.startButton.y, "[↓] Speed Run Mode", textConfig).setOrigin(0.5);
         
+        // Load Logo
+        this.logo = this.add.image(game.config.width * 0.75, game.config.height * .10, 'logo').setOrigin(0.5);
+
         // Sets the extra play options to be invisible
         this.regModeButton.alpha = 0;
         this.speedModeButton.alpha = 0;
@@ -45,8 +48,8 @@ class Menu extends Phaser.Scene {
 
         // Jumping title animation
         this.tweens.add({
-            targets: this.title,
-            y: this.title.y + 100,
+            targets: this.logo,
+            y: this.logo.y + 100,
             ease: 'Bounce',
             yoyo: 1,
             repeat: -1,

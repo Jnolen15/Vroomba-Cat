@@ -17,12 +17,28 @@ let config = {
 }
 
 // basic text configuration for rest of coding
-let textConfig = {
+/*let textConfig = {
     fontFamily: 'Courier',
     fontSize: '24px',
     color: 'white',
     align: 'center',
     stroke: '#000000',
+    strokeThickness: 6,
+    fill: 'white',
+    padding: {
+    top: 5,
+    bottom: 5,
+    },
+    wordWrap: {width: 800, useAdvancedWrap: true},
+    fixedWidth: 0
+}*/
+
+let textConfig = {
+    fontFamily: 'edosz',
+    fontSize: '24px',
+    color: 'white',
+    align: 'center',
+    stroke: '#598dbe',
     strokeThickness: 6,
     fill: 'white',
     padding: {
