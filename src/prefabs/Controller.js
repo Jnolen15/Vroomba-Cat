@@ -114,6 +114,7 @@ class Controller {
         // Trigger game ending if in speedrunmode
         if(speedrunMode && numObjs <= 0 && !gameOver){
             gameOver = true;
+            this.cat.fadevac();
             //var elapsedtime = this.timedEvent.getElapsedSeconds().toString();
             //this.minutes = Math.floor(elapsedtime / 60);
             //this.seconds = Phaser.Math.RoundTo(elapsedtime - (minutes * 60), -2);

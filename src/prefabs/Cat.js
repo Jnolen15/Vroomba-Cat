@@ -160,22 +160,10 @@ class Cat extends Phaser.Physics.Arcade.Sprite {
     turboChargeCat(scene) {
         this.moveSpeed = this.turboMoveSpeed;
         this.moveSpeedMax = this.turboMoveSpeedMax;
-        this.scene.tweens.add({
-            targets: this.vac,
-            volume: 0.05,
-            ease: 'Linear',
-            duration: 1000,
-        });
         // Game ending clock system
         this.clock = scene.time.delayedCall(1000, () => {
             this.moveSpeed = 20;
             this.moveSpeedMax = 500;
-            this.scene.tweens.add({
-                targets: this.vac,
-                volume: 0.025,
-                ease: 'Linear',
-                duration: 1000,
-            });
         }, null, this);
     }
 
