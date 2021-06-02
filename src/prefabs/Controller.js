@@ -35,6 +35,7 @@ class Controller {
                 menuText1.alpha = 1;
                 menuText2.alpha = 1;
                 gameOver = true;
+                numObjs = 0;
                 this.cat.fadevac();
             }, null, this);
         } else {
@@ -114,6 +115,7 @@ class Controller {
         // Trigger game ending if in speedrunmode
         if(speedrunMode && numObjs <= 0 && !gameOver){
             gameOver = true;
+            numObjs = 0;
             this.cat.fadevac();
             //var elapsedtime = this.timedEvent.getElapsedSeconds().toString();
             //this.minutes = Math.floor(elapsedtime / 60);

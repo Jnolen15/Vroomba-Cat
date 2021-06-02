@@ -67,15 +67,12 @@ class Play extends Phaser.Scene {
 			switch(object.name) {
                 case 'obj':
                     this.controller.spawner.createProp(this.randProp(), object.x*tmScale, object.y*tmScale, 0.5, CollisionLayer);
-                    numObjs++;
                     break;
                 case 'big':
                     this.controller.spawner.createBigProp(this.randBigProp(), object.x*tmScale, object.y*tmScale, 0.5, CollisionLayer);
-                    numObjs++;
                     break;
                 case 'wall':
                     this.controller.spawner.createAirProp(this.randWallProp(), object.x*tmScale, object.y*tmScale, 0.5, CollisionLayer);
-                    numObjs++;
                     break;
                 case 'spawn':
                     this.controller.cat.y = object.y * tmScale;    
