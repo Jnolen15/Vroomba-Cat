@@ -14,6 +14,7 @@ class Menu extends Phaser.Scene {
         this.keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         this.keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         this.keyC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.C);
+        // this.keyF = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F);
 
         // Menu Background
         this.add.image(game.config.width/2,game.config.height/2,'bg').setOrigin(0.5);
@@ -28,6 +29,13 @@ class Menu extends Phaser.Scene {
         this.creditsContent = this.add.text(-100, game.config.height * .8, "Benjamin Urlik\n Nathann Latimore\n Jared Nolen\n Danielle Kraljevski", textConfig).setOrigin(0.5);
         this.creditsContent.alpha = 0;
         
+        // this.keyF.on('down', function () {
+        //     if (this.scale.isFullscreen) { this.scale.stopFullscreen(); }
+        //     else { 
+        //         this.scale.startFullscreen(); 
+        //     }
+        // }, this);
+
         // Load Logo
         this.logo = this.add.image(game.config.width * 0.75, game.config.height * .10, 'logo').setOrigin(0.5);
 
@@ -171,26 +179,8 @@ class Menu extends Phaser.Scene {
         }
 
         if(Phaser.Input.Keyboard.JustDown(this.keyC)) {
-            if(this.creditsContent.alpha == 0) {
-                this.tweens.add({ 
-                    targets: this.creditsContent,
-                    ease: 'Bounce', 
-                    x: game.config.width * 0.27 +100,
-                    duration: 2000, 
-                    alpha: 1, 
-                });
-            }
-            else   {
-                // this.creditsContent.alpha = 0;
-                this.tweens.add({ 
-                    targets: this.creditsContent,
-                    ease: 'Quintic',
-                    x: -200,
-                    duration: 2000, 
-                    alpha: 0, 
-                });
-            }
-
+            if(this.creditsContent.alpha == 0) { this.tweens.add({ targets: this.creditsContent, ease: 'Bounce', x: game.config.width * 0.27 +100, duration: 2000,  alpha: 1, }); }
+            else   { this.tweens.add({ targets: this.creditsContent, ease: 'Quintic', x: -200, duration: 2000, alpha: 0, }); }
         }
 
         // Resets all options if player hits left arrow - Goes back to the default menu
