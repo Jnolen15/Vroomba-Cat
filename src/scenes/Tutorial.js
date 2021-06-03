@@ -125,10 +125,11 @@ class Tutorial extends Phaser.Scene {
         }
         else if(this.vroombaCat.x > 4000) {
             this.tutorialText.setText("Press (M)enu (P)lay!");
-            if(Phaser.Input.Keyboard.JustDown(this.keyM)) this.scene.start("menuScene");
+            if(Phaser.Input.Keyboard.JustDown(this.keyM)) {this.scene.start("menuScene");tutorialMedal = 'gold';}
             else if(Phaser.Input.Keyboard.JustDown(this.keyP)) {
                 game.settings = { gameTimer: 30000 }
                 this.scene.start("playScene");
+                tutorialMedal = 'gold';
             }
         }
     }

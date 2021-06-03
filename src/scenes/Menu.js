@@ -273,7 +273,7 @@ class Menu extends Phaser.Scene {
         } else if (timedMedal == 'bronze'){
             this.rMedal = this.add.image(this.startButton.x - 100, this.startButton.y, 'bronzeMedal');
             this.rMedal.setScale(0.1);
-        } else {}
+        }
         // Display medals for speedRun mode
         if(speedRunMedal == 'gold'){
             this.sMedal = this.add.image(this.startButton.x - 60, this.startButton.y, 'goldMedal');
@@ -284,50 +284,61 @@ class Menu extends Phaser.Scene {
         } else if (speedRunMedal == 'bronze'){
             this.sMedal = this.add.image(this.startButton.x - 60, this.startButton.y, 'bronzeMedal');
             this.sMedal.setScale(0.1);
-        } else {}
+        }
+        // Display medal for completeing tutorial
+        if(tutorialMedal == 'gold'){
+            this.tMedal = this.add.image(this.tutorialButton.x - 100, this.tutorialButton.y, 'goldMedal');
+            this.tMedal.setScale(0.1);
+        }
     }
 
     updateMedals(){
+        // Update medals
         if(this.regModeSelected){
             if(timedMedal != 'none'){
                 this.rMedal.x = this.regModeButton.x - 120;
                 this.rMedal.y = this.regModeButton.y - 58;
-            } else {}
+            }
             // Display medals for speedRun mode
             if(speedRunMedal != 'none'){
                 this.sMedal.x = this.speedModeButton.x - 120;
                 this.sMedal.y = this.speedModeButton.y - 4;
-            } else {}
+            }
         } else if(this.speedModeSelected){
             if(timedMedal != 'none'){
                 this.rMedal.x = this.regModeButton.x - 120;
                 this.rMedal.y = this.regModeButton.y - 8;
-            } else {}
+            }
             // Display medals for speedRun mode
             if(speedRunMedal != 'none'){
                 this.sMedal.x = this.speedModeButton.x - 130;
                 this.sMedal.y = this.speedModeButton.y - 56;
-            } else {}
+            }
         }else if(this.startModeOptions){
             if(timedMedal != 'none'){
                 this.rMedal.x = this.regModeButton.x - 120;
                 this.rMedal.y = this.regModeButton.y - 8;
-            } else {}
+            }
             // Display medals for speedRun mode
             if(speedRunMedal != 'none'){
                 this.sMedal.x = this.speedModeButton.x - 120;
                 this.sMedal.y = this.speedModeButton.y - 4;
-            } else {}
+            }
         } else {
             if(timedMedal != 'none'){
                 this.rMedal.x = this.startButton.x - 100;
                 this.rMedal.y = this.startButton.y;
-            } else {}
+            }
             // Display medals for speedRun mode
             if(speedRunMedal != 'none'){
                 this.sMedal.x = this.startButton.x - 60;
                 this.sMedal.y = this.startButton.y;
-            } else {}
+            }
+        }
+        //update tutorial medals
+        if (tutorialMedal != 'none'){
+            this.tMedal.x = this.tutorialButton.x - 80;
+            this.tMedal.y = this.tutorialButton.y;
         }
     }
 }

@@ -117,5 +117,6 @@ let numObjs = 0;
 
 //define globals
 let cursors;
+let tutorialMedal = 'none';
 let timedMedal = 'none';
 let speedRunMedal = 'none';
