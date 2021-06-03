@@ -13,6 +13,7 @@ class Menu extends Phaser.Scene {
         this.keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
         this.keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         this.keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+        this.keyC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.C);
 
         // Menu Background
         this.add.image(game.config.width/2,game.config.height/2,'bg').setOrigin(0.5);
@@ -21,8 +22,11 @@ class Menu extends Phaser.Scene {
         //this.title = this.add.text(game.config.width * 0.25, game.config.height * .30, "Vroomba Cat", textConfig).setOrigin(0.5);
         this.startButton = this.add.text(game.config.width * 0.25, game.config.height * .52, "[↑] Play", textConfig).setOrigin(0.5);
         this.tutorialButton = this.add.text(game.config.width * 0.25 , game.config.height * .6, "[↓] Tutorial", textConfig).setOrigin(0.5);
+        this.creditButton = this.add.text(game.config.width * 0.25 , game.config.height * .68, "(C) Credits", textConfig).setOrigin(0.5);
         this.regModeButton = this.add.text(this.startButton.x + 50, this.startButton.y, "[↑] Regular Mode", textConfig).setOrigin(0.5);
         this.speedModeButton = this.add.text(this.startButton.x + 50, this.startButton.y, "[↓] Speed Run Mode", textConfig).setOrigin(0.5);
+        this.creditsContent = this.add.text(-100, game.config.height * .8, "Benjamin Urlik\n Nathann Latimore\n Jared Nolen\n Danielle Kraljevski", textConfig).setOrigin(0.5);
+        this.creditsContent.alpha = 0;
         
         // Load Logo
         this.logo = this.add.image(game.config.width * 0.75, game.config.height * .10, 'logo').setOrigin(0.5);
@@ -33,10 +37,16 @@ class Menu extends Phaser.Scene {
 
         // Anchor points for the text
         this.startButtonXAnchor = this.startButton.x;
+        this.startButtonXAnim = this.startButton.x + 50;
         this.tutorialButtonXAnchor = this.tutorialButton.x;
+        this.tutorialButtonXAnim = this.tutorialButton.x + 50;
         this.regModeButtonXAnchor = this.regModeButton.x;
         this.regModeButtonYAnchor = this.regModeButton.y;
+        this.regModeButtonXAnimMoveOutAnchor = this.regModeButton.x + 300;
+        this.regModeButtonXAnimMoveInAnchor = this.regModeButton.x + 250;
         this.speedModeButtonXAnchor = this.speedModeButton.x;
+        this.speedModeButtonXAnimMoveOutAnchor = this.speedModeButton.x + 300;
+        this.speedModeButtonXAnimMoveInAnchor = this.speedModeButton.x + 250;
         this.speedModeButtonYAnchor = this.speedModeButton.y;
         
         // Boolean flags to determine which options are selected
@@ -81,7 +91,7 @@ class Menu extends Phaser.Scene {
                 this.tweens.add({ targets: this.tutorialButton, x: this.tutorialButtonXAnchor, ease: 'Linear', duration: 200,}); 
                 this.tutorialButton.setText("[↓] Tutorial");
             }
-            this.tweens.add({ targets: this.startButton, x: this.startButton.x + 50, ease: 'Linear', duration: 200, });
+            this.tweens.add({ targets: this.startButton, x: this.startButtonXAnim, ease: 'Linear', duration: 200, });
             this.startButton.setText("[→] Play");
             this.startSelected = true;
             this.tutorialSelected = false;
@@ -100,10 +110,10 @@ class Menu extends Phaser.Scene {
         if(this.startModeOptions &&  !this.regModeSelected && (Phaser.Input.Keyboard.JustDown(this.keyUP) || Phaser.Input.Keyboard.JustDown(this.keyW))) {
             this.sound.play('Select', { volume: 0.5 });
             if(this.speedModeSelected) { 
-                this.tweens.add({ targets: this.speedModeButton, x: this.speedModeButton.x - 50, ease: 'Linear', duration: 200, }); 
+                this.tweens.add({ targets: this.speedModeButton, x: this.speedModeButtonXAnimMoveInAnchor, ease: 'Linear', duration: 200, }); 
                 this.speedModeButton.setText("[↓] Speed Run Mode");
             }
-            this.tweens.add({ targets: this.regModeButton, x: this.regModeButton.x + 50, ease: 'Linear', duration: 200, });
+            this.tweens.add({ targets: this.regModeButton, x: this.regModeButtonXAnimMoveOutAnchor, ease: 'Linear', duration: 200, });
             this.regModeButton.setText("[→] Regular Mode: \nSmash as many objects as you \ncan within the time limit! \nHow high of a score can you get!");
             this.regModeSelected = true;
             this.speedModeSelected = false;
@@ -113,10 +123,10 @@ class Menu extends Phaser.Scene {
         if(this.startModeOptions && !this.speedModeSelected && (Phaser.Input.Keyboard.JustDown(this.keyDOWN) || Phaser.Input.Keyboard.JustDown(this.keyS))) {
             this.sound.play('Select', { volume: 0.5 });
             if(this.regModeSelected) { 
-                this.tweens.add({ targets: this.regModeButton, x: this.regModeButton.x - 50, ease: 'Linear', duration: 200, });
+                this.tweens.add({ targets: this.regModeButton, x: this.regModeButtonXAnimMoveInAnchor, ease: 'Linear', duration: 200, });
                 this.regModeButton.setText("[↑] Regular Mode");
             }
-            this.tweens.add({ targets: this.speedModeButton, x: this.speedModeButton.x + 50, ease: 'Linear', duration: 200, });
+            this.tweens.add({ targets: this.speedModeButton, x: this.speedModeButtonXAnimMoveOutAnchor, ease: 'Linear', duration: 200, });
             this.speedModeButton.setText("[→] Speed Run Mode: \nDestroy every object in the \nlevel as fast as you can! \nThe quicker the better!");
             this.speedModeSelected = true;
             this.regModeSelected = false;
@@ -146,7 +156,7 @@ class Menu extends Phaser.Scene {
                 this.tweens.add({ targets: this.startButton, x: this.startButtonXAnchor, ease: 'Linear', duration: 200, });
             }
             this.tutorialButton.setText("[→] Tutorial");
-            this.tweens.add({ targets: this.tutorialButton, x: this.tutorialButton.x + 50, ease: 'Linear', duration: 200, });
+            this.tweens.add({ targets: this.tutorialButton, x: this.tutorialButtonXAnim, ease: 'Linear', duration: 200, });
             this.startSelected = false;
             this.tutorialSelected = true;
         }
@@ -158,6 +168,29 @@ class Menu extends Phaser.Scene {
             speedrunMode = false;
             this.bg_music.stop();
             this.scene.start('tutorialScene');
+        }
+
+        if(Phaser.Input.Keyboard.JustDown(this.keyC)) {
+            if(this.creditsContent.alpha == 0) {
+                this.tweens.add({ 
+                    targets: this.creditsContent,
+                    ease: 'Bounce', 
+                    x: game.config.width * 0.27 +100,
+                    duration: 2000, 
+                    alpha: 1, 
+                });
+            }
+            else   {
+                // this.creditsContent.alpha = 0;
+                this.tweens.add({ 
+                    targets: this.creditsContent,
+                    ease: 'Quintic',
+                    x: -200,
+                    duration: 2000, 
+                    alpha: 0, 
+                });
+            }
+
         }
 
         // Resets all options if player hits left arrow - Goes back to the default menu
