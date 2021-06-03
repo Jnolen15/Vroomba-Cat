@@ -83,6 +83,9 @@ class Loading extends Phaser.Scene {
         this.load.audio('Point', './assets/sounds/Point.wav');
         this.load.audio('Select', './assets/sounds/Select.wav');
         this.load.audio('Start', './assets/sounds/Start.wav');
+        this.load.audio('bmGet', './assets/sounds/bmGet.mp3');
+        this.load.audio('smGet', './assets/sounds/smGet.mp3');
+        this.load.audio('gmGet', './assets/sounds/gmGet.mp3');
         this.load.audio('Break1', './assets/sounds/Break1.mp3'); // From https://freesound.org/people/Nox_Sound/sounds/554367/
         this.load.audio('Break2', './assets/sounds/Break2.mp3'); // From https://freesound.org/people/Nox_Sound/sounds/554367/
         this.load.audio('Break3', './assets/sounds/Break3.mp3'); // From https://freesound.org/people/InspectorJ/sounds/352208/

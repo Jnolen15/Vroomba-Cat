@@ -24,9 +24,9 @@ class Menu extends Phaser.Scene {
         this.startButton = this.add.text(game.config.width * 0.25, game.config.height * .52, "[↑] Play", textConfig).setOrigin(0.5);
         this.tutorialButton = this.add.text(game.config.width * 0.25 , game.config.height * .6, "[↓] Tutorial", textConfig).setOrigin(0.5);
         this.creditButton = this.add.text(game.config.width * 0.25 , game.config.height * .68, "(C) Credits", textConfig).setOrigin(0.5);
-        this.regModeButton = this.add.text(this.startButton.x + 50, this.startButton.y, "[↑] Regular Mode", textConfig).setOrigin(0.5);
+        this.regModeButton = this.add.text(this.startButton.x + 50, this.startButton.y, "[↑] Timed Mode", textConfig).setOrigin(0.5);
         this.speedModeButton = this.add.text(this.startButton.x + 50, this.startButton.y, "[↓] Speed Run Mode", textConfig).setOrigin(0.5);
-        this.creditsContent = this.add.text(-100, game.config.height * .8, "Benjamin Urlik\n Nathann Latimore\n Jared Nolen\n Danielle Kraljevski", textConfig).setOrigin(0.5);
+        this.creditsContent = this.add.text(-100, game.config.height * .8, "Jared Nolen\nBenjamin Urlik\n Nathann Latimore\n Danielle Kraljevski", textConfig).setOrigin(0.5);
         this.creditsContent.alpha = 0;
         
         // this.keyF.on('down', function () {
@@ -98,6 +98,12 @@ class Menu extends Phaser.Scene {
         this.spinVacuum.play();
 
         this.resetFlags();
+
+        // Display medals
+        this.displayMedals();
+
+        // Reset numObjs
+        numObjs = 0;
     }
     
 
@@ -138,7 +144,7 @@ class Menu extends Phaser.Scene {
                 this.speedModeButton.setText("[↓] Speed Run Mode");
             }
             this.tweens.add({ targets: this.regModeButton, x: this.regModeButtonXAnimMoveOutAnchor, ease: 'Linear', duration: 200, });
-            this.regModeButton.setText("[→] Regular Mode: \nSmash as many objects as you \ncan within the time limit! \nHow high of a score can you get!");
+            this.regModeButton.setText("[→] Timed Mode: \nSmash as many objects as you \ncan within the time limit! \nHow high of a score can you get!");
             this.regModeSelected = true;
             this.speedModeSelected = false;
         }
@@ -148,7 +154,7 @@ class Menu extends Phaser.Scene {
             this.sound.play('Select', { volume: 0.5 });
             if(this.regModeSelected) { 
                 this.tweens.add({ targets: this.regModeButton, x: this.regModeButtonXAnimMoveInAnchor, ease: 'Linear', duration: 200, });
-                this.regModeButton.setText("[↑] Regular Mode");
+                this.regModeButton.setText("[↑] Timed Mode");
             }
             this.tweens.add({ targets: this.speedModeButton, x: this.speedModeButtonXAnimMoveOutAnchor, ease: 'Linear', duration: 200, });
             this.speedModeButton.setText("[→] Speed Run Mode: \nDestroy every object in the \nlevel as fast as you can! \nThe quicker the better!");
@@ -197,7 +203,8 @@ class Menu extends Phaser.Scene {
         }
 
         if(Phaser.Input.Keyboard.JustDown(this.keyC)) {
-            if(this.creditsContent.alpha == 0) { this.tweens.add({ targets: this.creditsContent, ease: 'Bounce', x: game.config.width * 0.27 +100, duration: 2000,  alpha: 1, }); }
+            if(this.creditsContent.alpha == 0) { this.tweens.add({ targets: this.creditsContent, ease: 'Bounce', x: game.config.width * 0.27 +100, duration: 2000,  alpha: 1, }); 
+                                                this.sound.play('gmGet', { volume: 1 });}
             else   { this.tweens.add({ targets: this.creditsContent, ease: 'Quintic', x: -200, duration: 2000, alpha: 0, }); }
         }
 
@@ -207,7 +214,7 @@ class Menu extends Phaser.Scene {
             this.resetFlags();
             this.startButton.setText("[↑] Play");
             this.tutorialButton.setText("[↓] Tutorial");
-            this.regModeButton.setText("[↑] Regular Mode");
+            this.regModeButton.setText("[↑] Timed Mode");
             this.speedModeButton.setText("[↓] Speed Run Mode");
             this.tweens.add({ targets: this.startButton, x: this.startButtonXAnchor, ease: 'Linear', duration: 200, });
             this.tweens.add({ targets: this.tutorialButton, x: this.tutorialButtonXAnchor, ease: 'Linear', duration: 200, });
@@ -217,6 +224,7 @@ class Menu extends Phaser.Scene {
 
         // Scrolling the cat in and out of frame and managing audio
         this.scrollCat();
+        this.updateMedals();
     }
 
     resetFlags() {
@@ -252,5 +260,74 @@ class Menu extends Phaser.Scene {
         let d = b - a;
         let f = b - point;
         return (d - f) / d;
+    }
+
+    displayMedals(){
+        // Display medals for Timed mode
+        if(timedMedal == 'gold'){
+            this.rMedal = this.add.image(this.startButton.x - 100, this.startButton.y, 'goldMedal');
+            this.rMedal.setScale(0.1);
+        } else if (timedMedal == 'silver'){
+            this.rMedal = this.add.image(this.startButton.x - 100, this.startButton.y, 'silverMedal');
+            this.rMedal.setScale(0.1);
+        } else if (timedMedal == 'bronze'){
+            this.rMedal = this.add.image(this.startButton.x - 100, this.startButton.y, 'bronzeMedal');
+            this.rMedal.setScale(0.1);
+        } else {}
+        // Display medals for speedRun mode
+        if(speedRunMedal == 'gold'){
+            this.sMedal = this.add.image(this.startButton.x - 60, this.startButton.y, 'goldMedal');
+            this.sMedal.setScale(0.1);
+        } else if (speedRunMedal == 'silver'){
+            this.sMedal = this.add.image(this.startButton.x - 60, this.startButton.y, 'silverMedal');
+            this.sMedal.setScale(0.1);
+        } else if (speedRunMedal == 'bronze'){
+            this.sMedal = this.add.image(this.startButton.x - 60, this.startButton.y, 'bronzeMedal');
+            this.sMedal.setScale(0.1);
+        } else {}
+    }
+
+    updateMedals(){
+        if(this.regModeSelected){
+            if(timedMedal != 'none'){
+                this.rMedal.x = this.regModeButton.x - 120;
+                this.rMedal.y = this.regModeButton.y - 58;
+            } else {}
+            // Display medals for speedRun mode
+            if(speedRunMedal != 'none'){
+                this.sMedal.x = this.speedModeButton.x - 120;
+                this.sMedal.y = this.speedModeButton.y - 4;
+            } else {}
+        } else if(this.speedModeSelected){
+            if(timedMedal != 'none'){
+                this.rMedal.x = this.regModeButton.x - 120;
+                this.rMedal.y = this.regModeButton.y - 8;
+            } else {}
+            // Display medals for speedRun mode
+            if(speedRunMedal != 'none'){
+                this.sMedal.x = this.speedModeButton.x - 130;
+                this.sMedal.y = this.speedModeButton.y - 56;
+            } else {}
+        }else if(this.startModeOptions){
+            if(timedMedal != 'none'){
+                this.rMedal.x = this.regModeButton.x - 120;
+                this.rMedal.y = this.regModeButton.y - 8;
+            } else {}
+            // Display medals for speedRun mode
+            if(speedRunMedal != 'none'){
+                this.sMedal.x = this.speedModeButton.x - 120;
+                this.sMedal.y = this.speedModeButton.y - 4;
+            } else {}
+        } else {
+            if(timedMedal != 'none'){
+                this.rMedal.x = this.startButton.x - 100;
+                this.rMedal.y = this.startButton.y;
+            } else {}
+            // Display medals for speedRun mode
+            if(speedRunMedal != 'none'){
+                this.sMedal.x = this.startButton.x - 60;
+                this.sMedal.y = this.startButton.y;
+            } else {}
+        }
     }
 }

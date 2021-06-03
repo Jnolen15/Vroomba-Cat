@@ -177,26 +177,38 @@ class Controller {
 
     awardMedals(mode){
         if(mode == 'regular'){
-            if(this.score > 59){
+            if(this.score > 599){
                 this.scene.tweens.add({targets: this.gm, alpha: 1, ease: 'Linear', duration: 200, });
                 this.scene.tweens.add({targets: this.gm, scale: 0.6, ease: 'Linear', duration: 200, });
-            } else if(this.score > 39){
+                this.scene.sound.play('gmGet', { volume: 1 });
+                timedMedal = 'gold';
+            } else if(this.score > 399){
                 this.scene.tweens.add({targets: this.sm, alpha: 1, ease: 'Linear', duration: 200, });
                 this.scene.tweens.add({targets: this.sm, scale: 0.6, ease: 'Linear', duration: 200, });
+                this.scene.sound.play('smGet', { volume: 1 });
+                if(timedMedal != 'gold') timedMedal = 'silver';
             } else {
                 this.scene.tweens.add({targets: this.bm, alpha: 1, ease: 'Linear', duration: 200, });
                 this.scene.tweens.add({targets: this.bm, scale: 0.6, ease: 'Linear', duration: 200, });
+                this.scene.sound.play('bmGet', { volume: 1 });
+                if(timedMedal != 'gold' && timedMedal != 'silver') timedMedal = 'bronze';
             }
         } else if(mode == 'speedrun'){
             if(this.seconds < 30 && this.minutes < 1){
                 this.scene.tweens.add({targets: this.gm, alpha: 1, ease: 'Linear', duration: 200, });
                 this.scene.tweens.add({targets: this.gm, scale: 0.6, ease: 'Linear', duration: 200, });
+                this.scene.sound.play('gmGet', { volume: 1 });
+                speedRunMedal = 'gold';
             } else if(this.seconds < 45 && this.minutes < 1){
                 this.scene.tweens.add({targets: this.sm, alpha: 1, ease: 'Linear', duration: 200, });
                 this.scene.tweens.add({targets: this.sm, scale: 0.6, ease: 'Linear', duration: 200, });
+                this.scene.sound.play('smGet', { volume: 1 });
+                if(speedRunMedal != 'gold') speedRunMedal = 'silver';
             } else {
                 this.scene.tweens.add({targets: this.bm, alpha: 1, ease: 'Linear', duration: 200, });
                 this.scene.tweens.add({targets: this.bm, scale: 0.6, ease: 'Linear', duration: 200, });
+                this.scene.sound.play('bmGet', { volume: 1 });
+                if(speedRunMedal != 'gold' && speedRunMedal != 'silver') speedRunMedal = 'bronze';
             }
         } else {
             console.log('No mode given');
@@ -277,7 +289,7 @@ class Controller {
             });
             this.prevMulti = this.scoreMulti;
         }
-        if(this.comboText.y > 596) {this.comboText.y = 596; console.log('HERE:' + this.comboText.y)}
+        if(this.comboText.y > 596) {this.comboText.y = 596;}
         if(this.prevCombo != this.currCombo){
             this.comboText.setText(this.currCombo);
             this.comboText.y -= 25;
