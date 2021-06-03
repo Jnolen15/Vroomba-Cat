@@ -81,6 +81,22 @@ class Menu extends Phaser.Scene {
         console.log(this.bg_music);
         this.bg_music.volume = 0;
 
+        // Spinning Cat
+        this.spinCatMinX = -750;
+        this.spinCatMaxX = game.config.width + 750;
+        this.spinnningCat = this.add.sprite(this.spinCatMinX, game.config.height*.9, 'anim_spin_atlas', 'spin1.png');
+        this.spinnningCat.setScale(.4);
+        this.spinnningCat.play('spinning_animation');
+
+        // Spinning Cat Sounds
+        this.spinVacuum = this.sound.add('VacOn', { 
+            mute: false,
+            volume: .06,
+            rate: 1,
+            loop: true 
+        });
+        this.spinVacuum.play();
+
         this.resetFlags();
     }
     
@@ -149,6 +165,7 @@ class Menu extends Phaser.Scene {
 
             game.settings = { gameTimer: 30000 }
             this.bg_music.stop();
+            this.spinVacuum.stop();
             console.log(speedrunMode);
             if(this.speedModeSelected) { this.resetFlags(); this.scene.start('speedrunScene');} 
             else { this.resetFlags(); this.scene.start('playScene');}
@@ -175,6 +192,7 @@ class Menu extends Phaser.Scene {
             game.settings = { gameTimer: 600000 }
             speedrunMode = false;
             this.bg_music.stop();
+            this.spinVacuum.stop();
             this.scene.start('tutorialScene');
         }
 
@@ -196,6 +214,9 @@ class Menu extends Phaser.Scene {
             this.tweens.add({ targets: this.regModeButton, x: this.regModeButtonXAnchor, y: this.regModeButtonYAnchor, ease: 'Linear', duration: 200, alpha: 0, });
             this.tweens.add({ targets: this.speedModeButton, x: this.speedModeButtonXAnchor, y: this.speedModeButtonYAnchor, ease: 'Linear', duration: 200, alpha: 0, });
         }
+
+        // Scrolling the cat in and out of frame and managing audio
+        this.scrollCat();
     }
 
     resetFlags() {
@@ -204,5 +225,32 @@ class Menu extends Phaser.Scene {
         this.startModeOptions = false;
         this.startSelected = false;
         this.tutorialSelected = false;
+    }
+
+    scrollCat() {
+        // reposition cat if necessary
+        if (this.spinnningCat.x >= this.spinCatMaxX) {
+            this.spinnningCat.x = this.spinCatMinX;    
+        }
+
+        // move cat
+        this.spinnningCat.x += 4;
+
+        // change volume based on distance to center
+        let currVolume = .055 - (.055 * this.inverseLerp(Math.abs(this.spinnningCat.x - game.config.width*.5), 25, 1100));
+        this.spinVacuum.setVolume(currVolume);
+    }
+
+    inverseLerp(point, a, b) {
+        if (point >= b) {
+            return 1.0;
+        } else if (point <= a) {
+            return 0.0;
+        }
+        
+        point = Phaser.Math.Clamp(point, a, b);
+        let d = b - a;
+        let f = b - point;
+        return (d - f) / d;
     }
 }

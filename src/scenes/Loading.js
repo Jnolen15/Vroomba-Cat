@@ -64,6 +64,7 @@ class Loading extends Phaser.Scene {
         this.load.atlas('anim_move_atlas', './assets/anim_moveFLIPPED.png', './assets/anim_move.json');
         this.load.atlas('anim_kickflip_atlas', './assets/anim_kickflip.png', './assets/anim_kickflip.json');
         this.load.atlas('anim_swipe_atlas', './assets/anim_swipe.png', './assets/anim_swipe.json');
+        this.load.atlas('anim_spin_atlas', './assets/anim_spin.png', './assets/anim_spin.json');
         // Add audio
         this.load.audio('Hit1', './assets/sounds/Hit1.mp3');
         this.load.audio('Hit2', './assets/sounds/Hit2.mp3');
@@ -216,6 +217,19 @@ class Loading extends Phaser.Scene {
                 suffix: ".png",
                 start: 1,
                 end: 2
+            })
+        });
+
+        // spinning 
+        this.anims.create({
+            key: 'spinning_animation',
+            frameRate: 10,
+            repeat: -1,
+            frames: this.anims.generateFrameNames('anim_spin_atlas', {
+                prefix: 'spin',
+                suffix: ".png",
+                start: 2,
+                end: 8
             })
         });
 
