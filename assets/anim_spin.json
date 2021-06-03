@@ -1,0 +1,175 @@
+{
+	"frames": {
+		"spin1.png": {
+			"frame": {
+				"x": 5,
+				"y": 5,
+				"w": 412,
+				"h": 336
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 412,
+				"h": 336
+			},
+			"sourceSize": {
+				"w": 412,
+				"h": 336
+			}
+		},
+		"spin2.png": {
+			"frame": {
+				"x": 427,
+				"y": 5,
+				"w": 412,
+				"h": 336
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 412,
+				"h": 336
+			},
+			"sourceSize": {
+				"w": 412,
+				"h": 336
+			}
+		},
+		"spin3.png": {
+			"frame": {
+				"x": 849,
+				"y": 5,
+				"w": 412,
+				"h": 336
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 412,
+				"h": 336
+			},
+			"sourceSize": {
+				"w": 412,
+				"h": 336
+			}
+		},
+		"spin4.png": {
+			"frame": {
+				"x": 1271,
+				"y": 5,
+				"w": 412,
+				"h": 336
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 412,
+				"h": 336
+			},
+			"sourceSize": {
+				"w": 412,
+				"h": 336
+			}
+		},
+		"spin5.png": {
+			"frame": {
+				"x": 1693,
+				"y": 5,
+				"w": 412,
+				"h": 336
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 412,
+				"h": 336
+			},
+			"sourceSize": {
+				"w": 412,
+				"h": 336
+			}
+		},
+		"spin6.png": {
+			"frame": {
+				"x": 2115,
+				"y": 5,
+				"w": 412,
+				"h": 336
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 412,
+				"h": 336
+			},
+			"sourceSize": {
+				"w": 412,
+				"h": 336
+			}
+		},
+		"spin7.png": {
+			"frame": {
+				"x": 2537,
+				"y": 5,
+				"w": 412,
+				"h": 336
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 412,
+				"h": 336
+			},
+			"sourceSize": {
+				"w": 412,
+				"h": 336
+			}
+		},
+		"spin8.png": {
+			"frame": {
+				"x": 2959,
+				"y": 5,
+				"w": 412,
+				"h": 336
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 412,
+				"h": 336
+			},
+			"sourceSize": {
+				"w": 412,
+				"h": 336
+			}
+		}
+	},
+	"meta": {
+		"app": "http://www.codeandweb.com/texturepacker",
+		"version": "1.0",
+		"image": "spritesheet.png",
+		"format": "RGBA8888",
+		"size": {
+			"w": 3376,
+			"h": 346
+		},
+		"scale": "1"
+	}
+}
