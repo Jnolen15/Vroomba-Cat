@@ -1,11 +1,11 @@
-class Play extends Phaser.Scene {
+class Speedrun extends Phaser.Scene {
     constructor() {
-        super("playScene");
+        super("speedrunScene");
     }
 
     preload(){        
         // Load Json file
-        this.load.tilemapTiledJSON('level', './assets/tilemap/tm_level.json');
+        this.load.tilemapTiledJSON('speedrun', './assets/tilemap/tm_speedrun.json');
         // Load Spritesheet
         this.load.image('furniture2', './assets/tilemap/ts_furniture2.png');
         this.load.image('collision', './assets/tilemap/ts_collision.png');
@@ -15,10 +15,10 @@ class Play extends Phaser.Scene {
     
     create() {
         // Set world bounds
-        this.physics.world.setBounds(0,0,3150,1575);
+        this.physics.world.setBounds(0,0,2625,1313);
         
         //Create the tilemap
-        const map = this.add.tilemap('level');
+        const map = this.add.tilemap('speedrun');
 
         // Scale of tilemap
         const tmScale = 0.35;
@@ -51,7 +51,7 @@ class Play extends Phaser.Scene {
         // This part of code from https://www.html5gamedevs.com/topic/40484-jump-through-a-tile-from-underneath/
         CollisionLayer.layer.data.forEach((row) => { // here we are iterating through each tile.
 			row.forEach((Tile) => {
-                if(Tile.index==1){ 
+                if(Tile.index==951){ 
                     Tile.collideDown = false;
                     Tile.collideLeft = false;
                     Tile.collideRight = false;
@@ -67,12 +67,15 @@ class Play extends Phaser.Scene {
 			switch(object.name) {
                 case 'obj':
                     this.controller.spawner.createProp(this.randProp(), object.x*tmScale, object.y*tmScale, 0.5, CollisionLayer);
+                    numObjs++;
                     break;
                 case 'big':
                     this.controller.spawner.createBigProp(this.randBigProp(), object.x*tmScale, object.y*tmScale, 0.5, CollisionLayer);
+                    numObjs++;
                     break;
                 case 'wall':
                     this.controller.spawner.createAirProp(this.randWallProp(), object.x*tmScale, object.y*tmScale, 0.5, CollisionLayer);
+                    numObjs++;
                     break;
                 case 'spawn':
                     this.controller.cat.y = object.y * tmScale;    
@@ -82,7 +85,7 @@ class Play extends Phaser.Scene {
 		});
 
         // Set camera to world bounds
-        this.controller.scene.cameras.main.setBounds(0,0,3150,1575);
+        this.controller.scene.cameras.main.setBounds(0,0,2625,1313);
     }
 
     update(time, delta) {

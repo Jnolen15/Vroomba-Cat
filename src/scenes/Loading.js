@@ -29,13 +29,17 @@ class Loading extends Phaser.Scene {
         // Add images
         this.load.image('cat', './assets/placeholder_cat.png');
         this.load.image('platform', './assets/placeholder_Platform.png');
+        // Add UI images
+        this.load.image('timer_back', './assets/ui_timer_back.png');
+        this.load.image('speedtimer_back', './assets/ui_speedruntimer_back.png');
         this.load.image('combometer_back', './assets/ui_comboMeter_back.png');
         this.load.image('combometer_front', './assets/ui_comboMeter_front.png');
         this.load.image('scorecounters_back', './assets/ui_counters_back.png');
-        this.load.image('scorecounters_streak', './assets/ui_counters_streak.png');
+        this.load.image('multiplier_back', './assets/ui_multiplier_back.png');
         this.load.image('debris', './assets/prop_dust.png');
         // Menu Background
         this.load.image('bg', './assets/static_menubackground.png');
+        this.load.image('logo', './assets/VroombaCatLogoV2-Tilted.png');
         // Props
         this.load.image('p_cup', './assets/prop_cup.png');
         this.load.image('p_apple', './assets/prop_apple.png');
@@ -50,9 +54,12 @@ class Loading extends Phaser.Scene {
         this.load.image('p_wallclock', './assets/prop_wallclock.png');
         // Debris
         this.load.image('debris', './assets/prop_dust.png');
+        this.load.image('poof', './assets/prop_poof.png');
+        this.load.image('shard', './assets/prop_shard.png');
         // Add sprites via sprite atlas
         this.load.atlas('anim_move_atlas', './assets/anim_moveFLIPPED.png', './assets/anim_move.json');
         this.load.atlas('anim_kickflip_atlas', './assets/anim_kickflip.png', './assets/anim_kickflip.json');
+        this.load.atlas('anim_swipe_atlas', './assets/anim_swipe.png', './assets/anim_swipe.json');
         // Add audio
         this.load.audio('Hit1', './assets/sounds/Hit1.mp3');
         this.load.audio('Hit2', './assets/sounds/Hit2.mp3');
@@ -69,6 +76,8 @@ class Loading extends Phaser.Scene {
         this.load.audio('Woosh2', './assets/sounds/Woosh2.mp3');
         this.load.audio('Woosh3', './assets/sounds/Woosh3.mp3');
         this.load.audio('Point', './assets/sounds/Point.wav');
+        this.load.audio('Select', './assets/sounds/Select.wav');
+        this.load.audio('Start', './assets/sounds/Start.wav');
         this.load.audio('Break1', './assets/sounds/Break1.mp3'); // From https://freesound.org/people/Nox_Sound/sounds/554367/
         this.load.audio('Break2', './assets/sounds/Break2.mp3'); // From https://freesound.org/people/Nox_Sound/sounds/554367/
         this.load.audio('Break3', './assets/sounds/Break3.mp3'); // From https://freesound.org/people/InspectorJ/sounds/352208/
@@ -193,7 +202,20 @@ class Loading extends Phaser.Scene {
                 {key: 'anim_kickflip_atlas', frame: 'kickflip_4'}
             ]
         });
+        // swiping 
+        this.anims.create({
+            key: 'swiping_animation',
+            frameRate: 10,
+            repeat: 0,
+            frames: this.anims.generateFrameNames('anim_swipe_atlas', {
+                prefix: 'swipe',
+                suffix: ".png",
+                start: 1,
+                end: 2
+            })
+        });
 
+        // Start scene
         this.scene.start('menuScene');
     }
 }

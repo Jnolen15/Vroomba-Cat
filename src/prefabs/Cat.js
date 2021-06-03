@@ -11,12 +11,12 @@ class Cat extends Phaser.Physics.Arcade.Sprite {
         // Cat properties
         this.moveSpeed = 20;            // On ground move speed
         this.moveSpeedMax = 500;        // On ground Max move speed
-        this.turboMoveSpeed = 40;       // On ground TURBO move speed
-        this.turboMoveSpeedMax = 900;   // On ground TURBO Max move speed
+        this.turboMoveSpeed = 30;       // On ground TURBO move speed
+        this.turboMoveSpeedMax = 700;   // On ground TURBO Max move speed
         this.numJumps = 2;              // Number of jumps the player currently has
         this.totalJumps = 2;            // Total number of jumps the player has
-        this.jumpSpeed = 500;           // Jump speed / height
-        this.doubleSpeed = 400;         // Jump speed / height of second jump
+        this.jumpSpeed = 525;           // Jump speed / height
+        this.doubleSpeed = 350;         // Jump speed / height of second jump
         this.airBrake = 10;             // Air Braking
         this.groundBrake = 25;          // Ground Braking
         this.airSpeed = 20;             // How much in air controll the player has
@@ -121,11 +121,31 @@ class Cat extends Phaser.Physics.Arcade.Sprite {
         // Swipe (Just the animation and sound)
         if(Phaser.Input.Keyboard.JustDown(this.keyS) || Phaser.Input.Keyboard.JustDown(this.keyDOWN)){
             this.scene.sound.play('Swipe', { volume: 2 });
+            this.doSwipeAnimation();
         }
 
         // --- manage swipe hitbox position
         this.swipeBox.body.x = this.flipX ? this.body.x - (this.width * this.scale) / 2 : this.body.x + (this.width * this.scale) / 2;
         this.swipeBox.body.y = this.body.y;
+    }
+
+    stopCat() {
+        if(this.body.blocked.down){
+            // if the cat is grounded — slow it down
+            if(this.body.velocity.x > 0)
+                this.body.velocity.x -=this.groundBrake;
+            else if (this.body.velocity.x < 0)
+                this.body.velocity.x +=this.groundBrake;
+            
+            // if within a threshhold — stop completely
+            if(this.body.velocity.x > -20 && this.body.velocity.x < 20)
+                this.body.velocity.x = 0;
+
+            this.doIdleAnimation();
+        } else {
+            // if the cat is airborne — the falling anim until you hit the ground
+            this.doAirAnimation();
+        }
     }
 
     fadevac(){
@@ -140,24 +160,10 @@ class Cat extends Phaser.Physics.Arcade.Sprite {
     turboChargeCat(scene) {
         this.moveSpeed = this.turboMoveSpeed;
         this.moveSpeedMax = this.turboMoveSpeedMax;
-        console.log("TURBO!!");
-        this.scene.tweens.add({
-            targets: this.vac,
-            volume: 0.05,
-            ease: 'Linear',
-            duration: 1000,
-        });
         // Game ending clock system
         this.clock = scene.time.delayedCall(1000, () => {
             this.moveSpeed = 20;
             this.moveSpeedMax = 500;
-            console.log("End of turbo!!");
-            this.scene.tweens.add({
-                targets: this.vac,
-                volume: 0.025,
-                ease: 'Linear',
-                duration: 1000,
-            });
         }, null, this);
     }
 
@@ -257,6 +263,11 @@ class Cat extends Phaser.Physics.Arcade.Sprite {
             // transition to rising again
             this.play('air_rising_animation', true);
         });
+    }
+
+    doSwipeAnimation() {
+        // play the swipe animation
+        this.play('swiping_animation', true);
     }
 
 }

@@ -17,6 +17,41 @@ class Spawner {
         this.propPoints = 5;
         this.bigPropPoints = 2;
         this.airPropPoints = 5;
+
+        // Particles
+        let dustparticleConfig = {
+            x: 0,
+            y: 0,
+            blendmode: 'ADD',
+            speedX: {min: -50, max: 50},
+            scale: {min: 0.1, max: 0.3},
+            rotate: {min: 0, max: 360},
+            alpha: {start: 1, end: 0},
+            lifespan: {min: 1000, max: 1500},
+            gravityY: 20,
+            on: false,
+        }
+
+        this.dustParticles = this.scene.add.particles('poof');
+        this.dustParticles.depth = 200;
+        this.dustemitter = this.dustParticles.createEmitter(dustparticleConfig);
+
+        let shardparticleConfig = {
+            x: 0,
+            y: 0,
+            blendmode: 'ADD',
+            speed: {min: 20, max: 80},
+            scale: {min: 0.2, max: 0.6},
+            rotate: {start: 0, end: 360},
+            alpha: {start: 1, end: 0},
+            lifespan: {min: 200, max: 600},
+            gravityY: 50,
+            on: false,
+        }
+
+        this.shardParticles = this.scene.add.particles('shard');
+        this.shardParticles.depth = 200;
+        this.shardemitter = this.shardParticles.createEmitter(shardparticleConfig);
     }
 
     createProp(spriteName, xPos, yPos, scale) {
@@ -34,6 +69,8 @@ class Spawner {
             this.spawnDebris(prop);
             this.scene.controller.addToScore(this.propPoints);
             this.makeScorePopUp(prop, this.propPoints);
+            this.dustParticles.emitParticleAt(prop.x, prop.y+15, 8);
+            this.shardParticles.emitParticleAt(prop.x, prop.y+15, 20);
             prop.destroy();
             this.playRandSound(['Break1', 'Break2', 'Break3', 'Break4'], 0.4);
             prop.destroyed = true;
@@ -59,6 +96,8 @@ class Spawner {
                     hitCount = 0;
                     //this.scene.sound.play('a1', { volume: 2 });
                     this.spawnDebris(prop);
+                    this.dustParticles.emitParticleAt(prop.x, prop.y+15, 16);
+                    this.shardParticles.emitParticleAt(prop.x, prop.y+15, 30);
                     prop.destroy();
                     this.scene.controller.addToScore(this.bigPropPoints * 2);
                     this.makeScorePopUp(prop, this.bigPropPoints * 2);
@@ -70,9 +109,11 @@ class Spawner {
                     this.playRandSound(['Hit1', 'Hit2'], 1);
                     this.scene.controller.addToScore(this.bigPropPoints);
                     this.makeScorePopUp(prop, this.bigPropPoints);
-                    console.log("swiped big prop " + hitCount + " times");
                     this.scene.cameras.main.shake(20, 0.01);
+                    this.dustParticles.emitParticleAt(prop.x, prop.y+15, 1);
+                    this.shardParticles.emitParticleAt(prop.x, prop.y+15, 2);
                 }
+                this.cat.doSwipeAnimation();
             } 
         }, null, this);
     }
@@ -89,6 +130,8 @@ class Spawner {
                 this.cat.body.velocity.y = -this.cat.jumpSpeed;
                 this.scene.controller.addToScore(this.airPropPoints);
                 this.makeScorePopUp(prop, this.airPropPoints);
+                this.dustParticles.emitParticleAt(prop.x, prop.y+15, 12);
+                this.shardParticles.emitParticleAt(prop.x, prop.y+15, 26);
                 prop.destroy();
                 this.playRandSound(['Break1', 'Break2', 'Break3', 'Break4'], 0.4);
                 this.scene.cameras.main.shake(20, 0.01);
@@ -119,7 +162,7 @@ class Spawner {
         // debris.setBodySize(75,10);
         // console.log(this.debris);
         this.clock = this.scene.time.delayedCall(1000, () => {
-            console.log(debris);
+            //console.log(debris);
             debris.alpha = 1;
             debris.active = true;
             this.scene.physics.add.overlap(this.cat, debris, function(cat, deb) {
@@ -131,15 +174,31 @@ class Spawner {
     }
 
     makeScorePopUp(object, points) {
-        let xPos = (object.x) + Phaser.Math.FloatBetween(-3, 3)
-        let yPos = (object.y) + Phaser.Math.FloatBetween(-6, 6);
-        let pointsText = this.scene.add.text(xPos, yPos, '+' + points, tinyScoreConfig);
+        // Add text popups where an object is destroyed or any points are gained.
+        // Text is tweened to move up and fade. Shows the score and current multiplyer
+        let xPos = (object.x) + Phaser.Math.FloatBetween(-20, 20);
+        let yPos = (object.y) + Phaser.Math.FloatBetween(-10, 10);
+        let pointsText = this.scene.add.text(xPos, yPos, '+' + points * this.scene.controller.scoreMulti, tinyScoreConfig);
         let multiplierText = this.scene.add.text(xPos+pointsText.width*.9, yPos,' X' + this.scene.controller.scoreMulti, tinyMultConfig);
         pointsText.setOrigin(.5,.5);
         pointsText.setDepth(2);
         multiplierText.setOrigin(.5,.5);
         multiplierText.setDepth(2);
-        this.scene.time.delayedCall(800, () => {
+        this.scene.tweens.add({ 
+            targets: pointsText, 
+            y: "-=50",
+            alpha: 0,
+            ease: 'Linear', 
+            duration: 1000, 
+        });
+        this.scene.tweens.add({ 
+            targets: multiplierText, 
+            y: "-=50",
+            alpha: 0,
+            ease: 'Linear', 
+            duration: 1000, 
+        });
+        this.scene.time.delayedCall(1000, () => {
             pointsText.destroy();
             multiplierText.destroy();
         }, pointsText, this);
