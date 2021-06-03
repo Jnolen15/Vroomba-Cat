@@ -22,6 +22,20 @@ class Controller {
         this.camXFollowRate = .0095;
         this.camYFollowRate = .0075;
 
+        // Medals
+        this.bm = this.scene.add.image(game.config.width/2, game.config.height/2, 'bronzeMedal');
+        this.sm = this.scene.add.image(game.config.width/2, game.config.height/2, 'silverMedal');
+        this.gm = this.scene.add.image(game.config.width/2, game.config.height/2, 'goldMedal');
+        this.positionUIForCam(this.bm, this.bm.x, this.bm.y);
+        this.positionUIForCam(this.sm, this.sm.x, this.sm.y);
+        this.positionUIForCam(this.gm, this.gm.x, this.gm.y);
+        this.bm.alpha = 0;
+        this.bm.scale = 10;
+        this.sm.alpha = 0;
+        this.sm.scale = 10;
+        this.gm.alpha = 0;
+        this.gm.scale = 10;
+
         // Game ending clock system
         if(!speedrunMode){
             let menuText1 = scene.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', textConfig).setOrigin(0.5);
@@ -34,6 +48,7 @@ class Controller {
             this.clock = scene.time.delayedCall(game.settings.gameTimer, () => {
                 menuText1.alpha = 1;
                 menuText2.alpha = 1;
+                this.awardMedals('regular');
                 gameOver = true;
                 numObjs = 0;
                 this.cat.fadevac();
@@ -124,6 +139,7 @@ class Controller {
             this.endText1.alpha = 1; 
             this.endText2.alpha = 1;
             this.endText3.alpha = 1;
+            this.awardMedals('speedrun');
         }
         
         // If the game is over and the player hits keyLeft go to the main menu
@@ -159,6 +175,34 @@ class Controller {
         this.scene.cameras.main.update(time, delta);
     }
 
+    awardMedals(mode){
+        if(mode == 'regular'){
+            if(this.score > 59){
+                this.scene.tweens.add({targets: this.gm, alpha: 1, ease: 'Linear', duration: 200, });
+                this.scene.tweens.add({targets: this.gm, scale: 0.6, ease: 'Linear', duration: 200, });
+            } else if(this.score > 39){
+                this.scene.tweens.add({targets: this.sm, alpha: 1, ease: 'Linear', duration: 200, });
+                this.scene.tweens.add({targets: this.sm, scale: 0.6, ease: 'Linear', duration: 200, });
+            } else {
+                this.scene.tweens.add({targets: this.bm, alpha: 1, ease: 'Linear', duration: 200, });
+                this.scene.tweens.add({targets: this.bm, scale: 0.6, ease: 'Linear', duration: 200, });
+            }
+        } else if(mode == 'speedrun'){
+            if(this.seconds < 30 && this.minutes < 1){
+                this.scene.tweens.add({targets: this.gm, alpha: 1, ease: 'Linear', duration: 200, });
+                this.scene.tweens.add({targets: this.gm, scale: 0.6, ease: 'Linear', duration: 200, });
+            } else if(this.seconds < 45 && this.minutes < 1){
+                this.scene.tweens.add({targets: this.sm, alpha: 1, ease: 'Linear', duration: 200, });
+                this.scene.tweens.add({targets: this.sm, scale: 0.6, ease: 'Linear', duration: 200, });
+            } else {
+                this.scene.tweens.add({targets: this.bm, alpha: 1, ease: 'Linear', duration: 200, });
+                this.scene.tweens.add({targets: this.bm, scale: 0.6, ease: 'Linear', duration: 200, });
+            }
+        } else {
+            console.log('No mode given');
+        }
+    }
+    
     addToScore(points) {
         // add to score
         this.score += points * this.scoreMulti;

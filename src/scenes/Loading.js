@@ -56,6 +56,10 @@ class Loading extends Phaser.Scene {
         this.load.image('debris', './assets/prop_dust.png');
         this.load.image('poof', './assets/prop_poof.png');
         this.load.image('shard', './assets/prop_shard.png');
+        // Medals
+        this.load.image('bronzeMedal', './assets/BronzeMedal.png');
+        this.load.image('silverMedal', './assets/SilverMedal.png');
+        this.load.image('goldMedal', './assets/GoldMedal.png');
         // Add sprites via sprite atlas
         this.load.atlas('anim_move_atlas', './assets/anim_moveFLIPPED.png', './assets/anim_move.json');
         this.load.atlas('anim_kickflip_atlas', './assets/anim_kickflip.png', './assets/anim_kickflip.json');
