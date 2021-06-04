@@ -68,8 +68,6 @@ class Controller {
             this.endText3.alpha = 0;
         }
 
-        
-
         // Score setup
         this.score = 0;
         this.isScoring = false;
@@ -99,7 +97,7 @@ class Controller {
         this.multiplier_back = scene.add.sprite(UICenterX, UICenterY, 'multiplier_back');
         this.multiplier_back.setScale(.6);
         this.positionUIForCam(this.multiplier_back);
-        // combo meter backside
+        // combo meter backside art
         this.comboMeter_back = scene.add.sprite(UICenterX + 34, UICenterY + 29, 'combometer_back');
         this.comboMeter_back.setScale(.6);
         this.positionUIForCam(this.comboMeter_back);
@@ -123,6 +121,22 @@ class Controller {
         this.multText = scene.add.text(UICenterX + 35, UICenterY - 60, 'x1', messyTextConfig);
         this.multText.setFontSize(50);
         this.positionUIForCam(this.multText);
+
+        // --- Objects Remaining counter
+        if (speedrunMode) {
+            // remaining backside art
+            this.remaining_back = scene.add.sprite(game.config.width * .90, game.config.height * .1, 'remaining_back');
+            this.remaining_back.setScale(.6);
+            this.positionUIForCam(this.remaining_back);
+            // remaining text
+            this.remainingText = scene.add.text(game.config.width * .855, game.config.height * .015, '35', messyTextConfig);
+            this.remainingText.setFontSize(80);
+            this.remainingText.setColor("yellow");
+            this.remainingText.setFixedSize(100, 0);
+            this.positionUIForCam(this.remainingText);
+            // object remaining variables
+            this.prevObjRemaining = -1;
+        }
     }
 
 
@@ -322,6 +336,21 @@ class Controller {
             this.comboText.setColor("white");
             this.multText.setColor("white");
         }
+
+        // update objects remaining text
+        if (speedrunMode) {
+            if(this.prevObjRemaining != numObjs){
+                this.remainingText.setText(numObjs);
+                this.remainingText.y -= 25;
+                this.scene.tweens.add({ 
+                    targets: this.remainingText,
+                    y: "+=25",
+                    ease: 'Linear', 
+                    duration: 50, 
+                });
+                this.prevObjRemaining = numObjs;
+            }
+        }  
     }
 
     positionUIForCam(object) {

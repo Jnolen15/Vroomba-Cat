@@ -36,6 +36,7 @@ class Loading extends Phaser.Scene {
         this.load.image('combometer_front', './assets/ui_comboMeter_front.png');
         this.load.image('scorecounters_back', './assets/ui_counters_back.png');
         this.load.image('multiplier_back', './assets/ui_multiplier_back.png');
+        this.load.image('remaining_back', './assets/ui_remaining_back.png');
         this.load.image('debris', './assets/prop_dust.png');
         // Menu Background
         this.load.image('bg', './assets/static_menubackground.png');
