@@ -160,19 +160,21 @@ class Controller {
         if(speedrunMode && numObjs <= 0 && !gameOver){
             gameOver = true;
             numObjs = 0;
-            this.cat.fadevac();
+            this.cat.vac.volume = 0.0;
             this.makeEndScreen('speedrun');
         }
         
         // Main menu button handling
         if(Phaser.Input.Keyboard.JustDown(this.keyM)) {
             gameOver = false;
+            this.cat.vac.volume = 0.0;
             this.scene.scene.start('menuScene'); 
         }
 
         // Quick Reset button handling
         if(Phaser.Input.Keyboard.JustDown(this.keyR)) {
             gameOver = false;
+            this.cat.vac.volume = 0.0;
             if (this.gameMode == "regular") {
                 this.scene.scene.start('playScene'); 
             } else if (this.gameMode == "speedrun") {
