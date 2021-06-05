@@ -1,5 +1,5 @@
 class Controller {
-    constructor(scene, tmcol){
+    constructor(scene, tmcol, gamemode){
         this.scene = scene;
         this.tmcol = tmcol; // Tile map collision
         // Create Cat (Player)
@@ -23,6 +23,9 @@ class Controller {
         this.camXFollowRate = .0095;
         this.camYFollowRate = .0075;
 
+        // Current Game Mode
+        this.gameMode = gamemode; // "speedrun" | "regular" | "tutorial"
+
         // Medals
         this.bm = this.scene.add.image(game.config.width*.657, game.config.height*.5, 'bronzeMedal');
         this.sm = this.scene.add.image(game.config.width*.657, game.config.height*.5, 'silverMedal');
@@ -44,8 +47,8 @@ class Controller {
 
         // Game ending clock system
         if(!speedrunMode){
-            //this.clock = scene.time.delayedCall(game.settings.gameTimer, () => {
-            this.clock = scene.time.delayedCall(3000, () => {    
+            this.clock = scene.time.delayedCall(game.settings.gameTimer, () => {
+            //this.clock = scene.time.delayedCall(3000, () => {    
                 this.makeEndScreen('regular');
             }, null, this);
         } else {
@@ -161,10 +164,25 @@ class Controller {
             this.makeEndScreen('speedrun');
         }
         
-        // If the game is over and the player hits keyLeft go to the main menu
-        if(gameOver && Phaser.Input.Keyboard.JustDown(this.keyM)) {
+        // Main menu button handling
+        if(Phaser.Input.Keyboard.JustDown(this.keyM)) {
             gameOver = false;
             this.scene.scene.start('menuScene'); 
+        }
+
+        // Quick Reset button handling
+        if(Phaser.Input.Keyboard.JustDown(this.keyR)) {
+            gameOver = false;
+            if (this.gameMode == "regular") {
+                this.scene.scene.start('playScene'); 
+            } else if (this.gameMode == "speedrun") {
+                numObjs = 0;
+                this.scene.scene.start('speedrunScene');
+            } else if (this.gameMode == "tutorial") {
+                this.scene.scene.start('tutorialScene');
+            } else {
+                console.log("ERROR - gamemode not defined for restart");
+            }
         }
 
         // Update Player Cat

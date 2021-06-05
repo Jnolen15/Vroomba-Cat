@@ -60,7 +60,7 @@ class Play extends Phaser.Scene {
 		});
 
         // Add controller
-        this.controller = new Controller(this, CollisionLayer);
+        this.controller = new Controller(this, CollisionLayer, "regular");
 
         // Spawning objects
         objectsLayer.forEach(object => { // here we are iterating through each object.
