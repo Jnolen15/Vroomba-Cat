@@ -13,6 +13,7 @@ class Cat extends Phaser.Physics.Arcade.Sprite {
         this.moveSpeedMax = 500;        // On ground Max move speed
         this.turboMoveSpeed = 30;       // On ground TURBO move speed
         this.turboMoveSpeedMax = 700;   // On ground TURBO Max move speed
+        this.inTurboMode = false;       // Boolean for turbo mode
         this.numJumps = 2;              // Number of jumps the player currently has
         this.totalJumps = 2;            // Total number of jumps the player has
         this.jumpSpeed = 525;           // Jump speed / height
@@ -62,9 +63,29 @@ class Cat extends Phaser.Physics.Arcade.Sprite {
             duration: 1000,
         });
         
+        // Particles
+        let dustparticleConfig = {
+            blendmode: 'ADD',
+            scale: {min: 0.1, max: 0.2},
+            rotate: {min: 0, max: 360},
+            alpha: {start: 1, end: 0},
+            lifespan: {min: 1000, max: 1500},
+            gravityY: 20,
+            on: false,
+        }
+
+        this.dustTrial = this.scene.add.particles('poof');
+        this.dustTrial.depth = 0;
+        this.dustemitter = this.dustTrial.createEmitter(dustparticleConfig);
     }
 
     update(){
+        // Reset speed if not in turbo mode
+        if(!this.inTurboMode){
+            if(this.body.velocity.x > this.moveSpeedMax) this.body.velocity.x = this.moveSpeedMax;
+            else if(this.body.velocity.x < -this.moveSpeedMax) this.body.velocity.x = -this.moveSpeedMax;
+        }
+        
         if(this.body.blocked.down){
             // left/right movement on ground
             if(this.numJumps != this.totalJumps) this.playRandSound(['Thump1', 'Thump2'], 0.4);
@@ -127,6 +148,11 @@ class Cat extends Phaser.Physics.Arcade.Sprite {
         // --- manage swipe hitbox position
         this.swipeBox.body.x = this.flipX ? this.body.x - (this.width * this.scale) / 2 : this.body.x + (this.width * this.scale) / 2;
         this.swipeBox.body.y = this.body.y;
+
+        // Speed boost particles
+        if(this.inTurboMode){
+            this.dustTrial.emitParticleAt(this.x+40, this.y+60, 1);
+        }
     }
 
     stopCat() {
@@ -160,10 +186,12 @@ class Cat extends Phaser.Physics.Arcade.Sprite {
     turboChargeCat(scene) {
         this.moveSpeed = this.turboMoveSpeed;
         this.moveSpeedMax = this.turboMoveSpeedMax;
+        this.inTurboMode = true;
         // Game ending clock system
         this.clock = scene.time.delayedCall(1000, () => {
             this.moveSpeed = 20;
             this.moveSpeedMax = 500;
+            this.inTurboMode = false;
         }, null, this);
     }
 

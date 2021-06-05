@@ -216,12 +216,12 @@ class Controller {
 
     awardMedals(mode){
         if(mode == 'regular'){
-            if(this.score > 599){
+            if(this.score > 499){
                 this.scene.tweens.add({targets: this.gm, alpha: 1, ease: 'Linear', duration: 200, });
                 this.scene.tweens.add({targets: this.gm, scale: 0.5, ease: 'Linear', duration: 200, });
                 this.scene.sound.play('gmGet', { volume: 1 });
                 timedMedal = 'gold';
-            } else if(this.score > 399){
+            } else if(this.score > 299){
                 this.scene.tweens.add({targets: this.sm, alpha: 1, ease: 'Linear', duration: 200, });
                 this.scene.tweens.add({targets: this.sm, scale: 0.5, ease: 'Linear', duration: 200, });
                 this.scene.sound.play('smGet', { volume: 1 });
