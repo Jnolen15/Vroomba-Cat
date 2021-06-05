@@ -90,6 +90,7 @@ class Tutorial extends Phaser.Scene {
 
         // Get Player add text
         this.vroombaCat = this.controller.cat.body;
+        this.controllerCat = this.controller.cat;
         this.tutorialText = this.add.text(this.controller.cat.body.x, this.controller.cat.body.y, "Use ←→ or A/D to move.", textConfig).setOrigin(0.5);
         this.keyM = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
         this.keyP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
@@ -127,11 +128,12 @@ class Tutorial extends Phaser.Scene {
             this.tutorialText.setText("Press (M)enu (P)lay!");
             tutorialMedal = 'gold';
             if(Phaser.Input.Keyboard.JustDown(this.keyM)) {
-                this.scene.controller.cat.vac.volume = 0.0;
+                this.controllerCat.vac.volume = 0.0;
                 this.scene.start("menuScene");
             }
             else if(Phaser.Input.Keyboard.JustDown(this.keyP)) {
-                game.settings = { gameTimer: 30000 }
+                this.controllerCat.vac.volume = 0.0;
+                game.settings = { gameTimer: 30000 };
                 this.scene.start("playScene");
             }
         }
