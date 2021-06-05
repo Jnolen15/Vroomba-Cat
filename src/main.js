@@ -67,6 +67,7 @@ let scoreTextConfig = {
     fontFamily: 'Courier',
     fontSize: '28px',
     color: '#ffffff',
+    //backgroundColor: "black",
     align: 'center',
     stroke: '#fff',
     strokeThickness: 2,

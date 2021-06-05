@@ -13,6 +13,7 @@ class Controller {
         // Set up cursor keys
         cursors = scene.input.keyboard.createCursorKeys();
         this.keyM = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
+        this.keyR = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
 
         // Camera Follower Setup
         scene.cameras.main.setBounds(0, 0, game.config.width, game.config.height);
@@ -23,35 +24,29 @@ class Controller {
         this.camYFollowRate = .0075;
 
         // Medals
-        this.bm = this.scene.add.image(game.config.width/2, game.config.height/2, 'bronzeMedal');
-        this.sm = this.scene.add.image(game.config.width/2, game.config.height/2, 'silverMedal');
-        this.gm = this.scene.add.image(game.config.width/2, game.config.height/2, 'goldMedal');
+        this.bm = this.scene.add.image(game.config.width*.657, game.config.height*.5, 'bronzeMedal');
+        this.sm = this.scene.add.image(game.config.width*.657, game.config.height*.5, 'silverMedal');
+        this.gm = this.scene.add.image(game.config.width*.657, game.config.height*.5, 'goldMedal');
         this.positionUIForCam(this.bm, this.bm.x, this.bm.y);
         this.positionUIForCam(this.sm, this.sm.x, this.sm.y);
         this.positionUIForCam(this.gm, this.gm.x, this.gm.y);
+        let startingMedalScale = 10;
+        let medalDepth = 3;
+        this.bm.setScale(startingMedalScale);
+        this.sm.setScale(startingMedalScale);
+        this.gm.setScale(startingMedalScale);
+        this.bm.setDepth(medalDepth);
+        this.sm.setDepth(medalDepth);
+        this.gm.setDepth(medalDepth);
         this.bm.alpha = 0;
-        this.bm.scale = 10;
         this.sm.alpha = 0;
-        this.sm.scale = 10;
         this.gm.alpha = 0;
-        this.gm.scale = 10;
 
         // Game ending clock system
         if(!speedrunMode){
-            let menuText1 = scene.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', textConfig).setOrigin(0.5);
-            let menuText2 = scene.add.text(game.config.width/2, game.config.height/2 + 64, 'Press M for Menu', textConfig).setOrigin(0.5);
-            this.positionUIForCam(menuText1, menuText1.x, menuText1.y);
-            this.positionUIForCam(menuText2, menuText2.x, menuText2.y);
-            menuText1.alpha = 0; 
-            menuText2.alpha = 0;
-
-            this.clock = scene.time.delayedCall(game.settings.gameTimer, () => {
-                menuText1.alpha = 1;
-                menuText2.alpha = 1;
-                this.awardMedals('regular');
-                gameOver = true;
-                numObjs = 0;
-                this.cat.fadevac();
+            //this.clock = scene.time.delayedCall(game.settings.gameTimer, () => {
+            this.clock = scene.time.delayedCall(3000, () => {    
+                this.makeEndScreen('regular');
             }, null, this);
         } else {
             this.timedEvent = this.scene.time.addEvent({ delay: 6000000, callback: this.onClockEvent, callbackScope: this, repeat: 1 });
@@ -101,6 +96,15 @@ class Controller {
         this.comboMeter_back = scene.add.sprite(UICenterX + 34, UICenterY + 29, 'combometer_back');
         this.comboMeter_back.setScale(.6);
         this.positionUIForCam(this.comboMeter_back);
+        // endscreen backside art
+        if (!speedrunMode) {
+            this.endscreen_back = scene.add.sprite(game.config.width * .5, game.config.width * .35, 'timed_endscreen_back');
+        } else {
+            this.endscreen_back = scene.add.sprite(game.config.width * .5, game.config.width * .35, 'speedrun_endscreen_back');
+        }
+        this.endscreen_back.setScale(.72);
+        this.endscreen_back.setAlpha(0);
+        this.positionUIForCam(this.endscreen_back);
 
         // --- Setting up UI combo meter lights
         this.comboMeter_front = scene.add.sprite(UICenterX + 34, UICenterY + 28, 'combometer_front');
@@ -121,6 +125,14 @@ class Controller {
         this.multText = scene.add.text(UICenterX + 35, UICenterY - 60, 'x1', messyTextConfig);
         this.multText.setFontSize(50);
         this.positionUIForCam(this.multText);
+        // end screen text
+        this.finalScoreText = scene.add.text(game.config.width*.32, game.config.height*.61, '', scoreTextConfig).setOrigin(0.5);
+        this.positionUIForCam(this.finalScoreText);
+        this.finalScoreText.setDepth(3);
+        this.finalScoreText.setAlpha(0); 
+        this.finalScoreText.setFontSize(60);
+        this.finalScoreText.setFixedSize(290, 0);
+        this.finalScoreText.setStroke('#fff', 4);
 
         // --- Objects Remaining counter
         if (speedrunMode) {
@@ -146,14 +158,7 @@ class Controller {
             gameOver = true;
             numObjs = 0;
             this.cat.fadevac();
-            //var elapsedtime = this.timedEvent.getElapsedSeconds().toString();
-            //this.minutes = Math.floor(elapsedtime / 60);
-            //this.seconds = Phaser.Math.RoundTo(elapsedtime - (minutes * 60), -2);
-            this.endText2.setText('FINAL TIME: ' + this.minutes + ':' + this.seconds);
-            this.endText1.alpha = 1; 
-            this.endText2.alpha = 1;
-            this.endText3.alpha = 1;
-            this.awardMedals('speedrun');
+            this.makeEndScreen('speedrun');
         }
         
         // If the game is over and the player hits keyLeft go to the main menu
@@ -193,34 +198,34 @@ class Controller {
         if(mode == 'regular'){
             if(this.score > 599){
                 this.scene.tweens.add({targets: this.gm, alpha: 1, ease: 'Linear', duration: 200, });
-                this.scene.tweens.add({targets: this.gm, scale: 0.6, ease: 'Linear', duration: 200, });
+                this.scene.tweens.add({targets: this.gm, scale: 0.5, ease: 'Linear', duration: 200, });
                 this.scene.sound.play('gmGet', { volume: 1 });
                 timedMedal = 'gold';
             } else if(this.score > 399){
                 this.scene.tweens.add({targets: this.sm, alpha: 1, ease: 'Linear', duration: 200, });
-                this.scene.tweens.add({targets: this.sm, scale: 0.6, ease: 'Linear', duration: 200, });
+                this.scene.tweens.add({targets: this.sm, scale: 0.5, ease: 'Linear', duration: 200, });
                 this.scene.sound.play('smGet', { volume: 1 });
                 if(timedMedal != 'gold') timedMedal = 'silver';
             } else {
                 this.scene.tweens.add({targets: this.bm, alpha: 1, ease: 'Linear', duration: 200, });
-                this.scene.tweens.add({targets: this.bm, scale: 0.6, ease: 'Linear', duration: 200, });
+                this.scene.tweens.add({targets: this.bm, scale: 0.5, ease: 'Linear', duration: 200, });
                 this.scene.sound.play('bmGet', { volume: 1 });
                 if(timedMedal != 'gold' && timedMedal != 'silver') timedMedal = 'bronze';
             }
         } else if(mode == 'speedrun'){
             if(this.seconds < 30 && this.minutes < 1){
                 this.scene.tweens.add({targets: this.gm, alpha: 1, ease: 'Linear', duration: 200, });
-                this.scene.tweens.add({targets: this.gm, scale: 0.6, ease: 'Linear', duration: 200, });
+                this.scene.tweens.add({targets: this.gm, scale: 0.5, ease: 'Linear', duration: 200, });
                 this.scene.sound.play('gmGet', { volume: 1 });
                 speedRunMedal = 'gold';
             } else if(this.seconds < 45 && this.minutes < 1){
                 this.scene.tweens.add({targets: this.sm, alpha: 1, ease: 'Linear', duration: 200, });
-                this.scene.tweens.add({targets: this.sm, scale: 0.6, ease: 'Linear', duration: 200, });
+                this.scene.tweens.add({targets: this.sm, scale: 0.5, ease: 'Linear', duration: 200, });
                 this.scene.sound.play('smGet', { volume: 1 });
                 if(speedRunMedal != 'gold') speedRunMedal = 'silver';
             } else {
                 this.scene.tweens.add({targets: this.bm, alpha: 1, ease: 'Linear', duration: 200, });
-                this.scene.tweens.add({targets: this.bm, scale: 0.6, ease: 'Linear', duration: 200, });
+                this.scene.tweens.add({targets: this.bm, scale: 0.5, ease: 'Linear', duration: 200, });
                 this.scene.sound.play('bmGet', { volume: 1 });
                 if(speedRunMedal != 'gold' && speedRunMedal != 'silver') speedRunMedal = 'bronze';
             }
@@ -361,6 +366,24 @@ class Controller {
         object.setScale(1/this.scene.cameras.main.zoom * object.scale);
         object.setDepth(2);
         object.setScrollFactor(0);
+    }
+
+    makeEndScreen(mode) {
+        // set endscreen text and make it visible
+        if (!speedrunMode) {
+            this.finalScoreText.setText(this.score); 
+        } else {
+            this.finalScoreText.setText(this.minutes + ':' + this.seconds); 
+        }
+        this.finalScoreText.setAlpha(1); 
+        // make endscreen art visible
+        this.endscreen_back.setAlpha(1);
+        // place medal
+        this.awardMedals(mode);
+        // manage game over variables
+        gameOver = true;
+        numObjs = 0;
+        this.cat.fadevac();
     }
 
     // Borrowed from our earlier project: Ourobor-Bus
